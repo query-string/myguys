@@ -6,7 +6,8 @@ class AwsPolicyGenerator < Struct.new(:image_path)
   def execute
     s3 = AWS::S3.new(
       access_key_id: ENV.fetch("S3_KEY_ID"),
-      secret_access_key: ENV.fetch("S3_SECRET")
+      secret_access_key: ENV.fetch("S3_SECRET"),
+      region: ENV.fetch("S3_REGION", "us-east-1")
     )
     bucket = s3.buckets[ENV.fetch("S3_BUCKET_NAME")]
     object = bucket.objects[image_path]
