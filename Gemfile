@@ -44,6 +44,7 @@ gem 'rails-assets-jquery-cookie'
 group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'lumos'
 end
 
 group :development, :test do
