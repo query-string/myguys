@@ -17,15 +17,15 @@ your machine with [this script].
 For local development you also have to allow *Access-Control-Allow-Origin* and add a spectial CORS Cofiguration to your Amazon S3 Bucket settings:
 
 <pre>
-    <?xml version="1.0" encoding="UTF-8"?>
-    <CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
-        <CORSRule>
-            <AllowedOrigin>*</AllowedOrigin>
-            <AllowedMethod>PUT</AllowedMethod>
-            <MaxAgeSeconds>3000</MaxAgeSeconds>
-            <AllowedHeader>*</AllowedHeader>
-        </CORSRule>
-    </CORSConfiguration>
+<?xml version="1.0" encoding="UTF-8"?>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>PUT</AllowedMethod>
+        <MaxAgeSeconds>3000</MaxAgeSeconds>
+        <AllowedHeader>*</AllowedHeader>
+    </CORSRule>
+</CORSConfiguration>
 </pre>
 
 After setting up, you can run the application using [foreman]:
