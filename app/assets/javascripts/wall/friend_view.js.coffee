@@ -64,6 +64,6 @@ class @FriendView
 
   statusNickname: ->
     if @friend.status_nickname and @friend.status_nickname.length > 0
-      "#{@friend.status_nickname} "
+      "#{@friend.status_nickname} was "
     else
       ""

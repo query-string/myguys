@@ -10,6 +10,6 @@ class @StatusUpdater
           url: updateUrl,
           type: 'PUT',
           data: {status_value: $dom.val(), status_type: statusType}
-          success: ->
+          success: (data) ->
             $dom.blur()
-            $dom.val('') if statusType == "message"
+            if statusType == "message" then $dom.val('') else $dom.val(data.status_nickname)

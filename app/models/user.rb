@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   scope :by_id, -> { order(id: :asc) }
 
   validates :secret_token, presence: true, uniqueness: true
-  validates :status_nickname, uniqueness: true
 
   def signify_nickname
     self.status_nickname = "@#{status_nickname}" if status_nickname.present? && status_nickname.chr != "@"
