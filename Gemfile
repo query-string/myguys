@@ -40,6 +40,7 @@ gem 'rails-assets-jquery-tourbus'
 gem 'rails-assets-headroom.js'
 gem 'rails-assets-lodash'
 gem 'rails-assets-jquery-cookie'
+gem 'role-rails'
 
 group :development do
   gem 'spring'

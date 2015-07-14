@@ -21,8 +21,10 @@ module Api
     end
 
     def status
-      @user = valid_user
-      @user.update_attributes(status_message: params[:status_message])
+      @user       = valid_user
+      status_type = params[:status_type].empty? ? "message" : params[:status_type]
+
+      @user.update_attribute("status_#{status_type}", params[:status_value])
       respond_to do |format|
         format.json { render status: :ok }
       end
