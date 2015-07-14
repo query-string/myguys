@@ -54,10 +54,16 @@ class @FriendView
     , 5000)
 
   activeAtText: ->
-    "active about #{ moment(@friend.active_at).fromNow() }"
+    "#{ @statusNickname() }active about #{ moment(@friend.active_at).fromNow() }"
 
   statusMessage: ->
     if @friend.status_message and @friend.status_message.length > 0
       "#{@friend.status_message}"
+    else
+      ""
+
+  statusNickname: ->
+    if @friend.status_nickname and @friend.status_nickname.length > 0
+      "#{@friend.status_nickname} was "
     else
       ""

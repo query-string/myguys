@@ -240,6 +240,8 @@ GEM
       mail
     responders (1.1.1)
       railties (>= 3.2, < 4.2)
+    role-rails (1.4.0)
+      rails (>= 3.1.0)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -375,6 +377,7 @@ DEPENDENCIES
   rb-inotify
   recipient_interceptor
   responders
+  role-rails
   rspec-rails (~> 3.0.0)
   sass
   sass-globbing

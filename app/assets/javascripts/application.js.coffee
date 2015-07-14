@@ -1,5 +1,6 @@
 #= require jquery
 #= require jquery_ujs
+#= require jquery.role
 
 #= require ./wall/manager
 #= require ./headroom
@@ -27,7 +28,7 @@ $ ->
     else
       alert("Unfortunately your browser is not fully compatible with this website. Are you using Chrome or Firefox? Then try to refresh the browser!")
 
-  $statusUpdate = $("[data-guest-status-url]")
+  $statusUpdate = $("@status-updater")
   if $statusUpdate.length > 0
-    new StatusUpdater($statusUpdate)
-
+    $statusUpdate.each ->
+      new StatusUpdater($(@))

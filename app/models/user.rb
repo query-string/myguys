@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :images, dependent: :destroy, inverse_of: :user
+  before_save :signify_nickname
 
   belongs_to :last_image,
     class_name: 'Image'
@@ -18,5 +19,9 @@ class User < ActiveRecord::Base
   scope :by_id, -> { order(id: :asc) }
 
   validates :secret_token, presence: true, uniqueness: true
+
+  def signify_nickname
+    self.status_nickname = "@#{status_nickname}" if status_nickname.present? && status_nickname.chr != "@"
+  end
 end
 
