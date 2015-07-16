@@ -65,6 +65,30 @@
   .is-idle:hover &
     display: none
 
+.wall__brick__action
+  background-color: rgba(black, 0.6)
+  +position(absolute, 0px 0px 0px 0px)
+  color: white
+  text-decoration: none
+  opacity: 0
+  text-align: center
+  +transition(opacity .2s ease-out)
+  z-index: 1
+  .wall__brick:hover &
+    opacity: 1
+  .is-stream-active:hover &,
+  .is-idle:hover &
+    display: none
+
+.wall__brick__actionlinks
+  width: 100%
+  text-align: center
+  +center
+  i
+    font-size: 50px
+    cursor: pointer
+    margin: 0 5% 0 5%
+
 .wall__brick__idle
   background: image-url('noise.gif')
   +position(absolute, 0px 0px 0px 0px)

@@ -5,8 +5,11 @@
       span
         i.icon--camera
         | Waiting for your camera&nbsp;:)
-    a.wall__brick__shoot.js-shoot href="#"
-      i.wall_brick__icon.icon--photo
+    .wall__brick__action
+      .wall__brick__actionlinks
+        = fa_icon "slack", title: "Slack it!"
+        = fa_icon "camera", title: "Take a photo", class: "js-shoot"
+        = fa_icon "heart-o", title: "Like it"
     video.wall__brick__camera
     .wall__brick__countdown
     .wall__brick__flash

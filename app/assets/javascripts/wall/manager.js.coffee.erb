@@ -48,6 +48,7 @@ class @Manager
 
   refreshStatus: (cb) ->
     @client.fetchStatus (err, result) =>
+      console.debug result
       if err
         cb?(err)
       else
