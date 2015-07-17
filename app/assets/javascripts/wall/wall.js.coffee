@@ -31,6 +31,10 @@ class @Wall
       friendView.appendTo(@$friendViewsContainer)
       @friendViews.push(friendView)
 
+    for friendBrick in friends
+      brick = @$dom.find(".wall__brick").filter -> $(@).data("brick-id") == friendBrick.id
+      brick.attr("data-image-id", friendBrick.image_id)
+
   addTempFriend: (friendId) ->
     friendView = new FriendView({id: friendId})
     friendView.appendTo(@$friendViewsContainer)

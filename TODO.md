@@ -4,6 +4,8 @@
 - [ ] Slack-it photo
 - [ ] Favorite photo
 - [ ] Ask somebody photo from Slack (/spyguys @alex)
+- [ ] Ask group photo
+- [ ] Send group photo
 - [ ] Ping channel if nobody is active more than X hours
 - [ ] Ping channel if only X people are active
 

@@ -4,7 +4,7 @@ class @FriendView
   constructor: (@friend) ->
     template = if @friend.image_url
       """
-        <div class="wall__brick is-hidden" style="background-image: url('#{@friend.image_url}')">
+        <div class="wall__brick is-hidden" data-brick-id="#{@friend.id}" style="background-image: url('#{@friend.image_url}')">
           <div class="wall__brick__action">
             <div class="wall__brick__actionlinks">
               <i class="fa fa-slack" title="Slack it!"></i>

@@ -1,6 +1,6 @@
 .wall.js-wall data-pusher-channel=@pusher_channel data-user-id=@user.id
   = audio_tag("beep.ogg")
-  .wall__brick.js-camera.is-first
+  .wall__brick.js-camera.is-first data-brick-id=@user.id
     .wall__brick__idle
       span
         i.icon--camera
