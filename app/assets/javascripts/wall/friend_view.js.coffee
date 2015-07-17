@@ -5,6 +5,12 @@ class @FriendView
     template = if @friend.image_url
       """
         <div class="wall__brick is-hidden" style="background-image: url('#{@friend.image_url}')">
+          <div class="wall__brick__action">
+            <div class="wall__brick__actionlinks">
+              <i class="fa fa-slack" title="Slack it!"></i>
+                <i class="fa fa-heart-o" title="Like it"></i>
+            </div>
+          </div>
           <div class="wall__brick__messages">
             <span class="wall__brick__status js-status-message">#{@statusMessage()}</span>
             <span class="wall__brick__active js-active-at">#{@activeAtText()}</span>
