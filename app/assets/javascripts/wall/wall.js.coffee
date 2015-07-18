@@ -9,6 +9,14 @@ class @Wall
     @$friendViewsContainer = @$dom.find('.js-friends')
     @$userStatus = @$dom.find('#status_message')
 
+    _that = @
+
+    @$dom.find(".js-slack").on "click", (e) ->
+      image_id = $(e.target).parents(".wall__brick").attr("data-image-id")
+      $.post _that.$dom.data("slack-path"), {image_id: image_id}, (data) ->
+        console.debug data
+
+
   refreshFriends: (friends) ->
     myFriendsIds  = _.map(@friendViews, (f) -> f.id())
     newFriendsIds = _.map(friends, (f) -> f.id)

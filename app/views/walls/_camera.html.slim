@@ -1,4 +1,4 @@
-.wall.js-wall data-pusher-channel=@pusher_channel data-user-id=@user.id
+.wall.js-wall data-pusher-channel=@pusher_channel data-user-id=@user.id data-slack-path="#{api_slack_index_path}"
   = audio_tag("beep.ogg")
   .wall__brick.js-camera.is-first data-brick-id=@user.id
     .wall__brick__idle
@@ -7,7 +7,7 @@
         | Waiting for your camera&nbsp;:)
     .wall__brick__action
       .wall__brick__actionlinks
-        = fa_icon "slack", title: "Slack it!"
+        = fa_icon "slack", title: "Slack it!", class: "js-slack"
         = fa_icon "camera", title: "Take a photo", class: "js-shoot"
         = fa_icon "heart-o", title: "Like it"
     video.wall__brick__camera

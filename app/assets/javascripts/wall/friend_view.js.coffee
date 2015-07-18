@@ -7,8 +7,8 @@ class @FriendView
         <div class="wall__brick is-hidden" data-brick-id="#{@friend.id}" style="background-image: url('#{@friend.image_url}')">
           <div class="wall__brick__action">
             <div class="wall__brick__actionlinks">
-              <i class="fa fa-slack" title="Slack it!"></i>
-                <i class="fa fa-heart-o" title="Like it"></i>
+              <i class="fa fa-slack js-slack" title="Slack it!"></i>
+              <i class="fa fa-heart-o" title="Like it"></i>
             </div>
           </div>
           <div class="wall__brick__messages">

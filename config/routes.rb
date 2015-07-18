@@ -27,10 +27,11 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    post  '/wall/upload-requests',       to: 'walls#create_upload_policy'
-    post  '/wall/photos',                to: 'walls#create_photo'
-    get   '/wall',                       to: 'walls#show'
-    put   '/wall/status',                to: 'walls#status',                as: 'wall_update_status'
+    post      '/wall/upload-requests', to: 'walls#create_upload_policy'
+    post      '/wall/photos',          to: 'walls#create_photo'
+    get       '/wall',                 to: 'walls#show'
+    put       '/wall/status',          to: 'walls#status', as: 'wall_update_status'
+    resources :slack,                  only: %i(create)
   end
 
   root to: 'static#homepage'
