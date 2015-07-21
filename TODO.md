@@ -4,12 +4,13 @@
 - [ ] Slack-it:
     - [x] Send personal photo
     - [x] Basic markup for personal photos
-    - [ ] Mention username (if defined)
-    - [ ] Mention status (if defined)
+    - [x] Mention username (if defined)
+    - [x] Mention status (if defined)
     - [ ] Implement some UI feedback if photo has been posted
     - [ ] Send group photo
+    - [ ] Show Slack button only if Slack integration enabled
 - [ ] Listeners:
-    - [ ] Ask somebody's photo from Slack (/spyguys @alex)
+    - [ ] Ask somebody's photo from Slack (/higuys @alex)
     - [ ] Ask group photo
 - [ ] Reminders:
     - [ ] Ping channel if nobody is active more than X hours
