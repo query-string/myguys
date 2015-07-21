@@ -11,11 +11,11 @@ module Api
       attachments.merge!(author_name: image.status_nickname) if image.status_nickname.present?
       attachments.merge!(text: image.status_message) if image.status_message.present?
 
-      Slack.chat_postMessage  username: "hi.guys",
+      Slack.chat_postMessage  username: "higuys",
                               channel: "#general",
                               text: DateTime.now.in_time_zone.to_s,
                               icon_emoji: ":ghost:",
-                              attachments: [attachments].to_json
+                              attachments: [attachments]
 
       respond_with_success code: "OK"
     end

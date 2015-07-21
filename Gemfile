@@ -29,7 +29,7 @@ gem 'omniauth-github'
 gem 'showcase'
 gem 'letter_opener'
 gem 'rack-rewrite'
-gem 'slack-api', require: 'slack'
+gem 'slack-api', github: 'query-string/slack-ruby-gem', require: 'slack'
 
 gem 'bourbon', '~> 3.2.1'
 gem 'rails-assets-normalize-scss'
@@ -47,7 +47,7 @@ gem 'font-awesome-rails'
 group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'lumos'
+  gem 'lumos', '~> 0.0.2'
 end
 
 group :development, :test do
@@ -66,7 +66,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'poltergeist'
+  #gem 'poltergeist'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'shoulda-matchers', require: false
