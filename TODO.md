@@ -6,9 +6,10 @@
     - [x] Basic markup for personal photos
     - [x] Mention username (if defined)
     - [x] Mention status (if defined)
-    - [ ] Implement some UI feedback if photo has been posted
+    - [x] Implement some UI feedback if photo has been posted
     - [ ] Send group photo
     - [ ] Show Slack button only if Slack integration enabled
+    - [ ] DRY JS and Ruby code
 - [ ] Listeners:
     - [ ] Ask somebody's photo from Slack (/higuys @alex)
     - [ ] Ask group photo

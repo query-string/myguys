@@ -4,18 +4,11 @@
 
 class @Wall
   constructor: (@$dom, @guestId) ->
-    @friendViews = []
-    @myView = new MyView(@$dom.find('.js-camera'))
+    @friendViews           = []
+    @myView                = new MyView(@$dom.find('.js-camera'))
     @$friendViewsContainer = @$dom.find('.js-friends')
-    @$userStatus = @$dom.find('#status_message')
-
-    _that = @
-
-    @$dom.find(".js-slack").on "click", (e) ->
-      image_id = $(e.target).parents(".wall__brick").attr("data-image-id")
-      $.post _that.$dom.data("slack-path"), {image_id: image_id}, (data) ->
-        console.debug data
-
+    @$userStatus           = @$dom.find('#status_message')
+    @slackIt()
 
   refreshFriends: (friends) ->
     myFriendsIds  = _.map(@friendViews, (f) -> f.id())
@@ -47,3 +40,17 @@ class @Wall
     friendView = new FriendView({id: friendId})
     friendView.appendTo(@$friendViewsContainer)
     @friendViews.push(friendView)
+
+  slackIt: ->
+    _that = @
+    @$dom.find(".js-slack").on "click", (e) ->
+      target   = $(e.target)
+      image_id = target.parents(".wall__brick").attr("data-image-id")
+      target.animate
+        opacity: 0
+        , 200
+      $.post _that.$dom.data("slack-path"), {image_id: image_id}, (data) ->
+        $("body").prepend "<div class='flash--notice'>Photo has been successfully #slacked!</div>"
+        target.css
+          opacity: 1.0,
+          visibility: "visible"
