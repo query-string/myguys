@@ -11,8 +11,10 @@
     - [ ] Show Slack button only if Slack integration enabled
     - [ ] DRY JS and Ruby code
 - [ ] Listeners:
-    - [ ] Ask somebody's photo from Slack (/higuys @alex)
-    - [ ] Ask group photo
+    - [ ] Ask somebody's photo from Slack (@higuys: show me @alex)
+    - [ ] Ask group photo (@higuys: show me @channel)
+    - [ ] Ask about help
+    - [ ] Bot request must work inside PM too
 - [ ] Reminders:
     - [ ] Ping channel if nobody is active more than X hours
     - [ ] Ping channel if only X people are active

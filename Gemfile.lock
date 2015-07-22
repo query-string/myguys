@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/query-string/slack-ruby-gem.git
-  revision: 6fc0e417b9ffa1f915e88d4408581ca5dd61f3e2
+  revision: df0b0f6da9720c44bdb05dda5f79c4dec74a62e0
   specs:
     slack-api (1.1.6)
       faraday (>= 0.7, < 0.10)
