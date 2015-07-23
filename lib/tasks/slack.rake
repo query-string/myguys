@@ -4,17 +4,22 @@ namespace :slack do
     client = Slack.realtime
     client.on :message do |data|
       if data["type"] == "message"
-        bot_user_id  = client.response["self"]["id"]
-        mention_text = data["text"].split(">:")
 
-        # Listen mentions
-        if mention_text.size > 0
-          mentioned_message = mention_text[1]
-          mentioned_user_id = mention_text[0][2..-1]
+        regex        = /<@([A-Za-z0-9_-]+)>/i
+        message      = data["text"].split(":")
+        message_user = message[0]
 
-          # Compare mentioned user ID with API user ID
-          p mentioned_message.strip if mentioned_user_id == bot_user_id
+        # If first part of the message contains Slack username
+        if message_user =~ regex
+          bot_user_id     = client.response["self"]["id"]
+          message_user_id = message_user.match(regex).captures.join
+
+          # If mentioned user ID and Slack bot ID are equal
+          if bot_user_id == message_user_id
+            requested_users = message[1].scan(regex).flatten
+          end
         end
+
       end
     end
     client.start
