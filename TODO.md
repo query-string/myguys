@@ -12,7 +12,7 @@
     - [ ] Show Slack button only if Slack integration enabled
 - [ ] Bot channel:
     - [ ] Personal photo (@higuys: show me/us @alex)
-        - [ ] Get asking username
+        - [x] Get asking username
         - [ ] Post requested user photo
         - [ ] Extact logic from rake to class
         - [ ] me/us command parser
