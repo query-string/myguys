@@ -1,30 +1,39 @@
 class SlackPostPhoto < Struct.new(:image)
   extend Command
+  attr_reader :image
+
+  def initialize(image)
+    @image       = image
+    @attachments = default_attachments
+    extend_attachments
+  end
 
   def execute
-    @attachments  = {
+    SlackPost.execute(
+      "*The latest available photo* – #{Time.zone.at(image.created_at).strftime("%d %B %Y at %T")}",
+      @attachments
+    )
+  end
+
+  def default_attachments
+    {
       image_url:   image.imgx_url,
-      author_icon: "https://brandfolder.com/api/favicon/icon?size=18&domain=www.slack.com",
-      color:       "#439FE0"
+      author_icon: "https://brandfolder.com/api/favicon/icon?size=18&domain=www.slack.com"
     }
-
-    add_nickname
-    add_status
-
-    Slack.chat_postMessage  username: "higuys",
-                            channel: "#general",
-                            text: DateTime.now.in_time_zone.to_s,
-                            icon_emoji: ":ghost:",
-                            attachments: [@attachments]
   end
 
   private
 
-  def add_nickname
-    @attachments.merge!(author_name: image.status_nickname) if image.status_nickname.present?
+  def extend_attachments
+    add_attachment_nickname
+    add_attachment_status
   end
 
-  def add_status
+  def add_attachment_nickname
+   @attachments.merge!(author_name: image.status_nickname) if image.status_nickname.present?
+  end
+
+  def add_attachment_status
     @attachments.merge!(text: image.status_message) if image.status_message.present?
   end
 end
