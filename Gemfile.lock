@@ -82,6 +82,7 @@ GEM
       activerecord (>= 3.0, < 4.2)
       delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.5)
+    dish (0.0.6)
     dotenv (1.0.2)
     dotenv-rails (1.0.2)
       dotenv (= 1.0.2)
@@ -356,6 +357,7 @@ DEPENDENCIES
   coffee-rails
   database_cleaner
   delayed_job_active_record
+  dish
   dotenv-rails
   email_validator
   factory_girl_rails

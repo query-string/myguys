@@ -10,7 +10,7 @@ class SlackPostPhoto < Struct.new(:image)
 
   def execute
     SlackPost.execute(
-      "*The latest available photo* – #{Time.zone.at(image.created_at).strftime("%d %B %Y at %T")}",
+      "The latest available photo – *#{Time.zone.at(image.created_at).strftime("%d %B %Y at %T")}*",
       @attachments
     )
   end

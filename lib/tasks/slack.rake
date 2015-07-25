@@ -1,6 +1,7 @@
 namespace :slack do
   desc "Starts hg Slack bot listeneer"
   task listen: :environment do
+
     client = Slack.realtime
     client.on :message do |data|
       if data["type"] == "message"
@@ -27,7 +28,7 @@ namespace :slack do
               # Make sure that usernames array is not empty
               if requested_users.size > 0
                 # Get photos
-                p requested_users
+                p requested_users.first
               else
                 SlackPost.execute "Sorry @#{user_info_name}, your request must contain at least one *@username*"
               end
@@ -40,5 +41,6 @@ namespace :slack do
       end
     end
     client.start
+
   end
 end
