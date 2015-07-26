@@ -1,4 +1,5 @@
 class SlackBot
+  require "slack_bot/public_listener"
 
   attr_reader :target_channel
 
@@ -16,12 +17,20 @@ class SlackBot
     client.start
   end
 
-  def target_channel_id
-    client_response.channels.find{ |channel| channel.name == target_channel }.id
+  def bot_user_id
+    client_response.self.id
   end
 
   def channel_ids
     client_response.channels.map(&:id)
+  end
+
+  def target_channel_id
+    client_response.channels.find{ |channel| channel.name == target_channel }.id
+  end
+
+  def original_message
+    client_data.text
   end
 
   def message_type
@@ -43,11 +52,11 @@ private
   end
 
   def listen_public
-    p "public"
+    SlackBot::PublicListener.new
   end
 
   def listen_private
-    p "private"
+    SlackBot::PrivateListener.new
   end
 
 end
