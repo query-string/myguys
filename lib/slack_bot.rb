@@ -1,7 +1,8 @@
 class SlackBot
   require "slack_bot/public_listener"
+  require "slack_bot/private_listener"
 
-  attr_reader :target_channel
+  attr_reader :attributes, :target_channel
 
   REGEX = /@([A-Za-z0-9_-]+)/i
 
@@ -12,6 +13,7 @@ class SlackBot
   def start
     client.on :message do |data|
       @data = data
+      populate_attributes
       self.send("listen_#{message_type}") if client_data.type == "message"
     end
     client.start
@@ -44,19 +46,30 @@ private
   end
 
   def client_data
-    Dish(@data)
+    @client_data ||= Dish(@data)
   end
 
   def client_response
-    Dish(client.response)
+    @client_response ||= Dish(client.response)
+  end
+
+  def populate_attributes
+    @attributes = Dish ({
+      client: client,
+      data: client_data,
+      response: client_response,
+      message: original_message,
+      bot_user_id: bot_user_id,
+      target_channel_id: target_channel_id
+    })
   end
 
   def listen_public
-    SlackBot::PublicListener.new
+    lumos SlackBot::PublicListener.new @attributes
   end
 
   def listen_private
-    SlackBot::PrivateListener.new
+    lumos SlackBot::PrivateListener.new @attributes
   end
 
 end

@@ -1,6 +1,7 @@
 class SlackBot::PrivateListener
 
-  def inititialize
+  def initialize(attributes)
+    @attributes = attributes
   end
 
 end

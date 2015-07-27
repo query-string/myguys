@@ -1,6 +1,7 @@
 class SlackBot::PublicListener
 
-  def inititialize
+  def initialize(attributes)
+    @attributes = attributes
   end
 
 end
