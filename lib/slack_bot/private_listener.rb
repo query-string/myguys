@@ -1,7 +1,9 @@
-class SlackBot::PrivateListener
+class SlackBot
+  class PrivateListener
+    attr_reader :attributes
 
-  def initialize(attributes)
-    @attributes = attributes
+    def initialize(attributes)
+      @attributes = attributes
+    end
   end
-
 end

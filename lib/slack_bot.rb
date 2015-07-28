@@ -14,7 +14,7 @@ class SlackBot
     client.on :message do |data|
       @data = data
       populate_attributes
-      self.send("listen_#{message_type}") if client_data.type == "message"
+      send("listen_#{message_type}") if client_data.type == "message"
     end
     client.start
   end
@@ -28,7 +28,7 @@ class SlackBot
   end
 
   def target_channel_id
-    client_response.channels.find{ |channel| channel.name == target_channel }.id
+    client_response.channels.find { |channel| channel.name == target_channel }.id
   end
 
   def original_message
@@ -39,7 +39,7 @@ class SlackBot
     channel_ids.include?(client_data.channel) ? "public" : "private"
   end
 
-private
+  private
 
   def client
     @client ||= Slack.realtime
@@ -65,11 +65,10 @@ private
   end
 
   def listen_public
-    lumos SlackBot::PublicListener.new @attributes
+    SlackBot::PublicListener.new @attributes
   end
 
   def listen_private
-    lumos SlackBot::PrivateListener.new @attributes
+    SlackBot::PrivateListener.new @attributes
   end
-
 end
