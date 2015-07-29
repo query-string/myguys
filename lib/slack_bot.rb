@@ -19,20 +19,12 @@ class SlackBot
     client.start
   end
 
-  def bot_user_id
-    client_response.self.id
+  def bot_user
+    client_response.self
   end
 
   def channel_ids
     client_response.channels.map(&:id)
-  end
-
-  def target_channel_id
-    client_response.channels.find { |channel| channel.name == target_channel }.id
-  end
-
-  def original_message
-    client_data.text
   end
 
   def message_type
@@ -45,22 +37,22 @@ class SlackBot
     @client ||= Slack.realtime
   end
 
-  def client_data
-    @client_data ||= Dish(@data)
-  end
-
   def client_response
     @client_response ||= Dish(client.response)
+  end
+
+  def client_data
+    Dish(@data)
   end
 
   def populate_attributes
     @attributes = Dish ({
       client: client,
-      data: client_data,
       response: client_response,
-      message: original_message,
-      bot_user_id: bot_user_id,
-      target_channel_id: target_channel_id
+      data: client_data,
+      bot_user: bot_user,
+      target_channel: target_channel,
+      regex: REGEX
     })
   end
 
