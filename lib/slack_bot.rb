@@ -38,7 +38,7 @@ class SlackBot
   end
 
   def client_response
-    @client_response ||= Dish(client.response)
+    @client_response ||= client.response.to_hashugar
   end
 
   def client_data
@@ -46,14 +46,14 @@ class SlackBot
   end
 
   def populate_attributes
-    @attributes = Dish ({
+    @attributes = {
       client: client,
       response: client_response,
       data: client_data,
       bot_user: bot_user,
       target_channel: target_channel,
       regex: REGEX
-    })
+    }.to_hashugar
   end
 
   def listen_public

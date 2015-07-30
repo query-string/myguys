@@ -30,7 +30,7 @@ gem 'showcase'
 gem 'letter_opener'
 gem 'rack-rewrite'
 gem 'slack-api', github: 'query-string/slack-ruby-gem', require: 'slack'
-gem 'dish', require: 'dish/ext'
+gem 'hashugar'
 
 gem 'bourbon', '~> 3.2.1'
 gem 'rails-assets-normalize-scss'
