@@ -1,4 +1,7 @@
 class SlackBot
+  # sender_user    - a real (most likely) person, WHO sends the message
+  # recipient_user - a message recipient, WHOM has been mentioned at the first part of data.text (i.e. @higuys: or whatever)
+  # bot_user       - an application user
   class PublicListener
     attr_reader :attributes, :data, :response, :target_channel
 
@@ -11,7 +14,7 @@ class SlackBot
       # If channel is target channel
       # If first part of messge – is username
       # If requested user id is equal to bot user id
-      listen if channel == target_channel_id && user =~ attributes.regex && user_id == attributes.bot_user.id
+      listen if channel == target_channel_id && recipient_user =~ attributes.regex && recipient_user_id == bot_user.id
     end
 
     def message
@@ -26,12 +29,20 @@ class SlackBot
       splitted_message[1]
     end
 
-    def user
+    def bot_user
+      attributes.bot_user
+    end
+
+    def sender_user_id
+      data.user
+    end
+
+    def recipient_user
       splitted_message[0]
     end
 
-    def user_id
-      user.match(attributes.regex).captures.join
+    def recipient_user_id
+      recipient_user.match(attributes.regex).captures.join
     end
 
     def channel
@@ -45,7 +56,7 @@ class SlackBot
     private
 
     def listen
-      lumos text
+      p SlackBot::MessageParser.new(text, sender_user_id).response
     end
   end
 end
