@@ -14,7 +14,11 @@ class SlackBot
       # If channel is target channel
       # If first part of messge – is username
       # If requested user id is equal to bot user id
-      listen if channel == target_channel_id && recipient_user =~ attributes.regex && recipient_user_id == bot_user.id
+      listen if channel == target_channel_id && recipient_user =~ regex && recipient_user_id == bot_user.id
+    end
+
+    def regex
+      attributes.regex
     end
 
     def message
@@ -42,7 +46,7 @@ class SlackBot
     end
 
     def recipient_user_id
-      recipient_user.match(attributes.regex).captures.join
+      recipient_user.match(regex).captures.join
     end
 
     def channel
@@ -56,7 +60,7 @@ class SlackBot
     private
 
     def listen
-      p SlackBot::MessageParser.new(text, sender_user_id).response
+      p SlackBot::MessageParser.new(text, attributes).response
     end
   end
 end
