@@ -1,51 +1,68 @@
 class SlackBot
+  # sender_user     - a real (most likely) person, WHO sends the message
+  # channel_users   - a list of channel users brought by rtm.start response
+  # mentioned_users - an array of users mentioned in message
   class MessageParser
-    attr_reader :message, :user_id, :regex, :users
+    attr_reader :message, :sender_user, :channel_users, :regex
 
     def initialize(message, attibutes)
-      @message = message
-      @user_id = attibutes.data.user
-      @regex   = attibutes.regex
-      @users   = attibutes.response.users
+      @message       = message
+      @regex         = attibutes.regex
+      @sender_user   = attibutes.data.user
+      @channel_users = attibutes.response.users
     end
 
     def response
       if message.present?
-        if requested_users.size > 0
-          requested_user_names
+        if mentioned_user_ids.size > 0
+          { type: :users,
+            body: hg_slack_users
+          }
         else
-          no_users_presented
+          { type: :message,
+            body: no_users_presented
+          }
         end
       else
-        no_message_defined
+        { type: :message,
+          body: no_message_defined
+        }
       end
     end
 
-    def username
-      @username ||= find_by_id(user_id)["name"]
+    def channel_user_by_id(id)
+      channel_users.find{ |user| user["id"] == id }
     end
 
-    def find_by_id(id)
-      users.find{ |user| user["id"] == id }
+    def sender_user_name
+      @sender_user_name ||= channel_user_by_id(sender_user)["name"]
     end
 
-    def requested_users
+    def mentioned_user_ids
       message.scan(regex).flatten
     end
 
-    def requested_user_names
-      # Try to find username besides client response Slack users
-      requested_users.map{ |user_id| find_by_id(user_id) ? find_by_id(user_id)["name"] : user_id }
+    def mentioned_users
+      # Try to find username besides Slack responded users
+      mentioned_user_ids.map { |user| channel_user_by_id(user) ? channel_user_by_id(user)["name"] : user }
+    end
+
+    def hg_slack_users
+      # Try to find hg users
+      mentioned_users.map { |user|
+        hg_user = User.with_nickname(user).by_the_latest_photo.first
+        hg_user ? {type: :hg, user: hg_user} : {type: :slack, user: user}
+      }
     end
 
     private
 
     def no_message_defined
-      "How can I serve you, my dear @#{username}?"
+      "How can I serve you, my dear @#{sender_user_name}?"
     end
 
     def no_users_presented
-      "Sorry @#{username}, your request must contain at least one *@username*"
+      "Sorry @#{sender_user_name}, your request must contain at least one *@username*"
     end
   end
 end

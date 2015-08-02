@@ -13,7 +13,7 @@
 - [ ] Bot channel:
     - [ ] Personal photo (@higuys: show me/us @alex)
         - [x] Get asking username
-        - [ ] Post requested user photo
+        - [x] Post requested user photo
         - [ ] Extact logic from rake to class
         - [ ] me/us command parser
     - [ ] Group photo (@higuys: show me/us @channel)
