@@ -27,6 +27,7 @@
     - [ ] Ping channel if nobody is active more than X hours
     - [ ] Ping channel if only X people are active
 - [ ] Favorite photo
+- [ ] Write specs
 
 ## Common tweaks
 - [ ] Pusher listens for status changes too

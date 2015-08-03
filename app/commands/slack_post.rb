@@ -1,10 +1,10 @@
-class SlackPost < Struct.new(:text, :attachments)
+class SlackPost < Struct.new(:channel, :text, :attachments)
   extend Command
 
   def execute
     Slack.chat_postMessage(
       username:    "higuys",
-      channel:     "#general",
+      channel:     channel,
       text:        text,
       icon_emoji:  ":ghost:",
       attachments: [extended_attachments]

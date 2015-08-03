@@ -66,7 +66,7 @@ class SlackBot
           SlackPost.execute response[:body]
         when :users
           hg_users = response[:body].select { |user| user[:type] == :hg }
-          SlackPostPhoto.execute hg_users.first[:user].last_image if hg_users.size > 0
+          SlackPostPhoto.execute "##{target_channel}", hg_users.first[:user].last_image if hg_users.size > 0
         end
     end
   end

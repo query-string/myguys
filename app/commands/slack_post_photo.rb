@@ -1,8 +1,9 @@
-class SlackPostPhoto < Struct.new(:image)
+class SlackPostPhoto < Struct.new(:channel, :image)
   extend Command
-  attr_reader :image
+  attr_reader :channel, :image
 
-  def initialize(image)
+  def initialize(channel, image)
+    @channel     = channel
     @image       = image
     @attachments = default_attachments
     extend_attachments
@@ -10,6 +11,7 @@ class SlackPostPhoto < Struct.new(:image)
 
   def execute
     SlackPost.execute(
+      channel,
       "The latest available photo – *#{Time.zone.at(image.created_at).strftime("%d %B %Y at %T")}*",
       @attachments
     )
