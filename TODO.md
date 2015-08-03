@@ -14,7 +14,7 @@
     - [ ] Personal photo (@higuys: show me/us @alex)
         - [x] Get asking username
         - [x] Post requested user photo
-        - [ ] Extact logic from rake to class
+        - [x] Extact logic from rake to class
         - [ ] me/us command parser
     - [ ] Group photo (@higuys: show me/us @channel)
 - [ ] Bot PM: (show me @alex)
