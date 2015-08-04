@@ -13,7 +13,7 @@ class SlackBot
     end
 
     def response
-      if message.present?
+      @response = if message.present?
         if mentioned_user_ids.size > 0
           { type: :users,
             body: hg_slack_users
@@ -28,14 +28,30 @@ class SlackBot
           body: no_message_defined
         }
       end
+      @response.merge(destination: destination)
     end
 
-    def channel_user_by_id(id)
-      channel_users.find{ |user| user["id"] == id }
+    def destination
+      @destination ||= catch_destination
     end
 
     def sender_user_name
       @sender_user_name ||= channel_user_by_id(sender_user)["name"]
+    end
+
+    private
+
+    def catch_destination
+      substr = message.match(/show me|show us/)
+      if substr
+        substr.to_s.match(/me/) ? :private : :channel
+      else
+        :channel
+      end
+    end
+
+    def channel_user_by_id(id)
+      channel_users.find{ |user| user["id"] == id }
     end
 
     def mentioned_user_ids
@@ -54,8 +70,6 @@ class SlackBot
         hg_user ? {type: :hg, user: hg_user} : {type: :slack, user: user}
       }
     end
-
-    private
 
     def no_message_defined
       "How can I serve you, my dear @#{sender_user_name}?"

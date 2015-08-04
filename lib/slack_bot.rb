@@ -43,7 +43,7 @@ class SlackBot
   end
 
   def client_data
-    Dish(@data)
+    @data.to_hashugar
   end
 
   def populate_attributes
