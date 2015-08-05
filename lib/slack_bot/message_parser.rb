@@ -3,13 +3,16 @@ class SlackBot
   # channel_users   - a list of channel users brought by rtm.start response
   # mentioned_users - an array of users mentioned in message
   class MessageParser
-    attr_reader :message, :sender_user, :channel_users, :regex
+    attr_reader :message, :default_destination, :regex, :sender_user, :channel_users, :target_channel
 
-    def initialize(message, attibutes)
-      @message       = message
-      @regex         = attibutes.regex
-      @sender_user   = attibutes.data.user
-      @channel_users = attibutes.response.users
+    def initialize(message, destination, attibutes)
+      @message             = message
+      @default_destination = destination
+      # @TODO: Too many foreign attributes, better change it to native options
+      @regex               = attibutes.regex
+      @sender_user         = attibutes.data.user
+      @channel_users       = attibutes.response.users
+      @target_channel      = attibutes.target_channel
     end
 
     def response
@@ -44,9 +47,9 @@ class SlackBot
     def catch_destination
       substr = message.match(/show me|show us/)
       if substr
-        substr.to_s.match(/me/) ? :private : :channel
+        substr.to_s.match(/me/) ? "@#{sender_user_name}" : "##{target_channel}"
       else
-        :channel
+        default_destination
       end
     end
 

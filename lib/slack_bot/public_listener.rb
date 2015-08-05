@@ -60,14 +60,14 @@ class SlackBot
     private
 
     def listen
-      response = SlackBot::MessageParser.new(text, attributes).response
+      response = SlackBot::MessageParser.new(text, "##{target_channel}", attributes).response
       p response
       case response[:type]
         when :message
-          SlackPost.execute "##{target_channel}", response[:body]
+          SlackPost.execute response[:destination], response[:body]
         when :users
           hg_users = response[:body].select { |user| user[:type] == :hg }
-          SlackPostPhoto.execute "##{target_channel}", hg_users.first[:user].last_image if hg_users.size > 0
+          SlackPostPhoto.execute response[:destination], hg_users.first[:user].last_image if hg_users.size > 0
         end
     end
   end
