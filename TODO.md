@@ -15,7 +15,7 @@
         - [x] Get asking username
         - [x] Post requested user photo
         - [x] Extact logic from rake to class
-        - [ ] me/us command parser
+        - [x] me/us command parser
         - [ ] Handle cases when no one of mentioned users in hg at the moment
     - [ ] Group photo (@higuys: show me/us @channel)
 - [ ] Bot PM: (show me @alex)

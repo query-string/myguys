@@ -35,7 +35,7 @@ class SlackBot
     end
 
     def destination
-      @destination ||= catch_destination
+      @destination ||= message.present? ? catch_destination : default_destination
     end
 
     def sender_user_name
