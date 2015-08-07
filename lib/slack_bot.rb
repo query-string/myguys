@@ -47,6 +47,7 @@ class SlackBot
   end
 
   def populate_attributes
+    p bot_user
     @attributes = {
       client: client,
       response: client_response,

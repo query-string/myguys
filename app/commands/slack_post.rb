@@ -3,6 +3,7 @@ class SlackPost < Struct.new(:channel, :text, :attachments)
 
   def execute
     Slack.chat_postMessage(
+      as_user:     true,
       username:    "higuys",
       channel:     channel,
       text:        text,

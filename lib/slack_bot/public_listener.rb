@@ -1,7 +1,7 @@
 class SlackBot
   # sender_user    - a real (most likely) person, WHO sends the message
   # recipient_user - a message recipient, WHOM has been mentioned at the first part of data.text (i.e. @higuys: or whatever)
-  # bot_user       - an application user (application botЯ)
+  # bot_user       - an application user (application bot)
   class PublicListener
     attr_reader :attributes, :data, :response, :target_channel
 
@@ -64,7 +64,7 @@ class SlackBot
       p response
       case response[:type]
         when :message
-          SlackPost.execute response[:destination], response[:body]
+          SlackPost.execute "@higuys", response[:body]
         when :users
           hg_users = response[:body].select { |user| user[:type] == :hg }
           SlackPostPhoto.execute response[:destination], hg_users.first[:user].last_image if hg_users.size > 0
