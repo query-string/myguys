@@ -28,6 +28,10 @@ class SlackBot
     client_response.channels.map(&:id)
   end
 
+  def im_list
+    client_response.ims
+  end
+
   def message_type
     channel_ids.include?(client_data.channel) ? "public" : "private"
   end
@@ -47,12 +51,12 @@ class SlackBot
   end
 
   def populate_attributes
-    p bot_user
     @attributes = {
       client: client,
       response: client_response,
       data: client_data,
       bot_user: bot_user,
+      im_list: im_list,
       target_channel: target_channel,
       regex: REGEX
     }.to_hashugar

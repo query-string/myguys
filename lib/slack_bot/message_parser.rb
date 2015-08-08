@@ -13,6 +13,7 @@ class SlackBot
       @sender_user         = attibutes.data.user
       @channel_users       = attibutes.response.users
       @target_channel      = attibutes.target_channel
+      @im_list             = attibutes.im_list
     end
 
     def response
@@ -47,7 +48,7 @@ class SlackBot
     def catch_destination
       substr = message.match(/show me|show us/)
       if substr
-        substr.to_s.match(/me/) ? "@#{sender_user_name}" : "##{target_channel}"
+        substr.to_s.match(/me/) ? sender_user : "##{target_channel}"
       else
         default_destination
       end

@@ -64,7 +64,7 @@ class SlackBot
       p response
       case response[:type]
         when :message
-          SlackPost.execute "@higuys", response[:body]
+          SlackPost.execute response[:destination], response[:body]
         when :users
           hg_users = response[:body].select { |user| user[:type] == :hg }
           SlackPostPhoto.execute response[:destination], hg_users.first[:user].last_image if hg_users.size > 0
