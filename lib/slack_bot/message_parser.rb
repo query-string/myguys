@@ -3,7 +3,7 @@ class SlackBot
   # channel_users   - a list of channel users brought by rtm.start response
   # mentioned_users - an array of users mentioned in message
   class MessageParser
-    attr_reader :message, :default_destination, :regex, :sender_user, :channel_users, :target_channel
+    attr_reader :message, :default_destination, :regex, :sender_user, :channel_users, :target_channel, :im_list
 
     def initialize(message, destination, attibutes)
       @message             = message
@@ -43,12 +43,16 @@ class SlackBot
       @sender_user_name ||= channel_user_by_id(sender_user)["name"]
     end
 
+    def sender_user_im
+      @sender_user_im ||= im_list.find { |im| im.user == sender_user }.id
+    end
+
     private
 
     def catch_destination
       substr = message.match(/show me|show us/)
       if substr
-        substr.to_s.match(/me/) ? sender_user : "##{target_channel}"
+        substr.to_s.match(/me/) ? sender_user_im : "##{target_channel}"
       else
         default_destination
       end
