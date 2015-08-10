@@ -61,7 +61,6 @@ class SlackBot
 
     def listen
       response = SlackBot::MessageParser.new(text, "##{target_channel}", attributes).response
-      p response
       case response[:type]
         when :message
           SlackPost.execute response[:destination], response[:body]

@@ -5,15 +5,15 @@ class SlackBot
   class MessageParser
     attr_reader :message, :default_destination, :regex, :sender_user, :channel_users, :target_channel, :im_list
 
-    def initialize(message, destination, attibutes)
+    def initialize(message, destination, attributes)
       @message             = message
       @default_destination = destination
       # @TODO: Too many foreign attributes, better change it to native options
-      @regex               = attibutes.regex
-      @sender_user         = attibutes.data.user
-      @channel_users       = attibutes.response.users
-      @target_channel      = attibutes.target_channel
-      @im_list             = attibutes.im_list
+      @regex               = attributes.regex
+      @sender_user         = attributes.data.user
+      @channel_users       = attributes.response.users
+      @target_channel      = attributes.target_channel
+      @im_list             = attributes.im_list
     end
 
     def response
