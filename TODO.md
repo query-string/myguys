@@ -16,19 +16,21 @@
         - [x] Post requested user photo
         - [x] Extact logic from rake to class
         - [x] me/us command parser
+        - [ ] Case insensitive `Show me ...`
         - [ ] Handle cases when no one of mentioned users in hg at the moment
     - [ ] Group photo (@higuys: show me/us @channel)
 - [ ] Bot PM: (show me @alex)
-    - [ ] Personal photo (show me/us @alex)
+    - [x] Personal photo (show me/us @alex)
     - [ ] Group photo (show me/us @channel)
 - [ ] Slash commands:
     - [ ] Personal photo (/higuys show me/us @alex)
     - [ ] Group photo (/higuys show me/us @channel)
+- [ ] Refactoring
+- [ ] Specs
 - [ ] Reminders:
     - [ ] Ping channel if nobody is active more than X hours
     - [ ] Ping channel if only X people are active
 - [ ] Favorite photo
-- [ ] Write specs
 
 ## Common tweaks
 - [ ] Pusher listens for status changes too
