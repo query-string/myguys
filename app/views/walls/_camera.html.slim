@@ -7,7 +7,8 @@
         | Waiting for your camera&nbsp;:)
     .wall__brick__action
       .wall__brick__actionlinks
-        = fa_icon "slack", title: "Slack it!", class: "js-slack"
+        - if ENV["SLACK_BOT_TOKEN"].present?
+          = fa_icon "slack", title: "Slack it!", class: "js-slack"
         = fa_icon "camera", title: "Take a photo", class: "js-shoot"
         = fa_icon "heart-o", title: "Like it"
     video.wall__brick__camera

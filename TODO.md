@@ -9,7 +9,7 @@
     - [x] Implement some UI feedback if photo has been posted
     - [x] Personal photo
     - [ ] Group photo
-    - [ ] Show Slack button only if Slack integration enabled
+    - [x] Show Slack button only if Slack integration enabled
 - [ ] Bot channel:
     - [ ] Personal photo (@higuys: show me/us @alex)
         - [x] Get asking username
