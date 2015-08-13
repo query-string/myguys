@@ -8,7 +8,7 @@ class @Wall
     @myView                = new MyView(@$dom.find('.js-camera'))
     @$friendViewsContainer = @$dom.find('.js-friends')
     @$userStatus           = @$dom.find('#status_message')
-    @slackIt()
+    @bindSlack()
 
   refreshFriends: (friends) ->
     myFriendsIds  = _.map(@friendViews, (f) -> f.id())
@@ -31,6 +31,7 @@ class @Wall
       friendView = new FriendView(friend)
       friendView.appendTo(@$friendViewsContainer)
       @friendViews.push(friendView)
+      @bindSlack()
 
     for friendBrick in friends
       brick = @$dom.find(".wall__brick").filter -> $(@).data("brick-id") == friendBrick.id
@@ -41,7 +42,7 @@ class @Wall
     friendView.appendTo(@$friendViewsContainer)
     @friendViews.push(friendView)
 
-  slackIt: ->
+  bindSlack: ->
     _that = @
     @$dom.find(".js-slack").on "click", (e) ->
       target   = $(e.target)
