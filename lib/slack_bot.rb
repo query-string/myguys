@@ -1,4 +1,5 @@
 class SlackBot
+  require "slack_bot/listener"
   require "slack_bot/public_listener"
   require "slack_bot/private_listener"
   require "slack_bot/message_parser"
