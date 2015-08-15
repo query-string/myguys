@@ -1,11 +1,12 @@
 class SlackBot
   class PrivateListener < Listener
-    attr_reader :channel, :sender_user, :im_list
+    attr_reader :sender_user, :im_list
 
     def initialize(attributes)
+      @sender_user = attributes.data.user
+      @im_list     = attributes.im_list
+
       super
-      # If PM user is bot user
-      listen if channel == sender_user_im.try(:id)
     end
 
     def sender_user_im
@@ -15,7 +16,12 @@ class SlackBot
     private
 
     def parser_response
-      SlackBot::MessageParser.new(message, channel, attributes).response
+      SlackBot::MessageParser.new(text, channel, attributes).response
+    end
+
+    def proper_target_selected?
+      # If PM user is bot user
+      channel == sender_user_im.try(:id)
     end
   end
 end

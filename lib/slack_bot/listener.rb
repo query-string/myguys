@@ -1,22 +1,15 @@
 class SlackBot
   class Listener
-    attr_reader :attributes, :data, :message
+    attr_reader :attributes, :data, :text, :channel, :bot_user
 
     def initialize(attributes)
-      @attributes  = attributes
-      @data        = attributes.data
-      @message     = attributes.data.text
+      @attributes   = attributes
+      @data         = attributes.data
+      @text         = attributes.data.text
+      @channel      = attributes.data.channel
+      @bot_user     = attributes.bot_user
 
-      @response       = attributes.response
-      @target_channel = attributes.target_channel
-
-      @channel     = attributes.data.channel
-      @sender_user = attributes.data.user
-      @im_list     = attributes.im_list
-    end
-
-    def bot_user
-      attributes.bot_user
+      listen if proper_target_selected?
     end
 
     private

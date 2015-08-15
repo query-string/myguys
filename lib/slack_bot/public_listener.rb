@@ -3,42 +3,30 @@ class SlackBot
   # recipient_user - a message recipient, WHOM has been mentioned at the first part of data.text (i.e. @higuys: or whatever)
   # bot_user       - an application user (application bot)
   class PublicListener < Listener
-    attr_reader :response, :target_channel
+    attr_reader :regex, :response, :target_channel
 
     def initialize(attributes)
+      @regex          = attributes.regex
+      @response       = attributes.response
+      @target_channel = attributes.target_channel
+
       super
-      # If channel is target channel
-      # If first part of messge – is username
-      # If requested user id is equal to bot user id
-      listen if channel == target_channel_id && recipient_user =~ regex && recipient_user_id == bot_user.id
     end
 
-    def regex
-      attributes.regex
+    def splitted_text
+      text.split(":")
     end
 
-    def splitted_message
-      message.split(":")
-    end
-
-    def text
-      splitted_message[1]
-    end
-
-    def sender_user_id
-      data.user
+    def message
+      splitted_text[1]
     end
 
     def recipient_user
-      splitted_message[0]
+      splitted_text[0]
     end
 
     def recipient_user_id
       recipient_user.match(regex).captures.join
-    end
-
-    def channel
-      data.channel
     end
 
     def target_channel_id
@@ -47,8 +35,15 @@ class SlackBot
 
     private
 
+    def proper_target_selected?
+      # If channel is target channel
+      # If first part of messge – is username
+      # If requested user id is equal to bot user id
+      channel == target_channel_id && recipient_user =~ regex && recipient_user_id == bot_user.id
+    end
+
     def parser_response
-      SlackBot::MessageParser.new(text, "##{target_channel}", attributes).response
+      SlackBot::MessageParser.new(message, "##{target_channel}", attributes).response
     end
   end
 end
