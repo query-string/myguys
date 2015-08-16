@@ -1,12 +1,13 @@
 class SlackBot
+  require "slack_bot/environment"
   require "slack_bot/listener"
   require "slack_bot/public_listener"
   require "slack_bot/private_listener"
   require "slack_bot/message_parser"
 
-  attr_reader :attributes, :target_channel
+  include SlackBot::Environment
 
-  REGEX = /@([A-Za-z0-9_-]+)/i
+  attr_reader :attributes, :target_channel
 
   def initialize(target_channel = "general")
     @target_channel = target_channel
