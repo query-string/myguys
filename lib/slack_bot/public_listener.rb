@@ -3,10 +3,9 @@ class SlackBot
   # recipient_user - a message recipient, WHOM has been mentioned at the first part of data.text (i.e. @higuys: or whatever)
   # bot_user       - an application user (application bot)
   class PublicListener < Listener
-    attr_reader :regex, :response, :target_channel
+    attr_reader :response, :target_channel
 
     def initialize(attributes)
-      @regex          = attributes.regex
       @response       = attributes.response
       @target_channel = attributes.target_channel
 

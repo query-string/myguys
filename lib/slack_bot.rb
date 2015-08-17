@@ -59,8 +59,7 @@ class SlackBot
       data: client_data,
       bot_user: bot_user,
       im_list: im_list,
-      target_channel: target_channel,
-      regex: REGEX
+      target_channel: target_channel
     }.to_hashugar
   end
 

@@ -3,13 +3,13 @@ class SlackBot
   # channel_users   - a list of channel users brought by rtm.start response
   # mentioned_users - an array of users mentioned in message
   class MessageParser
-    attr_reader :message, :default_destination, :regex, :sender_user, :channel_users, :target_channel, :im_list
+    include SlackBot::Environment
+    attr_reader :message, :default_destination, :sender_user, :channel_users, :target_channel, :im_list
 
     def initialize(message, destination, attributes)
       @message             = message
       @default_destination = destination
       # @TODO: Too many foreign attributes, better change it to native options
-      @regex               = attributes.regex
       @sender_user         = attributes.data.user
       @channel_users       = attributes.response.users
       @target_channel      = attributes.target_channel

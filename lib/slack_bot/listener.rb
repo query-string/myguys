@@ -1,5 +1,6 @@
 class SlackBot
   class Listener
+    include SlackBot::Environment
     attr_reader :attributes, :data, :text, :channel, :bot_user
 
     def initialize(attributes)
