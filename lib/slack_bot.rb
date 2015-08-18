@@ -1,10 +1,10 @@
-class SlackBot
-  require "slack_bot/environment"
-  require "slack_bot/listener"
-  require "slack_bot/public_listener"
-  require "slack_bot/private_listener"
-  require "slack_bot/message_parser"
+require "slack_bot/environment"
+require "slack_bot/listener"
+require "slack_bot/public_listener"
+require "slack_bot/private_listener"
+require "slack_bot/message_parser"
 
+class SlackBot
   include SlackBot::Environment
 
   attr_reader :attributes, :target_channel
