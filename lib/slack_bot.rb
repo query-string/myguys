@@ -4,10 +4,13 @@ require "slack_bot/public_listener"
 require "slack_bot/private_listener"
 require "slack_bot/message_parser"
 
+# @TODO: Extract client related methods to client class
+# @TODO: User liteners as a message cleaners
+# @TODO: Message parser should only parse message, but not define a destination (?)
+
 class SlackBot
   include SlackBot::Environment
-
-  attr_reader :attributes, :target_channel
+  attr_reader :attributes, :data
 
   def initialize(target_channel = "general")
     @target_channel = target_channel
@@ -15,12 +18,14 @@ class SlackBot
 
   def start
     client.on :message do |data|
-      @data = data
+      @data = data.to_hashugar
       populate_attributes
-      send("listen_#{message_type}") if client_data.type == "message"
+      listen
     end
     client.start
   end
+
+  private
 
   def bot_user
     client_response.self
@@ -35,10 +40,8 @@ class SlackBot
   end
 
   def message_type
-    channel_ids.include?(client_data.channel) ? "public" : "private"
+    channel_ids.include?(data.channel) ? "public" : "private"
   end
-
-  private
 
   def client
     @client ||= Slack.realtime
@@ -48,26 +51,23 @@ class SlackBot
     @client_response ||= client.response.to_hashugar
   end
 
-  def client_data
-    @data.to_hashugar
-  end
-
   def populate_attributes
     @attributes = {
       client: client,
       response: client_response,
-      data: client_data,
+      data: data,
       bot_user: bot_user,
       im_list: im_list,
       target_channel: target_channel
     }.to_hashugar
   end
 
-  def listen_public
-    SlackBot::PublicListener.new @attributes
-  end
-
-  def listen_private
-    SlackBot::PrivateListener.new @attributes
+  def listen
+    case data.type
+      when "message"
+        SlackBot::PublicListener.new @attributes
+      else
+        SlackBot::PrivateListener.new @attributes
+      end
   end
 end
