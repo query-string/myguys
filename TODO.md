@@ -17,6 +17,7 @@
         - [x] Extact logic from rake to class
         - [x] me/us command parser
         - [ ] Case insensitive `Show me ...`
+        - [ ] Handle cases whe more than on user requesed
         - [ ] Handle cases when no one of mentioned users in hg at the moment
     - [ ] Group photo (@higuys: show me/us @channel)
 - [ ] Bot PM: (show me @alex)

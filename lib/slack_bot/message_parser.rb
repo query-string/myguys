@@ -23,12 +23,12 @@ class SlackBot
             body: hg_slack_users
           }
         else
-          { type: :message,
+          { type: :notice,
             body: no_users_presented
           }
         end
       else
-        { type: :message,
+        { type: :notice,
           body: no_message_defined
         }
       end

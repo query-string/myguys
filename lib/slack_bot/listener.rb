@@ -17,7 +17,7 @@ class SlackBot
 
     def listen
       case parser_response[:type]
-        when :message
+        when :notice
           SlackPost.execute parser_response[:destination], parser_response[:body]
         when :users
           hg_users = parser_response[:body].select { |user| user[:type] == :hg }
