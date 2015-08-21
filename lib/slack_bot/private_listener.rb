@@ -4,7 +4,7 @@ class SlackBot
 
     def initialize(attributes)
       @sender_user = attributes.data.user
-      @im_list     = attributes.im_list
+      @im_list     = attributes.client.ims
 
       super
     end

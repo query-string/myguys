@@ -11,9 +11,9 @@ class SlackBot
       @default_destination = destination
       # @TODO: Too many foreign attributes, better change it to native options
       @sender_user         = attributes.data.user
-      @channel_users       = attributes.response.users
+      @channel_users       = attributes.client.response.users
+      @im_list             = attributes.client.ims
       @target_channel      = attributes.target_channel
-      @im_list             = attributes.im_list
     end
 
     def response

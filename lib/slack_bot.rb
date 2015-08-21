@@ -34,17 +34,14 @@ class SlackBot
   def populate_attributes
     @attributes = {
       client: realtime,
-      response: realtime.response,
       data: data,
-      bot_user: realtime.bot,
-      im_list: realtime.ims,
       target_channel: target_channel
     }.to_hashugar
   end
 
   def listen
-    case data.type
-      when "message"
+    case message_type
+      when "public"
         SlackBot::PublicListener.new @attributes
       else
         SlackBot::PrivateListener.new @attributes

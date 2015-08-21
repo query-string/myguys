@@ -19,7 +19,7 @@ class SlackBot
     end
 
     def channel_ids
-      client_response.channels.map(&:id)
+      response.channels.map(&:id)
     end
   end
 end

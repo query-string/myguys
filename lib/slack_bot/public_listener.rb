@@ -6,7 +6,7 @@ class SlackBot
     attr_reader :response, :target_channel
 
     def initialize(attributes)
-      @response       = attributes.response
+      @response       = attributes.client.response
       @target_channel = attributes.target_channel
 
       super

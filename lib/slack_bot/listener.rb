@@ -5,10 +5,10 @@ class SlackBot
 
     def initialize(attributes)
       @attributes   = attributes
+      @bot_user     = attributes.client.bot
       @data         = attributes.data
       @text         = attributes.data.text
       @channel      = attributes.data.channel
-      @bot_user     = attributes.bot_user
 
       listen if proper_target_selected?
     end
