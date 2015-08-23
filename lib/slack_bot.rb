@@ -30,8 +30,8 @@ class SlackBot
 
   def listen(listener_type)
     "SlackBot::#{listener_type}Listener".constantize.new ({
-      client: realtime,
-      data: message.data,
+      realtime: realtime,
+      message: message,
       target_channel: target
     }.to_hashugar)
   end

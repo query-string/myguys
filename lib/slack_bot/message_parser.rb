@@ -10,9 +10,9 @@ class SlackBot
       @message             = message
       @default_destination = destination
       # @TODO: Too many foreign attributes, better change it to native options
-      @sender_user         = attributes.data.user
-      @channel_users       = attributes.client.response.users
-      @im_list             = attributes.client.ims
+      @sender_user         = attributes.message.data.user
+      @channel_users       = attributes.realtime.response.users
+      @im_list             = attributes.realtime.ims
       @target_channel      = attributes.target_channel
     end
 

@@ -18,5 +18,17 @@ class SlackBot
     def type
       realtime.channel_ids.include?(data.channel) ? "Public" : "Private"
     end
+
+    def sender_user
+      data.user
+    end
+
+    def sender_user_im
+      realtime.ims.find { |im| im.user == sender_user }
+    end
+
+    def proper_for_private?
+      data.channel == sender_user_im.try(:id)
+    end
   end
 end
