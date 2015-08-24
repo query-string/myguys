@@ -1,12 +1,13 @@
 class SlackBot
   class Listener
     include SlackBot::Environment
-    attr_reader :attributes, :realtime, :message, :bot_user, :text, :channel
+    attr_reader :attributes, :realtime, :message, :target, :bot_user, :text, :channel
 
     def initialize(attributes)
       @attributes   = attributes
       @realtime     = attributes.realtime
       @message      = attributes.message
+      @target       = attributes.target
 
       @bot_user     = attributes.realtime.bot
       @text         = attributes.message.data.text
@@ -18,12 +19,12 @@ class SlackBot
     private
 
     def listen
-      case parser_response[:type]
+      case parser[:type]
         when :notice
-          SlackPost.execute parser_response[:destination], parser_response[:body]
+          SlackPost.execute parser[:destination], parser[:body]
         when :users
-          hg_users = parser_response[:body].select { |user| user[:type] == :hg }
-          SlackPostPhoto.execute parser_response[:destination], hg_users.first[:user].last_image if hg_users.size > 0
+          hg_users = parser[:body].select { |user| user[:type] == :hg }
+          SlackPostPhoto.execute parser[:destination], hg_users.first[:user].last_image if hg_users.size > 0
         end
     end
 

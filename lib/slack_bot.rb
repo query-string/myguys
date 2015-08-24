@@ -32,7 +32,7 @@ class SlackBot
     "SlackBot::#{listener_type}Listener".constantize.new ({
       realtime: realtime,
       message: message,
-      target_channel: target
+      target: target
     }.to_hashugar)
   end
 end

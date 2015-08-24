@@ -3,14 +3,18 @@ class SlackBot
   # recipient_user - a message recipient, WHOM has been mentioned at the first part of data.text (i.e. @higuys: or whatever)
   # bot_user       - an application user (application bot)
   class PublicListener < Listener
-    attr_reader :response, :target_channel
-
-    def initialize(attributes)
-      @response       = attributes.realtime.response
-      @target_channel = attributes.target_channel
-
-      super
+    def parser
+      SlackBot::MessageParser.new(message, "##{target}", attributes).response
     end
+
+    def proper_target_selected?
+      # If channel is a target channel
+      # If first part of messge – is a username
+      # If requested user id is equal to bot user id
+      channel == target_channel_id && recipient_user =~ regex && recipient_user_id == bot_user.id
+    end
+
+    private
 
     def splitted_text
       text.split(":")
@@ -29,20 +33,7 @@ class SlackBot
     end
 
     def target_channel_id
-      response.channels.find { |channel| channel.name == target_channel }.id
-    end
-
-    private
-
-    def proper_target_selected?
-      # If channel is target channel
-      # If first part of messge – is username
-      # If requested user id is equal to bot user id
-      channel == target_channel_id && recipient_user =~ regex && recipient_user_id == bot_user.id
-    end
-
-    def parser_response
-      SlackBot::MessageParser.new(message, "##{target_channel}", attributes).response
+      realtime.find_channel(target).try(:id)
     end
   end
 end

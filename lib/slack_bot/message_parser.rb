@@ -4,7 +4,7 @@ class SlackBot
   # mentioned_users - an array of users mentioned in message
   class MessageParser
     include SlackBot::Environment
-    attr_reader :message, :default_destination, :sender_user, :channel_users, :target_channel, :im_list
+    attr_reader :message, :default_destination, :sender_user, :channel_users, :target, :im_list
 
     def initialize(message, destination, attributes)
       @message             = message
@@ -13,7 +13,7 @@ class SlackBot
       @sender_user         = attributes.message.data.user
       @channel_users       = attributes.realtime.response.users
       @im_list             = attributes.realtime.ims
-      @target_channel      = attributes.target_channel
+      @target              = attributes.target
     end
 
     def response
@@ -52,7 +52,7 @@ class SlackBot
     def catch_destination
       substr = message.match(/show me|show us/)
       if substr
-        substr.to_s.match(/me/) ? sender_user_im : "##{target_channel}"
+        substr.to_s.match(/me/) ? sender_user_im : "##{target}"
       else
         default_destination
       end

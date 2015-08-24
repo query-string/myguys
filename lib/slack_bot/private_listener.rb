@@ -1,6 +1,6 @@
 class SlackBot
   class PrivateListener < Listener
-    def parser_response
+    def parser
       SlackBot::MessageParser.new(text, channel, attributes).response
     end
 

@@ -21,5 +21,9 @@ class SlackBot
     def channel_ids
       response.channels.map(&:id)
     end
+
+    def find_channel(channel_name)
+      response.channels.find { |channel| channel.name == channel_name }
+    end
   end
 end
