@@ -1,10 +1,13 @@
 class SlackBot
-  # sender_user    - a real (most likely) person, WHO sends the message
-  # recipient_user - a message recipient, WHOM has been mentioned at the first part of data.text (i.e. @higuys: or whatever)
-  # bot_user       - an application user (application bot)
-  class PublicListener < Listener
-    def parser
-      SlackBot::MessageParser.new(message, "##{target}", attributes).response
+  class PublicGate < Gate
+    include SlackBot::Environment
+
+    def gate_text
+      message
+    end
+
+    def gate_channel
+      "##{target}"
     end
 
     def proper_target_selected?
