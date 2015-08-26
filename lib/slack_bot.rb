@@ -31,7 +31,7 @@ class SlackBot
   def request_gate(gate_type)
     "SlackBot::#{gate_type}Gate".constantize.new ({
       realtime: realtime,
-      message: message,
+      realtime_message: message,
       target: target
     })
   end
