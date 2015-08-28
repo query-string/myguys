@@ -9,7 +9,7 @@ class SlackBot
     end
 
     def proper_target_selected?
-      message.proper_for_private?
+      realtime_message.proper_for_private?
     end
   end
 end
