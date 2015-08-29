@@ -17,12 +17,20 @@ class SlackBot
       @channel          = realtime_message.data.channel
     end
 
+    def gate_text
+      text
+    end
+
+    def gate_source
+      channel
+    end
+
     def coordinates
       if proper_target_selected?
-        {
-          text: gate_text,
-          channel: gate_channel
-        }
+        OpenStruct.new(
+          text:   gate_text,
+          source: gate_source
+        )
       end
     end
   end

@@ -2,7 +2,7 @@ class SlackBot
   # sender_user     - a real (most likely) person, WHO sends the message
   # channel_users   - a list of channel users brought by rtm.start response
   # mentioned_users - an array of users mentioned in message
-  class MessageParser
+  class Forwarder
     include SlackBot::Environment
     attr_reader :message, :default_destination, :sender_user, :channel_users, :target, :im_list
 

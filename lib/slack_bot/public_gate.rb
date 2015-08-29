@@ -6,7 +6,7 @@ class SlackBot
       message
     end
 
-    def gate_channel
+    def gate_source
       "##{target}"
     end
 

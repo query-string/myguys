@@ -4,7 +4,7 @@ require "slack_bot/realtime_message"
 require "slack_bot/gate"
 require "slack_bot/public_gate"
 require "slack_bot/private_gate"
-require "slack_bot/message_parser"
+require "slack_bot/forwarder"
 
 # @TODO: Use liteners as a message cleaners
 # @TODO: Message parser should only parse message, but not define a destination (?)
