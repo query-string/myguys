@@ -1,38 +1,47 @@
 require "slack_bot/environment"
 require "slack_bot/realtime"
 require "slack_bot/realtime_message"
-require "slack_bot/gate"
-require "slack_bot/public_gate"
-require "slack_bot/private_gate"
+require "slack_bot/filter"
+require "slack_bot/public_filter"
+require "slack_bot/private_filter"
 require "slack_bot/forwarder"
 
-# @TODO: Use liteners as a message cleaners
 # @TODO: Message parser should only parse message, but not define a destination (?)
 # @TODO: Remove environment
 
 class SlackBot
-  attr_reader :realtime, :message, :target, :gate
+  attr_reader :realtime, :message, :target, :filter, :forwarder
 
   def initialize(target = "general")
     @target   = target
     @realtime = SlackBot::Realtime.new
   end
 
+  def rtm_attributes
+    {
+      realtime: realtime,
+      realtime_message: message,
+      target: target
+    }
+  end
+
   def start
     @message = SlackBot::RealtimeMessage.new(realtime)
     @message.on do |type|
-       @gate = request_gate type
-       p gate.coordinates
+       @filter = request_filter type
+       if filter.references
+        @forwarder = request_forwarder.message
+       end
     end
   end
 
   private
 
-  def request_gate(gate_type)
-    "SlackBot::#{gate_type}Gate".constantize.new ({
-      realtime: realtime,
-      realtime_message: message,
-      target: target
-    })
+  def request_filter(filter_type)
+    "SlackBot::#{filter_type}Filter".constantize.new rtm_attributes
+  end
+
+  def request_forwarder
+    SlackBot::Forwarder.new filter.references.merge(rtm_attributes)
   end
 end

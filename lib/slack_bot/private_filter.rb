@@ -1,6 +1,6 @@
 class SlackBot
-  class PrivateGate < Gate
-    def proper_target_selected?
+  class PrivateFilter < Filter
+    def proper_target_defined?
       realtime_message.proper_for_private?
     end
   end

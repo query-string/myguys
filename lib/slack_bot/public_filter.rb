@@ -1,5 +1,5 @@
 class SlackBot
-  class PublicGate < Gate
+  class PublicFilter < Filter
     include SlackBot::Environment
 
     def gate_text
@@ -10,11 +10,11 @@ class SlackBot
       "##{target}"
     end
 
-    def proper_target_selected?
+    def proper_target_defined?
       # If channel is a target channel
       # If first part of messge – is a username
       # If requested user id is equal to bot user id
-      channel == target_channel_id && recipient_user =~ regex && recipient_user_id == bot_user.id
+      source == target_channel_id && recipient_user =~ regex && recipient_user_id == bot_user.id
     end
 
     private
