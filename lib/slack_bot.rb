@@ -30,7 +30,10 @@ class SlackBot
     @message.on do |type|
        @filter = request_filter type
        if filter.references
-        @forwarder = request_forwarder.message
+          @forwarder = request_forwarder
+          p @forwarder.destination
+          p @forwarder.mark
+          p @forwarder.message
        end
     end
   end

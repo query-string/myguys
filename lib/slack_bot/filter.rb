@@ -15,7 +15,7 @@ class SlackBot
       @target           = attributes.fetch(:target)
 
       @text             = realtime_message.data.text
-      @channel          = realtime_message.data.channel
+      @source           = realtime_message.data.channel
       @bot_user         = realtime.bot
     end
 
