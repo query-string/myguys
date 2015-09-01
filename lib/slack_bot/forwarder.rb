@@ -34,6 +34,13 @@ class SlackBot
       realtime_message.sender_user_im.id
     end
 
+    def mentioned_users
+      mentioned_user_ids.map do |user|
+        team_user = realtime.team_user_by_id user
+        team_user ? team_user.name : user
+      end
+    end
+
     private
 
     def catch_destination
@@ -43,6 +50,10 @@ class SlackBot
       else
         source
       end
+    end
+
+    def mentioned_user_ids
+      text.scan(regex).flatten
     end
   end
 end

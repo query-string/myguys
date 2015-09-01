@@ -34,6 +34,7 @@ class SlackBot
           p @forwarder.destination
           p @forwarder.mark
           p @forwarder.message
+          p @forwarder.mentioned_users
        end
     end
   end
