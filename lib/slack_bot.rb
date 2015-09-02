@@ -4,6 +4,7 @@ require "slack_bot/realtime_message"
 require "slack_bot/filter"
 require "slack_bot/public_filter"
 require "slack_bot/private_filter"
+require "slack_bot/forwarder_powerball"
 require "slack_bot/forwarder"
 
 # @TODO: Message parser should only parse message, but not define a destination (?)
@@ -32,7 +33,7 @@ class SlackBot
        if filter.references
           @forwarder = request_forwarder
           p @forwarder.destination
-          p @forwarder.mark
+          p @forwarder.flag
           p @forwarder.message
           p @forwarder.mentioned_users
        end

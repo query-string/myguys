@@ -9,6 +9,8 @@ class SlackBot
     # channel_users   - a list of channel users brought by rtm.start response
     # mentioned_users - an array of users mentioned in message
     include SlackBot::Environment
+    include SlackBot::Forwarder::Powerball
+
     attr_reader :attributes, :realtime, :realtime_message, :target, :text, :source
 
     def initialize(attributes)
@@ -20,14 +22,8 @@ class SlackBot
       @source           = attributes.fetch(:source)
     end
 
-    def mark
-    end
-
     def destination
       text.present? ? catch_destination : source
-    end
-
-    def message
     end
 
     def sender_user_id
@@ -42,6 +38,10 @@ class SlackBot
     end
 
     private
+
+    def method_missing(method)
+      powerball method.to_sym if POWERBALL_KEYS.include?(method.to_sym)
+    end
 
     def catch_destination
       substr = text.match(/show me|show us/)
