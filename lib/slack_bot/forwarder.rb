@@ -35,6 +35,13 @@ class SlackBot
       end
     end
 
+    def mentioned_users_with_references
+      mentioned_users.map do |slack_user|
+        local_user = User.with_nickname(slack_user).by_the_latest_photo.first
+        local_user ? {found_in: :local, user: local_user} : {found_in: :slack, user: slack_user}
+      end
+    end
+
     private
 
     def method_missing(method)
