@@ -5,8 +5,6 @@ class SlackBot
   class Forwarder
     # target          – public channel which listens by default (usually #general)
     # source          – source channel from where message comes ATM (public channel OR PM)
-    # sender_user     - a real (most likely) person, WHO sends the message
-    # channel_users   - a list of channel users brought by rtm.start response
     # mentioned_users - an array of users mentioned in message
     include SlackBot::Environment
     include SlackBot::Forwarder::Powerball

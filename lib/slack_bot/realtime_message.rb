@@ -23,6 +23,10 @@ class SlackBot
       data.user
     end
 
+    def sender_user_name
+      realtime.team_user_by_id(sender_user).name
+    end
+
     def sender_user_im
       realtime.ims.find { |im| im.user == sender_user }
     end
