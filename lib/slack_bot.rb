@@ -32,10 +32,6 @@ class SlackBot
        @filter = request_filter type
        if filter.references
           @forwarder = request_forwarder
-          p @forwarder.destination
-          p @forwarder.flag
-          p @forwarder.message
-          p @forwarder.mentioned_users
        end
     end
   end

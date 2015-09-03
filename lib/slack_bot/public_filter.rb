@@ -24,7 +24,7 @@ class SlackBot
     end
 
     def message
-      splitted_text[1].strip
+      splitted_text[1].to_s.strip
     end
 
     def recipient_user
