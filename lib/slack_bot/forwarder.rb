@@ -42,6 +42,14 @@ class SlackBot
       end
     end
 
+    def slack_users
+      mentioned_users_with_references.select { |user| user[:found_in] == :slack }
+    end
+
+    def local_users
+      mentioned_users_with_references.select { |user| user[:found_in] == :local }
+    end
+
     private
 
     def method_missing(method)

@@ -32,6 +32,7 @@ class SlackBot
        @filter = request_filter type
        if filter.references
           @forwarder = request_forwarder
+          reply
        end
     end
   end
@@ -44,5 +45,14 @@ class SlackBot
 
   def request_forwarder
     SlackBot::Forwarder.new filter.references.merge(rtm_attributes)
+  end
+
+  def reply
+    case forwarder.flag
+      when :notice
+        SlackPost.execute forwarder.destination, forwarder.body
+      when :users
+        SlackPostPhoto.execute forwarder.destination, forwarder.local_users.first[:user].last_image if forwarder.local_users.any?
+      end
   end
 end
