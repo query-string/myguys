@@ -6,5 +6,10 @@ module Api
 
       respond_with_success code: "OK"
     end
+
+    def slash_command
+      lumos params
+      render({text: "Ololo!"})
+    end
   end
 end

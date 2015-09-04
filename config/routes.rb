@@ -31,7 +31,9 @@ Rails.application.routes.draw do
     post      '/wall/photos',          to: 'walls#create_photo'
     get       '/wall',                 to: 'walls#show'
     put       '/wall/status',          to: 'walls#status', as: 'wall_update_status'
-    resources :slack,                  only: %i(create)
+    #resources :slack,                  only: %i(create)
+    post      'slack',                 to: 'slack#create'
+    post      'slack/slash-command',   to: 'slack#slash_command'
   end
 
   root to: 'static#homepage'
