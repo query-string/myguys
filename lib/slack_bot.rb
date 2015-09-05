@@ -18,15 +18,12 @@ class SlackBot
     @realtime = SlackBot::Realtime.new
   end
 
-  def rtm_attributes
-    {
-      realtime: realtime,
-      realtime_message: message,
-      target: target
-    }
+  def start
+    listen_chat
+    listen_queue
   end
 
-  def start
+  def listen_chat
     @message = SlackBot::RealtimeMessage.new(realtime)
     @message.on do |type|
        @filter = request_filter type
@@ -37,7 +34,18 @@ class SlackBot
     end
   end
 
+  def listen_queue
+  end
+
   private
+
+  def rtm_attributes
+    {
+      realtime: realtime,
+      realtime_message: message,
+      target: target
+    }
+  end
 
   def request_filter(filter_type)
     "SlackBot::#{filter_type}Filter".constantize.new rtm_attributes
