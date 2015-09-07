@@ -1,4 +1,5 @@
 require "slack_bot/environment"
+require "slack_bot/slash_command_listener"
 require "slack_bot/realtime"
 require "slack_bot/realtime_message"
 require "slack_bot/filter"
@@ -35,6 +36,7 @@ class SlackBot
   end
 
   def listen_queue
+    Wisper.subscribe(SlackBot::SlashCommandListener.new)
   end
 
   private
