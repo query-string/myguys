@@ -1,6 +1,6 @@
 class SlackBot
   class SlashCommandListener
-    def perform(params)
+    def command_fired(params)
       p '###'
       p params
       p '###'

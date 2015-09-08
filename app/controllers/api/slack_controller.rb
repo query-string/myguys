@@ -10,7 +10,7 @@ module Api
     end
 
     def slash_command
-      publish(:perform, params)
+      publish(:command_fired, params)
 
       render({text: "Ololo!"})
     end

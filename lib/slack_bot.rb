@@ -20,8 +20,8 @@ class SlackBot
   end
 
   def start
-    listen_chat
     listen_queue
+    listen_chat
   end
 
   def listen_chat
@@ -36,7 +36,7 @@ class SlackBot
   end
 
   def listen_queue
-    Wisper.subscribe(SlackBot::SlashCommandListener.new)
+    p Wisper.subscribe(SlackBot::SlashCommandListener.new)
   end
 
   private
