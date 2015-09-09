@@ -1,7 +1,5 @@
 module Api
   class SlackController < BaseController
-    include Wisper::Publisher
-
     def create
       image = Image.find(params[:image_id])
       SlackPostPhoto.execute "#general", image
@@ -10,9 +8,8 @@ module Api
     end
 
     def slash_command
-      publish(:command_fired, params)
-
-      render({text: "Ololo!"})
+      p params
+      render({text: "Processing..."})
     end
   end
 end

@@ -9,6 +9,7 @@ class SlackBot
 
     def on(&block)
       client.on :message do |data|
+        p data
         @data = data.to_hashugar
         block.call type if block_given?
       end

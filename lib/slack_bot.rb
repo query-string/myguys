@@ -1,5 +1,4 @@
 require "slack_bot/environment"
-require "slack_bot/slash_command_listener"
 require "slack_bot/realtime"
 require "slack_bot/realtime_message"
 require "slack_bot/filter"
@@ -8,7 +7,8 @@ require "slack_bot/private_filter"
 require "slack_bot/forwarder_powerball"
 require "slack_bot/forwarder"
 
-# @TODO: Message parser should only parse message, but not define a destination (?)
+# @TODO: Send messages other the realtime instance
+# @TODO: Attributes :realtime and :realtime_message might be a part of Forwarder class
 # @TODO: Remove environment
 
 class SlackBot
@@ -20,23 +20,18 @@ class SlackBot
   end
 
   def start
-    listen_queue
     listen_chat
   end
 
   def listen_chat
     @message = SlackBot::RealtimeMessage.new(realtime)
-    @message.on do |type|
-       @filter = request_filter type
+    @message.on do |channel_type|
+       @filter = request_filter channel_type
        if filter.references
           @forwarder = request_forwarder
           reply
        end
     end
-  end
-
-  def listen_queue
-    p Wisper.subscribe(SlackBot::SlashCommandListener.new)
   end
 
   private
