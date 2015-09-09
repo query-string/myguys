@@ -20,10 +20,6 @@ class SlackBot
   end
 
   def start
-    listen_chat
-  end
-
-  def listen_chat
     @message = SlackBot::RealtimeMessage.new(realtime)
     @message.on do |channel_type|
        @filter = request_filter channel_type
@@ -55,8 +51,9 @@ class SlackBot
   def reply
     case forwarder.flag
       when :notice
-        SlackPost.execute forwarder.destination, forwarder.body
+        SlackPost.execute forwarder.destination, forwarder.message
       when :users
+        # @TODO: Extract to the Forwarder class as well
         SlackPostPhoto.execute forwarder.destination, forwarder.local_users.first[:user].last_image if forwarder.local_users.any?
       end
   end
