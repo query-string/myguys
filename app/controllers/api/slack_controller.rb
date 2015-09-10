@@ -8,7 +8,6 @@ module Api
     end
 
     def slash_command
-      # @TODO: Validate message, post it as DM to bot, clean it up
       p params
       render({text: "Processing..."})
     end
