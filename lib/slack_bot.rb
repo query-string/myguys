@@ -11,6 +11,9 @@ require "slack_bot/forwarder"
 # @TODO: Attributes :realtime and :realtime_message might be a part of Forwarder class
 # @TODO: Remove environment
 
+CHANNEL       = "slack_bot"
+RESET_CHANNEL = "pg_restart"
+
 class SlackBot
   attr_reader :realtime, :message, :target, :filter, :forwarder
 
@@ -20,6 +23,11 @@ class SlackBot
   end
 
   def start
+    listen_bus
+    listen_chat
+  end
+
+  def listen_chat
     @message = SlackBot::RealtimeMessage.new(realtime)
     @message.on do |channel_type|
        @filter = request_filter channel_type
@@ -27,6 +35,28 @@ class SlackBot
           @forwarder = request_forwarder
           reply
        end
+    end
+  end
+
+  def listen_bus
+    ActiveRecord::Base.connection_pool.with_connection do |connection|
+      conn = connection.instance_variable_get(:@connection)
+      begin
+        conn.async_exec "LISTEN #{RESET_CHANNEL}"
+        conn.async_exec "LISTEN #{CHANNEL}"
+        catch(:break_loop) do
+          loop do
+            conn.wait_for_notify do |channel, pid, payload|
+              p [channel, payload]
+              throw :break_loop if channel == RESET_CHANNEL
+            end
+          end
+        end
+      rescue => error
+        p [:error, error]
+      ensure
+        conn.async_exec "UNLISTEN *"
+      end
     end
   end
 
