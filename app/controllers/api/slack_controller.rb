@@ -8,8 +8,16 @@ module Api
     end
 
     def slash_command
-      p params
-      render({text: "Processing..."})
+      payload = {
+        channel_id:   params[:channel_id],
+        channel_name: params[:channel_name],
+        user_id:      params[:user_id],
+        user_name:    params[:user_name],
+        text:         params[:text]
+      }
+      ActiveRecord::Base.connection.execute %Q(NOTIFY "slack_bot", '#{payload}') if params[:token].present?
+
+      render :none
     end
   end
 end
