@@ -15,7 +15,7 @@ CHANNEL       = "slack_bot"
 RESET_CHANNEL = "pg_restart"
 
 class SlackBot
-  attr_reader :realtime, :message, :target, :filter, :forwarder
+  attr_reader :realtime, :message, :target
 
   def initialize(target = "general")
     @target   = target
@@ -23,17 +23,17 @@ class SlackBot
   end
 
   def start
-    listen_bus
+    #listen_bus
     listen_chat
   end
 
   def listen_chat
     @message = SlackBot::RealtimeMessage.new(realtime)
     @message.on do |channel_type|
-       @filter = request_filter channel_type
+       filter = "SlackBot::#{channel_type}Filter".constantize.new rtm_attributes
        if filter.references
-          @forwarder = request_forwarder
-          reply
+          forwarder = SlackBot::Forwarder.new filter.references.merge(rtm_attributes)
+          reply forwarder
        end
     end
   end
@@ -65,21 +65,13 @@ class SlackBot
 
   def rtm_attributes
     {
-      realtime: realtime,
+      realtime:         realtime,
       realtime_message: message,
-      target: target
+      target:           target
     }
   end
 
-  def request_filter(filter_type)
-    "SlackBot::#{filter_type}Filter".constantize.new rtm_attributes
-  end
-
-  def request_forwarder
-    SlackBot::Forwarder.new filter.references.merge(rtm_attributes)
-  end
-
-  def reply
+  def reply(forwarder)
     case forwarder.flag
       when :notice
         SlackPost.execute forwarder.destination, forwarder.message
