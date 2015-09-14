@@ -4,18 +4,16 @@ class SlackBot
     # sender_user    - a real (most likely) person, WHO sends the message
     # recipient_user - a message recipient, WHOM has been mentioned at the first part of data.text (i.e. @higuys: or whatever)
     # bot_user       - an application user (application bot)
-    attr_reader :attributes, :realtime, :realtime_message, :target,
-                :text, :source, :bot_user
+    attr_reader :attributes, :realtime, :text, :source, :sender_user_im, :target, :bot_user
 
     def initialize(attributes)
       @attributes       = attributes
 
       @realtime         = attributes.fetch(:realtime)
-      @realtime_message = attributes.fetch(:realtime_message)
       @target           = attributes.fetch(:target)
-
-      @text             = realtime_message.data.text
-      @source           = realtime_message.data.channel
+      @text             = attributes.fetch(:text)
+      @source           = attributes.fetch(:source)
+      @sender_user_im   = attributes.fetch(:sender_user_im)
       @bot_user         = realtime.bot
     end
 

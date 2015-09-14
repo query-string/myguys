@@ -1,7 +1,7 @@
 class SlackBot
   class PrivateFilter < Filter
     def proper_target_defined?
-      realtime_message.proper_for_private?
+      source == sender_user_im.try(:id)
     end
   end
 end

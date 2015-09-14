@@ -30,7 +30,13 @@ class SlackBot
   def listen_chat
     @message = SlackBot::RealtimeMessage.new(realtime)
     @message.on do |channel_type|
-       filter = "SlackBot::#{channel_type}Filter".constantize.new rtm_attributes
+      filter = "SlackBot::#{channel_type}Filter".constantize.new(
+        realtime:       realtime,
+        text:           message.data.text,
+        source:         message.data.channel,
+        sender_user_im: message.sender_user_im,
+        target:         target
+      )
        if filter.references
           forwarder = SlackBot::Forwarder.new filter.references.merge(rtm_attributes)
           reply forwarder
