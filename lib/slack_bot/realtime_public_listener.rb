@@ -1,5 +1,5 @@
 class SlackBot
-  class PublicFilter < Filter
+  class RealtimePublicListener < RealtimeListener
     include SlackBot::Environment
 
     def gate_text

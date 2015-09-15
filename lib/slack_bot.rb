@@ -1,9 +1,9 @@
 require "slack_bot/environment"
 require "slack_bot/realtime"
 require "slack_bot/realtime_message"
-require "slack_bot/filter"
-require "slack_bot/public_filter"
-require "slack_bot/private_filter"
+require "slack_bot/realtime_listener"
+require "slack_bot/realtime_public_listener"
+require "slack_bot/realtime_private_listener"
 require "slack_bot/forwarder_powerball"
 require "slack_bot/forwarder"
 
@@ -25,20 +25,21 @@ class SlackBot
   def start
     #listen_bus
     listen_chat
+    p "Listening..."
   end
 
   def listen_chat
     @message = SlackBot::RealtimeMessage.new(realtime)
     @message.on do |channel_type|
-      filter = "SlackBot::#{channel_type}Filter".constantize.new(
+      listener = "SlackBot::Realtime#{channel_type}Listener".constantize.new(
         realtime:       realtime,
         text:           message.data.text,
         source:         message.data.channel,
         sender_user_im: message.sender_user_im,
         target:         target
       )
-       if filter.references
-          forwarder = SlackBot::Forwarder.new filter.references.merge(rtm_attributes)
+       if listener.references
+          forwarder = SlackBot::Forwarder.new listener.references.merge(rtm_attributes)
           reply forwarder
        end
     end

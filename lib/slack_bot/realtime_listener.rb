@@ -1,6 +1,6 @@
 class SlackBot
   # Filters rtm messages and gives future references if proper target defined
-  class Filter
+  class RealtimeListener
     # sender_user    - a real (most likely) person, WHO sends the message
     # recipient_user - a message recipient, WHOM has been mentioned at the first part of data.text (i.e. @higuys: or whatever)
     # bot_user       - an application user (application bot)
