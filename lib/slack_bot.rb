@@ -25,10 +25,10 @@ class SlackBot
   def start
     #listen_bus
     listen_chat
-    p "Listening..."
   end
 
   def listen_chat
+    lumos "Listening chat...", position: :bottom, delimiter: "❄"
     @message = SlackBot::RealtimeMessage.new(realtime)
     @message.on do |channel_type|
       listener = "SlackBot::Realtime#{channel_type}Listener".constantize.new(
@@ -38,8 +38,13 @@ class SlackBot
         sender_user_im: message.sender_user_im,
         target:         target
       )
-       if listener.references
-          forwarder = SlackBot::Forwarder.new listener.references.merge(rtm_attributes)
+       if listener.proper_target_defined?
+          forwarder = SlackBot::Forwarder.new(
+            rtm_attributes.merge({
+              text: listener.listener_text,
+              source: listener.listener_source
+            })
+          )
           reply forwarder
        end
     end

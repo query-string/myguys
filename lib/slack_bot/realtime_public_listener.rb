@@ -2,11 +2,11 @@ class SlackBot
   class RealtimePublicListener < RealtimeListener
     include SlackBot::Environment
 
-    def gate_text
+    def listener_text
       message
     end
 
-    def gate_source
+    def listener_source
       "##{target}"
     end
 
