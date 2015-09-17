@@ -1,6 +1,6 @@
 require "slack_bot/environment"
 require "slack_bot/realtime"
-require "slack_bot/realtime_message"
+require "slack_bot/realtime_event"
 require "slack_bot/realtime_listener"
 require "slack_bot/realtime_public_listener"
 require "slack_bot/realtime_private_listener"
@@ -15,7 +15,7 @@ CHANNEL       = "slack_bot"
 RESET_CHANNEL = "pg_restart"
 
 class SlackBot
-  attr_reader :realtime, :message, :target
+  attr_reader :realtime, :realtime_event, :target
 
   def initialize(target = "general")
     @target   = target
@@ -29,13 +29,13 @@ class SlackBot
 
   def listen_chat
     lumos "Listening chat...", position: :bottom, delimiter: "❄"
-    @message = SlackBot::RealtimeMessage.new(realtime)
-    @message.on do |channel_type|
+    @realtime_event = SlackBot::RealtimeEvent.new(realtime)
+    @realtime_event.on do |channel_type|
       listener = "SlackBot::Realtime#{channel_type}Listener".constantize.new(
         realtime:       realtime,
-        text:           message.data.text,
-        source:         message.data.channel,
-        sender_user_im: message.sender_user_im,
+        text:           realtime_event.data.text,
+        source:         realtime_event.data.channel,
+        sender_user_im: realtime_event.sender_user_im,
         target:         target
       )
        if listener.proper_target_defined?
@@ -78,7 +78,7 @@ class SlackBot
   def rtm_attributes
     {
       realtime:         realtime,
-      realtime_message: message,
+      realtime_message: realtime_event,
       target:           target
     }
   end
@@ -86,7 +86,7 @@ class SlackBot
   def reply(forwarder)
     case forwarder.flag
       when :notice
-        SlackPost.execute forwarder.destination, forwarder.message
+        SlackPost.execute forwarder.destination, forwarder.event
       when :users
         # @TODO: Extract to the Forwarder class as well
         SlackPostPhoto.execute forwarder.destination, forwarder.local_users.first[:user].last_image if forwarder.local_users.any?

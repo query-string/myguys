@@ -1,5 +1,5 @@
 class SlackBot
-  class RealtimeMessage
+  class RealtimeEvent
     attr_reader :realtime, :client, :data
 
     def initialize(realtime)
