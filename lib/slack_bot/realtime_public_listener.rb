@@ -2,11 +2,11 @@ class SlackBot
   class RealtimePublicListener < RealtimeListener
     include SlackBot::Environment
 
-    def listener_text
-      message
+    def message
+      splitted_text[1].to_s.strip
     end
 
-    def listener_source
+    def source
       "##{target}"
     end
 
@@ -14,7 +14,7 @@ class SlackBot
       # If channel is a target channel
       # If first part of messge – is a username
       # If requested user id is equal to bot user id
-      source == target_channel_id && recipient_user =~ regex && recipient_user_id == bot_user.id
+      channel == target_channel_id && recipient_user =~ regex && recipient_user_id == bot_user.id
     end
 
     private
@@ -23,9 +23,6 @@ class SlackBot
       text.split(":")
     end
 
-    def message
-      splitted_text[1].to_s.strip
-    end
 
     def recipient_user
       splitted_text[0]

@@ -9,19 +9,19 @@ class SlackBot
     include SlackBot::Environment
     include SlackBot::Forwarder::Powerball
 
-    attr_reader :attributes, :realtime, :realtime_message, :target, :text, :source
+    attr_reader :attributes, :realtime, :realtime_message, :target, :message, :source
 
     def initialize(attributes)
       @attributes       = attributes
 
       @realtime         = attributes.fetch(:realtime)
       @realtime_message = attributes.fetch(:realtime_message)
-      @text             = attributes.fetch(:text)
+      @message          = attributes.fetch(:message)
       @source           = attributes.fetch(:source)
     end
 
     def destination
-      text.present? ? catch_destination : source
+      message.present? ? catch_destination : source
     end
 
     def sender_user_id
@@ -57,7 +57,7 @@ class SlackBot
     end
 
     def catch_destination
-      substr = text.match(/show me|show us/)
+      substr = message.match(/show me|show us/)
       if substr
         substr.to_s.match(/me/) ? sender_user_id : "##{target}"
       else
@@ -66,7 +66,7 @@ class SlackBot
     end
 
     def mentioned_user_ids
-      text.scan(regex).flatten
+      message.scan(regex).flatten
     end
   end
 end

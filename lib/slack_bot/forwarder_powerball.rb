@@ -8,7 +8,7 @@ class SlackBot
       end
 
       def powerball(attr)
-        response = if text.present?
+        response = if message.present?
           mentioned_user_ids.any? ? [:users, mentioned_users_with_references] : [:notice, powerball_notice_empty]
         else
           [:notice, powerball_notice_nousers]

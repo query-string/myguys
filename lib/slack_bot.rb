@@ -34,15 +34,15 @@ class SlackBot
       listener = "SlackBot::Realtime#{channel_type}Listener".constantize.new(
         realtime:       realtime,
         text:           realtime_event.data.text,
-        source:         realtime_event.data.channel,
+        channel:        realtime_event.data.channel,
         sender_user_im: realtime_event.sender_user_im,
         target:         target
       )
        if listener.proper_target_defined?
           forwarder = SlackBot::Forwarder.new(
             rtm_attributes.merge({
-              text: listener.listener_text,
-              source: listener.listener_source
+              message: listener.message,
+              source:  listener.source
             })
           )
           reply forwarder

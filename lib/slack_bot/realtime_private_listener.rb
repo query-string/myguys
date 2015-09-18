@@ -1,15 +1,15 @@
 class SlackBot
   class RealtimePrivateListener < RealtimeListener
-    def listener_text
+    def message
       text
     end
 
-    def listener_source
-      source
+    def source
+      channel
     end
 
     def proper_target_defined?
-      source == sender_user_im.try(:id)
+      channel == sender_user_im.try(:id)
     end
   end
 end
