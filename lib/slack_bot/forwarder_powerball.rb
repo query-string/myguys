@@ -4,7 +4,7 @@ class SlackBot
       POWERBALL_KEYS = %i(flag message)
 
       def sender_user_name
-        realtime_message.sender_user_name
+        sender.name
       end
 
       def powerball(attr)

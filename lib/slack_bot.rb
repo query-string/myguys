@@ -6,6 +6,7 @@ require "slack_bot/realtime_public_listener"
 require "slack_bot/realtime_private_listener"
 require "slack_bot/forwarder_powerball"
 require "slack_bot/forwarder"
+require "slack_bot/sender"
 
 # @TODO: Send messages other the realtime instance
 # @TODO: Attributes :realtime and :realtime_message might be a part of Forwarder class
@@ -31,20 +32,16 @@ class SlackBot
     lumos "Listening chat...", position: :bottom, delimiter: "❄"
     @realtime_event = SlackBot::RealtimeEvent.new(realtime)
     @realtime_event.on do |channel_type|
+      sender   = SlackBot::Sender.new(realtime: realtime, realtime_event: realtime_event)
       listener = "SlackBot::Realtime#{channel_type}Listener".constantize.new(
-        realtime:       realtime,
-        text:           realtime_event.data.text,
-        channel:        realtime_event.data.channel,
-        sender_user_im: realtime_event.sender_user_im,
-        target:         target
+        realtime: realtime,
+        text:     realtime_event.data.text,
+        channel:  realtime_event.data.channel,
+        sender:   sender,
+        target:   target
       )
        if listener.proper_target_defined?
-          forwarder = SlackBot::Forwarder.new(
-            rtm_attributes.merge({
-              message: listener.message,
-              source:  listener.source
-            })
-          )
+          forwarder = SlackBot::Forwarder.new(listener)
           reply forwarder
        end
     end
@@ -74,14 +71,6 @@ class SlackBot
   end
 
   private
-
-  def rtm_attributes
-    {
-      realtime:         realtime,
-      realtime_message: realtime_event,
-      target:           target
-    }
-  end
 
   def reply(forwarder)
     case forwarder.flag

@@ -9,15 +9,14 @@ class SlackBot
     include SlackBot::Environment
     include SlackBot::Forwarder::Powerball
 
-    attr_reader :attributes, :realtime, :realtime_message, :target, :message, :source
+    attr_reader :realtime, :target, :message, :source, :sender
 
-    def initialize(attributes)
-      @attributes       = attributes
-
-      @realtime         = attributes.fetch(:realtime)
-      @realtime_message = attributes.fetch(:realtime_message)
-      @message          = attributes.fetch(:message)
-      @source           = attributes.fetch(:source)
+    def initialize(listener)
+      @realtime = listener.realtime
+      @target   = listener.target
+      @message  = listener.message
+      @source   = listener.source
+      @sender   = listener.sender
     end
 
     def destination
@@ -25,7 +24,7 @@ class SlackBot
     end
 
     def sender_user_id
-      realtime_message.sender_user_im.id
+      sender.im.try(:id)
     end
 
     def mentioned_users
