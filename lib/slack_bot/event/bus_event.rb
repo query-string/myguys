@@ -1,33 +1,10 @@
 class SlackBot
-  class BusEvent
-    attr_reader :realtime, :mutex, :bgthread
-
+  class BusEvent < Event
     CHANNEL       = "slack_bot"
     RESET_CHANNEL = "pg_restart"
 
-    def initialize(attributes)
-      @realtime = attributes.fetch(:realtime)
-      @mutex    = Mutex.new
-      @bgthread = false
-
-      hello
-      start
-    end
-
-    def hello
-      lumos "Listening PG...", position: :bottom, delimiter: "❄"
-    end
-
-    def start
-      mutex.synchronize do
-        unless bgthread
-          bgthread = true
-          Thread.new do
-            connection
-            bgthread = false
-          end
-        end
-      end
+    def hello_message
+      "Listening PG..."
     end
 
     def connection

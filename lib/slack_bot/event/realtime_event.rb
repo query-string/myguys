@@ -5,6 +5,7 @@ class SlackBot
     def initialize(realtime)
       @realtime = realtime
       @client   = realtime.client
+
       hello
     end
 

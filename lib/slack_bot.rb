@@ -1,10 +1,13 @@
 require "slack_bot/environment"
 require "slack_bot/realtime"
-require "slack_bot/realtime_event"
+
+require "slack_bot/event/event"
+require "slack_bot/event/realtime_event"
+require "slack_bot/event/bus_event"
+
 require "slack_bot/realtime_listener"
 require "slack_bot/realtime_public_listener"
 require "slack_bot/realtime_private_listener"
-require "slack_bot/bus_event"
 require "slack_bot/forwarder_powerball"
 require "slack_bot/forwarder"
 require "slack_bot/sender"
