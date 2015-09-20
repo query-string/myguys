@@ -4,6 +4,7 @@ require "slack_bot/realtime_event"
 require "slack_bot/realtime_listener"
 require "slack_bot/realtime_public_listener"
 require "slack_bot/realtime_private_listener"
+require "slack_bot/pg_event"
 require "slack_bot/forwarder_powerball"
 require "slack_bot/forwarder"
 require "slack_bot/sender"
@@ -14,9 +15,6 @@ require "slack_bot/sender"
 # @TODO: Attributes :realtime and :realtime_message might be a part of Forwarder class
 # @TODO: Remove environment
 
-CHANNEL       = "slack_bot"
-RESET_CHANNEL = "pg_restart"
-
 class SlackBot
   attr_reader :realtime, :realtime_event, :target
 
@@ -26,8 +24,8 @@ class SlackBot
   end
 
   def start
-    #listen_bus
-    listen_chat
+    listen_bus
+    #listen_chat
   end
 
   def listen_chat
@@ -35,41 +33,25 @@ class SlackBot
     @realtime_event = SlackBot::RealtimeEvent.new(realtime)
     @realtime_event.on do |channel_type|
       listener = "SlackBot::Realtime#{channel_type}Listener".constantize.new(
-        realtime:       realtime,
-        realtime_event: realtime_event,
-        target:         target
+        realtime_attributes.merge(realtime_event: realtime_event)
       )
-       if listener.proper_target_defined?
-          forwarder = SlackBot::Forwarder.new(listener)
-          reply forwarder
-       end
+      reply SlackBot::Forwarder.new(listener) if listener.proper_target_defined?
     end
   end
 
   def listen_bus
-    ActiveRecord::Base.connection_pool.with_connection do |connection|
-      conn = connection.instance_variable_get(:@connection)
-      begin
-        conn.async_exec "LISTEN #{RESET_CHANNEL}"
-        conn.async_exec "LISTEN #{CHANNEL}"
-        catch(:break_loop) do
-          loop do
-            conn.wait_for_notify do |channel, pid, payload|
-              p realtime
-              p payload
-              throw :break_loop if channel == RESET_CHANNEL
-            end
-          end
-        end
-      rescue => error
-        p [:error, error]
-      ensure
-        conn.async_exec "UNLISTEN *"
-      end
-    end
+    lumos "Listening PG...", position: :bottom, delimiter: "❄"
+    @pg_event = SlackBot::PgEvent.new realtime_attributes
   end
 
   private
+
+  def realtime_attributes
+    {
+      realtime:       realtime,
+      target:         target
+    }
+  end
 
   def reply(forwarder)
     case forwarder.flag
