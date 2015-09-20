@@ -18,5 +18,9 @@ class SlackBot
     def im
       realtime.ims.find { |im| im.user == user }
     end
+
+    def id
+      im.try(:id)
+    end
   end
 end

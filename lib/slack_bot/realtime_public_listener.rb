@@ -14,7 +14,7 @@ class SlackBot
       # If channel is a target channel
       # If first part of messge – is a username
       # If requested user id is equal to bot user id
-      channel == target_channel_id && recipient_user =~ regex && recipient_user_id == bot_user.id
+      channel == target_channel_id && recipient =~ regex && recipient_id == bot.id
     end
 
     private
@@ -24,12 +24,12 @@ class SlackBot
     end
 
 
-    def recipient_user
+    def recipient
       splitted_text[0]
     end
 
-    def recipient_user_id
-      recipient_user.match(regex).captures.join
+    def recipient_id
+      recipient.match(regex).captures.join
     end
 
     def target_channel_id

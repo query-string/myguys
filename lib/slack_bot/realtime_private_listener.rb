@@ -9,7 +9,7 @@ class SlackBot
     end
 
     def proper_target_defined?
-      channel == sender.im.try(:id)
+      channel == sender.id
     end
   end
 end

@@ -8,6 +8,8 @@ require "slack_bot/forwarder_powerball"
 require "slack_bot/forwarder"
 require "slack_bot/sender"
 
+# @TODO: Empty message error
+# @TODO: Show us command doesn't work
 # @TODO: Send messages other the realtime instance
 # @TODO: Attributes :realtime and :realtime_message might be a part of Forwarder class
 # @TODO: Remove environment
@@ -32,13 +34,10 @@ class SlackBot
     lumos "Listening chat...", position: :bottom, delimiter: "❄"
     @realtime_event = SlackBot::RealtimeEvent.new(realtime)
     @realtime_event.on do |channel_type|
-      sender   = SlackBot::Sender.new(realtime: realtime, realtime_event: realtime_event)
       listener = "SlackBot::Realtime#{channel_type}Listener".constantize.new(
-        realtime: realtime,
-        text:     realtime_event.data.text,
-        channel:  realtime_event.data.channel,
-        sender:   sender,
-        target:   target
+        realtime:       realtime,
+        realtime_event: realtime_event,
+        target:         target
       )
        if listener.proper_target_defined?
           forwarder = SlackBot::Forwarder.new(listener)

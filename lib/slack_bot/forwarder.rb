@@ -14,17 +14,13 @@ class SlackBot
     def initialize(listener)
       @realtime = listener.realtime
       @target   = listener.target
+      @sender   = listener.sender
       @message  = listener.message
       @source   = listener.source
-      @sender   = listener.sender
     end
 
     def destination
       message.present? ? catch_destination : source
-    end
-
-    def sender_user_id
-      sender.im.try(:id)
     end
 
     def mentioned_users
@@ -58,7 +54,7 @@ class SlackBot
     def catch_destination
       substr = message.match(/show me|show us/)
       if substr
-        substr.to_s.match(/me/) ? sender_user_id : "##{target}"
+        substr.to_s.match(/me/) ? sender.id : "##{target}"
       else
         source
       end
