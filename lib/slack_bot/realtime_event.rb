@@ -5,6 +5,11 @@ class SlackBot
     def initialize(realtime)
       @realtime = realtime
       @client   = realtime.client
+      hello
+    end
+
+    def hello
+      lumos "Listening chat...", position: :bottom, delimiter: "❄"
     end
 
     def on(&block)

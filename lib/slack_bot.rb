@@ -4,7 +4,7 @@ require "slack_bot/realtime_event"
 require "slack_bot/realtime_listener"
 require "slack_bot/realtime_public_listener"
 require "slack_bot/realtime_private_listener"
-require "slack_bot/pg_event"
+require "slack_bot/bus_event"
 require "slack_bot/forwarder_powerball"
 require "slack_bot/forwarder"
 require "slack_bot/sender"
@@ -16,7 +16,7 @@ require "slack_bot/sender"
 # @TODO: Remove environment
 
 class SlackBot
-  attr_reader :realtime, :realtime_event, :target
+  attr_reader :realtime, :target
 
   def initialize(target = "general")
     @target   = target
@@ -24,32 +24,34 @@ class SlackBot
   end
 
   def start
-    listen_bus
-    #listen_chat
+    event_bus
+    event_realtime
   end
 
-  def listen_chat
-    lumos "Listening chat...", position: :bottom, delimiter: "❄"
-    @realtime_event = SlackBot::RealtimeEvent.new(realtime)
-    @realtime_event.on do |channel_type|
-      listener = "SlackBot::Realtime#{channel_type}Listener".constantize.new(
-        realtime_attributes.merge(realtime_event: realtime_event)
-      )
+  def event_realtime
+    event = SlackBot::RealtimeEvent.new(realtime)
+    event.on do |channel_type|
+      listener = realtime_listener(channel_type)
       reply SlackBot::Forwarder.new(listener) if listener.proper_target_defined?
     end
   end
 
-  def listen_bus
-    lumos "Listening PG...", position: :bottom, delimiter: "❄"
-    @pg_event = SlackBot::PgEvent.new realtime_attributes
+  def event_bus
+    event = SlackBot::BusEvent.new realtime_attributes
   end
 
   private
 
+  def realtime_listener(channel_type)
+    "SlackBot::Realtime#{channel_type}Listener".constantize.new(
+      realtime_attributes.merge(realtime_event: event)
+    )
+  end
+
   def realtime_attributes
     {
-      realtime:       realtime,
-      target:         target
+      realtime: realtime,
+      target:   target
     }
   end
 
