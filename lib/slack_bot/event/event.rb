@@ -1,27 +1,30 @@
 class SlackBot
   class Event
-    attr_reader :realtime, :mutex, :bgthread
+    attr_reader :realtime, :callback, :mutex, :background
 
-    def initialize(attributes)
-      @realtime = attributes.fetch(:realtime)
-      @mutex    = Mutex.new
-      @bgthread = false
+    def initialize(attributes, &callback)
+      @realtime   = attributes.fetch(:realtime)
+      @callback   = callback
+      @mutex      = Mutex.new
+      @background = false
 
       hello
-      start
+      thread
     end
+
+    private
 
     def hello
       lumos hello_message, position: :bottom, delimiter: "❄"
     end
 
-    def start
+    def thread
       mutex.synchronize do
-        unless bgthread
-          bgthread = true
+        unless background
+          background = true
           Thread.new do
-            connection
-            bgthread = false
+            listen
+            background = false
           end
         end
       end

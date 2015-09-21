@@ -28,7 +28,7 @@ class SlackBot
 
   def start
     event_bus
-    event_realtime
+    #event_realtime
   end
 
   def event_realtime
@@ -40,7 +40,9 @@ class SlackBot
   end
 
   def event_bus
-    event = SlackBot::BusEvent.new realtime_attributes
+    SlackBot::BusEvent.new(realtime_attributes) do
+      p "Block"
+    end
   end
 
   private
