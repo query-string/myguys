@@ -1,22 +1,22 @@
 class SlackBot
-  class RealtimeEvent
+  class RealtimeEvent < Event
     attr_reader :realtime, :client, :data
 
-    def initialize(realtime)
-      @realtime = realtime
-      @client   = realtime.client
-
-      hello
+    def initialize(attributes, &callback)
+      @client = attributes.fetch(:realtime).client
+      super
     end
 
-    def hello
-      lumos "Listening chat...", position: :bottom, delimiter: "❄"
+    private
+
+    def hello_message
+      "Listening chat..."
     end
 
-    def on(&block)
+    def listen
       client.on :message do |data|
         @data = data.to_hashugar
-        block.call type if block_given?
+        callback.call type
       end
       client.start
     end

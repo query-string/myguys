@@ -27,15 +27,13 @@ class SlackBot
   end
 
   def start
+    event_realtime
     event_bus
-    #event_realtime
   end
 
   def event_realtime
-    event = SlackBot::RealtimeEvent.new(realtime)
-    event.on do |channel_type|
-      listener = realtime_listener(channel_type)
-      reply SlackBot::Forwarder.new(listener) if listener.proper_target_defined?
+    SlackBot::RealtimeEvent.new(realtime_attributes) do |channel_type|
+      p channel_type
     end
   end
 
