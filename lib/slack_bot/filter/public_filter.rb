@@ -1,5 +1,5 @@
 class SlackBot
-  class RealtimePublicListener < RealtimeListener
+  class PublicFilter < Filter
     include SlackBot::Environment
 
     def message

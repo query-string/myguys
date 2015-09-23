@@ -1,5 +1,5 @@
 class SlackBot
-  class RealtimePrivateListener < RealtimeListener
+  class PrivateFilter < Filter
     def message
       text
     end
