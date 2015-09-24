@@ -32,23 +32,24 @@ class SlackBot
   end
 
   def event_realtime
-    SlackBot::RealtimeEvent.new(realtime_attributes) do |channel_type|
-      p channel_type
+    event = SlackBot::RealtimeEvent.new(realtime_attributes) do |filter_type|
+      handler filter_type, event
     end
   end
 
   def event_bus
     SlackBot::BusEvent.new(realtime_attributes) do
-      p "Block"
+      handler "Slash"
     end
   end
 
   private
 
-  def realtime_listener(channel_type)
-    "SlackBot::Realtime#{channel_type}Listener".constantize.new(
-      realtime_attributes.merge(realtime_event: event)
-    )
+  def handler(type, realtime_event = nil)
+    attributes = realtime_event.present? ? realtime_attributes.merge(realtime_event: realtime_event) : realtime_attributes
+    listener   = "SlackBot::#{channel_type}Listener".constantize.new attributes
+
+    reply SlackBot::Forwarder.new(listener) if listener.proper_target_defined?
   end
 
   def realtime_attributes
