@@ -32,15 +32,15 @@ class SlackBot
   end
 
   def event_realtime
-    event = SlackBot::RealtimeEvent.new(realtime_attributes) do |filter_type|
+    event = SlackBot::RealtimeEvent.new(realtime_attributes) { |filter_type|
       handler filter_type, event
-    end
+    }; nil
   end
 
   def event_bus
-    SlackBot::BusEvent.new(realtime_attributes) do
+    SlackBot::BusEvent.new(realtime_attributes) {
       handler "Slash"
-    end
+    }; nil
   end
 
   private
