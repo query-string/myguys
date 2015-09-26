@@ -28,19 +28,19 @@ class SlackBot
 
   def start
     event_realtime
-    event_bus
+    #event_bus
   end
 
   def event_realtime
-    event = SlackBot::RealtimeEvent.new(realtime_attributes) { |filter_type|
+    event = SlackBot::RealtimeEvent.new(realtime_attributes.merge(mode: :process)) { |filter_type|
       handler filter_type, event
-    }; nil
+    }
   end
 
   def event_bus
     SlackBot::BusEvent.new(realtime_attributes) {
       handler "Slash"
-    }; nil
+    }
   end
 
   private

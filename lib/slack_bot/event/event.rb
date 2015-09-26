@@ -1,15 +1,16 @@
 class SlackBot
   class Event
-    attr_reader :realtime, :callback, :mutex, :background
+    attr_reader :realtime, :mode, :callback, :mutex, :background
 
     def initialize(attributes, &callback)
       @realtime   = attributes.fetch(:realtime)
+      @mode       = attributes.fetch(:mode, :thread)
       @callback   = callback
       @mutex      = Mutex.new
       @background = false
 
       hello
-      thread
+      send(mode)
     end
 
     private
@@ -28,6 +29,10 @@ class SlackBot
           end
         end
       end
+    end
+
+    def process
+      listen
     end
   end
 end
