@@ -47,7 +47,7 @@ class SlackBot
 
   def handler(type, realtime_event = nil)
     attributes = realtime_event.present? ? realtime_attributes.merge(realtime_event: realtime_event) : realtime_attributes
-    listener   = "SlackBot::#{channel_type}Listener".constantize.new attributes
+    listener   = "SlackBot::#{type}Filter".constantize.new attributes
 
     reply SlackBot::Forwarder.new(listener) if listener.proper_target_defined?
   end
