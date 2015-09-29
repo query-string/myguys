@@ -12,17 +12,15 @@ class SlackBot
     end
 
     def listen
-      ActiveRecord::Base.connection_pool.with_connection do |connection|
-        @conn = connection.instance_variable_get(:@connection)
-        begin
-          conn.async_exec "LISTEN #{RESTART}"
-          conn.async_exec "LISTEN #{CHANNEL}"
-          execute
-        rescue => error
-          p [:error, error]
-        ensure
-          conn.async_exec "UNLISTEN *"
-        end
+      @conn = ActiveRecord::Base.connection.instance_variable_get(:@connection)
+      begin
+        conn.async_exec "LISTEN #{RESTART}"
+        conn.async_exec "LISTEN #{CHANNEL}"
+        execute
+      rescue => error
+        p [:error, error]
+      ensure
+        conn.async_exec "UNLISTEN *"
       end
     end
 
