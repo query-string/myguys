@@ -7,6 +7,7 @@ require "slack_bot/event/bus_event"
 require "slack_bot/filter/filter"
 require "slack_bot/filter/public_filter"
 require "slack_bot/filter/private_filter"
+require "slack_bot/filter/slash_filter"
 
 require "slack_bot/forwarder_powerball"
 require "slack_bot/forwarder"
@@ -35,25 +36,21 @@ class SlackBot
 
   def event_realtime
     event = SlackBot::RealtimeEvent.new(realtime_attributes)
-    event.on { |filter_type|
-      handler filter_type, event
-    }
+    event.on { |filter_type| handler filter_type, event }
   end
 
   def event_bus
     event = SlackBot::BusEvent.new(realtime_attributes)
-    event.on {
-      handler "Slash"
-    }
+    event.on { handler "Slash" }
   end
 
   private
 
   def handler(type, realtime_event = nil)
-    attributes = realtime_event.present? ? realtime_attributes.merge(realtime_event: realtime_event) : realtime_attributes
-    listener   = "SlackBot::#{type}Filter".constantize.new attributes
+    filter_attr = realtime_event.present? ? realtime_attributes.merge(realtime_event: realtime_event) : realtime_attributes
+    filter      = "SlackBot::#{type}Filter".constantize.new filter_attr
 
-    reply SlackBot::Forwarder.new(listener) if listener.proper_target_defined?
+    reply SlackBot::Forwarder.new(filter) if filter.proper_target_defined?
   end
 
   def realtime_attributes
