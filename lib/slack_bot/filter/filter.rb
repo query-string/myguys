@@ -8,16 +8,16 @@ class SlackBot
 
     def initialize(attributes)
       @realtime       = attributes.fetch(:realtime)
-      @realtime_event = attributes.fetch(:realtime_event)
+      @realtime_event = attributes.fetch(:realtime_event, nil)
       @target         = attributes.fetch(:target)
     end
 
     def text
-      realtime_event.data.text
+      realtime_event.text
     end
 
     def channel
-      realtime_event.data.channel
+      realtime_event.channel
     end
 
     def bot

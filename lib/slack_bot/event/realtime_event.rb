@@ -7,6 +7,14 @@ class SlackBot
       super
     end
 
+    def channel
+      data.channel
+    end
+
+    def text
+      data.text
+    end
+
     private
 
     def hello_message
