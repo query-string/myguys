@@ -1,5 +1,5 @@
 class SlackBot
-  class BusEvent < Event
+  class BusObserver < Observer
     attr_reader :conn
 
     CHANNEL = "slack_bot"

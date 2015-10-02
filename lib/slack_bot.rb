@@ -1,9 +1,9 @@
 require "slack_bot/environment"
 require "slack_bot/realtime"
 
-require "slack_bot/event/event"
-require "slack_bot/event/realtime_event"
-require "slack_bot/event/bus_event"
+require "slack_bot/observers/observer"
+require "slack_bot/observers/realtime_observer"
+require "slack_bot/observers/bus_observer"
 require "slack_bot/filter/filter"
 require "slack_bot/filter/public_filter"
 require "slack_bot/filter/private_filter"
@@ -28,20 +28,20 @@ class SlackBot
   end
 
   def start
-    r = event_realtime
-    b = event_bus
+    r = observer_realtime
+    b = observer_bus
     r.join
     b.join
   end
 
-  def event_realtime
-    event = SlackBot::RealtimeEvent.new(realtime_attributes)
-    event.on { |filter_type| handler filter_type, event }
+  def observer_realtime
+    observer = SlackBot::RealtimeObserver.new(realtime_attributes)
+    observer.on { |filter_type| handler filter_type, observer }
   end
 
-  def event_bus
-    event = SlackBot::BusEvent.new(realtime_attributes)
-    event.on { handler "Slash" }
+  def observer_bus
+    observer = SlackBot::BusObserver.new(realtime_attributes)
+    observer.on { handler "Slash" }
   end
 
   private

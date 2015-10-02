@@ -1,5 +1,5 @@
 class SlackBot
-  class Event
+  class Observer
     attr_reader :realtime, :callback, :background
 
     def initialize(attributes)
