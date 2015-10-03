@@ -1,5 +1,5 @@
 class SlackBot
-  class PrivateFilter < Filter
+  class PrivateHandler < Handler
     def message
       text
     end

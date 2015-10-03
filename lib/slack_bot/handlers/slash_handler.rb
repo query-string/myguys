@@ -1,5 +1,5 @@
 class SlackBot
-  class SlashFilter < Filter
+  class SlashHandler < Handler
     def proper_target_defined?
       false
     end

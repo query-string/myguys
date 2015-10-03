@@ -1,5 +1,5 @@
 class SlackBot
-  class PublicFilter < Filter
+  class PublicHandler < Handler
     include SlackBot::Environment
 
     def message
