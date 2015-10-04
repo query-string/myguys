@@ -36,28 +36,23 @@ class SlackBot
 
   def observer_realtime
     observer = SlackBot::RealtimeObserver.new(realtime_attributes)
-    observer.on { |filter_type| handler filter_type, observer }
+    observer.on { |handler_type| handle handler_type, observer }
   end
 
   def observer_bus
     observer = SlackBot::BusObserver.new(realtime_attributes)
-    observer.on { handler "Slash" }
+    observer.on { handle "Slash" }
   end
 
   private
 
-  def handler(type, realtime_event = nil)
-    filter_attr = realtime_event.present? ? realtime_attributes.merge(realtime_event: realtime_event) : realtime_attributes
-    filter      = "SlackBot::#{type}Handler".constantize.new filter_attr
-
-    reply SlackBot::Forwarder.new(filter) if filter.proper_target_defined?
+  def handle(type, event)
+    handler = "SlackBot::#{type}Handler".constantize.new realtime_attributes(event: event)
+    reply SlackBot::Forwarder.new(handler) if handler.proper_target_defined?
   end
 
-  def realtime_attributes
-    {
-      realtime: realtime,
-      target:   target
-    }
+  def realtime_attributes(extra_attrs = {})
+    { realtime: realtime, target: target }.merge(extra_attrs)
   end
 
   def reply(forwarder)
