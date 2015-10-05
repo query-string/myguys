@@ -28,7 +28,7 @@ class SlackBot
       catch(:break_loop) do
         loop do
           conn.wait_for_notify do |channel, pid, payload|
-            callback.call
+            callback.call payload
             throw :break_loop if channel == RESTART
           end
         end

@@ -9,15 +9,15 @@ module Api
 
     def slash_command
       payload = {
-        channel_id:   params[:channel_id],
-        channel_name: params[:channel_name],
-        user_id:      params[:user_id],
-        user_name:    params[:user_name],
-        text:         params[:text]
+        text:       params[:text],
+        user:       params[:user_name],
+        channel:    params[:channel_name],
+        user_id:    params[:user_id],
+        channel_id: params[:channel_id]
       }
-      ActiveRecord::Base.connection.execute %Q(NOTIFY "slack_bot", '#{payload}') if params[:token].present?
+      ActiveRecord::Base.connection.execute %Q(NOTIFY "slack_bot", '#{payload.to_json}') if params[:token].present?
 
-      render :none
+      render text: ":ok_hand:"
     end
   end
 end

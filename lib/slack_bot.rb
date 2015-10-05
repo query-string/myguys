@@ -41,7 +41,7 @@ class SlackBot
 
   def observer_bus
     observer = SlackBot::BusObserver.new(realtime_attributes)
-    observer.on { handle "Slash" }
+    observer.on { |payload| handle "Slash", JSON.parse(payload).to_hashugar }
   end
 
   private
@@ -51,8 +51,8 @@ class SlackBot
     reply SlackBot::Forwarder.new(handler) if handler.proper_target_defined?
   end
 
-  def realtime_attributes(extra_attrs = {})
-    { realtime: realtime, target: target }.merge(extra_attrs)
+  def realtime_attributes(extra = {})
+    {realtime: realtime, target: target}.merge(extra)
   end
 
   def reply(forwarder)
