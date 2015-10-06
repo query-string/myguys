@@ -9,9 +9,8 @@ require "slack_bot/handlers/public_handler"
 require "slack_bot/handlers/private_handler"
 require "slack_bot/handlers/slash_handler"
 
-require "slack_bot/forwarder_powerball"
-require "slack_bot/forwarder"
 require "slack_bot/sender"
+require "slack_bot/responder"
 
 # @TODO: Empty message error
 # @TODO: Show us command doesn't work
@@ -48,7 +47,7 @@ class SlackBot
 
   def handle(type, event)
     handler = "SlackBot::#{type}Handler".constantize.new realtime_attributes(event: event)
-    reply SlackBot::Forwarder.new(handler) if handler.proper_target_defined?
+    reply SlackBot::Responder.new(handler) if handler.proper_target_defined?
   end
 
   def realtime_attributes(extra = {})

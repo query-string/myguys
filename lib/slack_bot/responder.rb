@@ -2,21 +2,22 @@ class SlackBot
   # Calculates destination
   # Validates message
   # Returns users
-  class Forwarder
+  class Responder
     # target          – public channel which listens by default (usually #general)
     # source          – source channel from where message comes ATM (public channel OR PM)
     # mentioned_users - an array of users mentioned in message
     include SlackBot::Environment
-    include SlackBot::Forwarder::Powerball
 
     attr_reader :realtime, :target, :message, :source, :sender
 
-    def initialize(listener)
-      @realtime = listener.realtime
-      @target   = listener.target
-      @sender   = listener.sender
-      @message  = listener.message
-      @source   = listener.source
+    POWERBALL_KEYS = %i(flag message)
+
+    def initialize(handler)
+      @realtime = handler.realtime
+      @target   = handler.target
+      @sender   = handler.sender
+      @message  = handler.message
+      @source   = handler.source
     end
 
     def destination
@@ -62,6 +63,23 @@ class SlackBot
 
     def mentioned_user_ids
       message.scan(regex).flatten
+    end
+
+    def powerball(attr)
+      response = if message.present?
+        mentioned_user_ids.any? ? [:users, mentioned_users_with_references] : [:notice, powerball_notice_empty]
+      else
+        [:notice, powerball_notice_nousers]
+      end
+      Hash[POWERBALL_KEYS.zip(response)][attr]
+    end
+
+    def powerball_notice_empty
+      "How can I serve you, my dear @#{sender.name}?"
+    end
+
+    def powerball_notice_nousers
+      "Sorry @#{sender.name}, your request must contain at least one *@username*"
     end
   end
 end
