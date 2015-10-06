@@ -2,6 +2,7 @@ class SlackBot
   # Calculates destination
   # Validates message
   # Returns users
+  # @TODO: Split to separated classes accroding to their responsibility
   class Responder
     # target          – public channel which listens by default (usually #general)
     # source          – source channel from where message comes ATM (public channel OR PM)
@@ -18,6 +19,15 @@ class SlackBot
       @sender   = handler.sender
       @message  = handler.message
       @source   = handler.source
+    end
+
+    def respond
+      case flag
+        when :notice
+          SlackPost.execute destination, event
+        when :users
+          SlackPostPhoto.execute destination, local_users.first[:user].last_image if local_users.any?
+        end
     end
 
     def destination

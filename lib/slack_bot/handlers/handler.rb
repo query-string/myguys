@@ -24,6 +24,7 @@ class SlackBot
       realtime.bot
     end
 
+    # @TODO: Extract to `Responder`
     def sender
       SlackBot::Sender.new(
         realtime: realtime,

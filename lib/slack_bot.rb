@@ -47,20 +47,10 @@ class SlackBot
 
   def handle(type, event)
     handler = "SlackBot::#{type}Handler".constantize.new realtime_attributes(event: event)
-    reply SlackBot::Responder.new(handler) if handler.proper_target_defined?
+    SlackBot::Responder.new(handler).respond if handler.proper_target_defined?
   end
 
   def realtime_attributes(extra = {})
     {realtime: realtime, target: target}.merge(extra)
-  end
-
-  def reply(forwarder)
-    case forwarder.flag
-      when :notice
-        SlackPost.execute forwarder.destination, forwarder.event
-      when :users
-        # @TODO: Extract to the Forwarder class as well
-        SlackPostPhoto.execute forwarder.destination, forwarder.local_users.first[:user].last_image if forwarder.local_users.any?
-      end
   end
 end
