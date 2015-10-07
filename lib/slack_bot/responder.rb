@@ -59,7 +59,7 @@ class SlackBot
     private
 
     def method_missing(method)
-      powerball method.to_sym if POWERBALL_KEYS.include?(method.to_sym)
+      POWERBALL_KEYS.include?(method.to_sym) ? powerball(method.to_sym) : super
     end
 
     def catch_destination
