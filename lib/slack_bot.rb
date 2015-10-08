@@ -27,23 +27,29 @@ class SlackBot
   end
 
   def start
-    r = observer_realtime
-    b = observer_bus
+    r = observe_realtime
+    b = observe_bus
     r.join
     b.join
   end
 
-  def observer_realtime
-    observer = SlackBot::RealtimeObserver.new(realtime_attributes)
-    observer.on { |handler_type| handle handler_type, observer }
+  def observe_realtime
+    observer = realtime_observer
+    observer.on { |response| handle response, observer }
   end
 
-  def observer_bus
-    observer = SlackBot::BusObserver.new(realtime_attributes)
-    observer.on { |payload| handle "Slash", JSON.parse(payload).to_hashugar }
+  def observe_bus
+    bus_observer.on { |response| handle "Slash", JSON.parse(response).to_hashugar }
   end
 
   private
+
+  %i(realtime bus).each do |name|
+    observer = "#{name}_observer"
+    define_method(observer) do
+      "SlackBot::#{observer.camelize}".constantize.new(realtime_attributes)
+    end
+  end
 
   def handle(type, event)
     handler = "SlackBot::#{type}Handler".constantize.new realtime_attributes(event: event)
