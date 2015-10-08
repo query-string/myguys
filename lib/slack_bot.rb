@@ -35,14 +35,24 @@ class SlackBot
 
   def observe_realtime
     observer = realtime_observer
-    observer.on { |response| handle response, observer }
+    observer.on do |response|
+      handler = send("#{response}_handler", observer)
+      SlackBot::Responder.new(handler).respond if handler.proper_target_defined?
+    end
   end
 
   def observe_bus
-    bus_observer.on { |response| handle "Slash", JSON.parse(response).to_hashugar }
+    bus_observer.on do |response|
+      handler = slash_handler(JSON.parse(response).to_hashugar)
+      SlackBot::Responder.new(handler).respond if handler.proper_target_defined?
+    end
   end
 
   private
+
+  def realtime_attributes(extra = {})
+    {realtime: realtime, target: target}.merge(extra)
+  end
 
   %i(realtime bus).each do |name|
     observer = "#{name}_observer"
@@ -51,12 +61,10 @@ class SlackBot
     end
   end
 
-  def handle(type, event)
-    handler = "SlackBot::#{type}Handler".constantize.new realtime_attributes(event: event)
-    SlackBot::Responder.new(handler).respond if handler.proper_target_defined?
-  end
-
-  def realtime_attributes(extra = {})
-    {realtime: realtime, target: target}.merge(extra)
+  %i(private public slash).each do |name|
+    handler = "#{name}_handler"
+    define_method(handler) do |event|
+      "SlackBot::#{handler.camelize}".constantize.new realtime_attributes(event: event)
+    end
   end
 end

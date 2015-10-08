@@ -30,7 +30,7 @@ class SlackBot
     end
 
     def type
-      realtime.channel_ids.include?(data.channel) ? "Public" : "Private"
+      realtime.channel_ids.include?(data.channel) ? "public" : "private"
     end
   end
 end
