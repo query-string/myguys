@@ -37,14 +37,14 @@ class SlackBot
     observer = realtime_observer
     observer.on do |response|
       handler = send("#{response}_handler", observer)
-      SlackBot::Responder.new(handler).respond if handler.proper_target_defined?
+      SlackBot::Responder.new(handler).respond
     end
   end
 
   def observe_bus
     bus_observer.on do |response|
       handler = slash_handler(JSON.parse(response).to_hashugar)
-      SlackBot::Responder.new(handler).respond if handler.proper_target_defined?
+      SlackBot::Responder.new(handler).respond
     end
   end
 

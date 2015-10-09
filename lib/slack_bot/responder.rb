@@ -9,11 +9,12 @@ class SlackBot
     # mentioned_users - an array of users mentioned in message
     include SlackBot::Environment
 
-    attr_reader :realtime, :target, :message, :source, :sender
+    attr_reader :handler, :realtime, :target, :message, :source, :sender
 
     POWERBALL_KEYS = %i(flag message)
 
     def initialize(handler)
+      @handler  = handler
       @realtime = handler.realtime
       @target   = handler.target
       @sender   = handler.sender
@@ -22,6 +23,10 @@ class SlackBot
     end
 
     def respond
+      post if handler.proper_target_defined?
+    end
+
+    def post
       case flag
         when :notice
           SlackPost.execute destination, event
