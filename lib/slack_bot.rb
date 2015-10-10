@@ -36,15 +36,17 @@ class SlackBot
   def observe_realtime
     observer = realtime_observer
     observer.on do |response|
-      handler = send("#{response}_handler", observer)
-      SlackBot::Responder.new(handler).respond
+      SlackBot::Responder.new(
+        send("#{response}_handler", observer)
+      ).respond
     end
   end
 
   def observe_bus
     bus_observer.on do |response|
-      handler = slash_handler(JSON.parse(response).to_hashugar)
-      SlackBot::Responder.new(handler).respond
+      SlackBot::Responder.new(
+        slash_handler(JSON.parse(response).to_hashugar)
+      ).respond
     end
   end
 
@@ -54,6 +56,7 @@ class SlackBot
     {realtime: realtime, target: target}.merge(extra)
   end
 
+  # Obsever methods: relatime_observer
   %i(realtime bus).each do |name|
     observer = "#{name}_observer"
     define_method(observer) do
@@ -61,9 +64,11 @@ class SlackBot
     end
   end
 
+  # Handler methods: slash_handler(event)
   %i(private public slash).each do |name|
     handler = "#{name}_handler"
     define_method(handler) do |event|
+      # TODO: Do we really have to pass realtime_attributes here?
       "SlackBot::#{handler.camelize}".constantize.new realtime_attributes(event: event)
     end
   end

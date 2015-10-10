@@ -1,14 +1,14 @@
 class SlackBot
   class Sender
-    attr_reader :realtime, :realtime_event
+    attr_reader :realtime, :event
 
     def initialize(attributes)
-      @realtime       = attributes.fetch(:realtime)
-      @realtime_event = attributes.fetch(:realtime_event)
+      @realtime = attributes.fetch(:realtime)
+      @event    = attributes.fetch(:event)
     end
 
     def user
-      realtime_event.data.user
+      event.user
     end
 
     def name

@@ -15,6 +15,10 @@ class SlackBot
       data.text
     end
 
+    def user
+      data.user
+    end
+
     private
 
     def hello_message
