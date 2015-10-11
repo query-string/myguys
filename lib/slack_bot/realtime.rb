@@ -1,9 +1,10 @@
 class SlackBot
   class Realtime
-    attr_reader :client, :response
+    attr_reader :client, :response, :regex
 
     def initialize
       @client ||= Slack.realtime
+      @regex = /@([A-Za-z0-9_-]+)/i
     end
 
     def response
@@ -33,5 +34,6 @@ class SlackBot
     def find_channel(channel_name)
       response.channels.find { |channel| channel.name == channel_name }
     end
+
   end
 end

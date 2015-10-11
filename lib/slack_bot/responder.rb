@@ -7,7 +7,6 @@ class SlackBot
     # target          – public channel which listens by default (usually #general)
     # source          – source channel from where message comes ATM (public channel OR PM)
     # mentioned_users - an array of users mentioned in message
-    include SlackBot::Environment
 
     attr_reader :handler, :realtime, :event, :target, :sender, :message, :source
 
@@ -21,7 +20,6 @@ class SlackBot
       @sender   = handler.sender
       @message  = handler.message
       @source   = handler.source
-      @sender   = handler.sender
     end
 
     def respond
@@ -79,7 +77,7 @@ class SlackBot
     end
 
     def mentioned_user_ids
-      message.scan(regex).flatten
+      message.scan(realtime.regex).flatten
     end
 
     def powerball(attr)

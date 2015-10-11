@@ -1,4 +1,3 @@
-require "slack_bot/environment"
 require "slack_bot/realtime"
 
 require "slack_bot/observers/observer"
@@ -16,7 +15,6 @@ require "slack_bot/responder"
 # @TODO: Show us command doesn't work
 # @TODO: Send messages other the realtime instance
 # @TODO: Attributes :realtime and :realtime_message might be a part of Forwarder class
-# @TODO: Remove environment
 
 class SlackBot
   attr_reader :realtime, :target
@@ -68,7 +66,6 @@ class SlackBot
   %i(private public slash).each do |name|
     handler = "#{name}_handler"
     define_method(handler) do |event|
-      # TODO: Do we really have to pass realtime_attributes here?
       "SlackBot::#{handler.camelize}".constantize.new realtime_attributes(event: event)
     end
   end

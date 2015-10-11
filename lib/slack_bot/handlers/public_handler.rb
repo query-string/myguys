@@ -1,7 +1,5 @@
 class SlackBot
   class PublicHandler < Handler
-    include SlackBot::Environment
-
     def message
       splitted_text[1].to_s.strip
     end
@@ -14,7 +12,7 @@ class SlackBot
       # If channel is a target channel
       # If first part of messge – is a username
       # If requested user id is equal to bot user id
-      channel == target_channel_id && recipient =~ regex && recipient_id == bot.id
+      channel == target_channel_id && recipient =~ realtime.regex && recipient_id == bot.id
     end
 
     private
