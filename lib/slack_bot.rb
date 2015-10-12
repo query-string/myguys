@@ -4,10 +4,10 @@ require "slack_bot/observers/base"
 require "slack_bot/observers/realtime"
 require "slack_bot/observers/bus"
 
-require "slack_bot/handlers/handler"
-require "slack_bot/handlers/public_handler"
-require "slack_bot/handlers/private_handler"
-require "slack_bot/handlers/slash_handler"
+require "slack_bot/handlers/base"
+require "slack_bot/handlers/public"
+require "slack_bot/handlers/private"
+require "slack_bot/handlers/slash"
 
 require "slack_bot/sender"
 require "slack_bot/responder"
@@ -56,17 +56,15 @@ class SlackBot
 
   # Obsever methods: relatime_observer
   %i(realtime bus).each do |name|
-    observer = "#{name}_observer"
-    define_method(observer) do
+    define_method("#{name}_observer") do
       "SlackBot::Observers::#{name.capitalize}".constantize.new(realtime_attributes)
     end
   end
 
   # Handler methods: slash_handler(event)
   %i(private public slash).each do |name|
-    handler = "#{name}_handler"
-    define_method(handler) do |event|
-      "SlackBot::#{handler.camelize}".constantize.new realtime_attributes(event: event)
+    define_method("#{name}_handler") do |event|
+      "SlackBot::Handlers::#{name.capitalize}".constantize.new realtime_attributes(event: event)
     end
   end
 end
