@@ -1,8 +1,9 @@
 require "slack_bot/realtime"
 
-require "slack_bot/observers/observer"
-require "slack_bot/observers/realtime_observer"
-require "slack_bot/observers/bus_observer"
+require "slack_bot/observers/base"
+require "slack_bot/observers/realtime"
+require "slack_bot/observers/bus"
+
 require "slack_bot/handlers/handler"
 require "slack_bot/handlers/public_handler"
 require "slack_bot/handlers/private_handler"
@@ -14,7 +15,6 @@ require "slack_bot/responder"
 # @TODO: Empty message error
 # @TODO: Show us command doesn't work
 # @TODO: Send messages other the realtime instance
-# @TODO: Attributes :realtime and :realtime_message might be a part of Forwarder class
 
 class SlackBot
   attr_reader :realtime, :target
@@ -58,7 +58,7 @@ class SlackBot
   %i(realtime bus).each do |name|
     observer = "#{name}_observer"
     define_method(observer) do
-      "SlackBot::#{observer.camelize}".constantize.new(realtime_attributes)
+      "SlackBot::Observers::#{name.capitalize}".constantize.new(realtime_attributes)
     end
   end
 
