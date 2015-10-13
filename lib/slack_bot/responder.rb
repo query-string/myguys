@@ -36,7 +36,7 @@ class SlackBot
     end
 
     def destination
-      message.present? ? catch_destination : source
+      SlackBot::ResponderDestination.new(message: message, source: source, target: target, sender: sender).respond
     end
 
     def mentioned_users
@@ -65,15 +65,6 @@ class SlackBot
 
     def method_missing(method)
       POWERBALL_KEYS.include?(method.to_sym) ? powerball(method.to_sym) : super
-    end
-
-    def catch_destination
-      substr = message.match(/show me|show us/)
-      if substr
-        substr.to_s.match(/me/) ? sender.id : "##{target}"
-      else
-        source
-      end
     end
 
     def mentioned_user_ids
