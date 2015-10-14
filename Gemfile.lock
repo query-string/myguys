@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/query-string/slack-ruby-gem.git
-  revision: df0b0f6da9720c44bdb05dda5f79c4dec74a62e0
+  revision: 2f708a11bc4cf4950ab0e672088b860e08068e1a
   specs:
     slack-api (1.1.6)
       faraday (>= 0.7, < 0.10)
@@ -411,3 +411,6 @@ DEPENDENCIES
   unicorn
   vcr
   webmock
+
+BUNDLED WITH
+   1.10.6

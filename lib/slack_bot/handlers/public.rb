@@ -9,11 +9,15 @@ class SlackBot
         "##{target}"
       end
 
+      def regex
+        realtime.regex
+      end
+
       def proper_target_defined?
         # If channel is a target channel
         # If first part of messge – is a username
         # If requested user id is equal to bot user id
-        channel == target_channel_id && recipient =~ realtime.regex && recipient_id == bot.id
+        channel == target_channel_id && recipient =~ regex && recipient_id == bot.id
       end
 
       private
