@@ -31,7 +31,7 @@ class SlackBot
         when :notice
           SlackPost.execute destination, event
         when :users
-          SlackPostPhoto.execute destination, local_users.first[:user].last_image if local_users.any?
+          SlackPostPhoto.execute destination, users.in_local.first[:user].last_image if users.in_local.any?
         end
     end
 
@@ -39,26 +39,8 @@ class SlackBot
       SlackBot::ResponderDestination.new(message: message, source: source, target: target, sender: sender).respond
     end
 
-    def mentioned_users
-      mentioned_user_ids.map do |user|
-        team_user = realtime.team_user_by_id user
-        team_user ? team_user.name : user
-      end
-    end
-
-    def mentioned_users_with_references
-      mentioned_users.map do |slack_user|
-        local_user = User.with_nickname(slack_user).by_the_latest_photo.first
-        local_user ? {found_in: :local, user: local_user} : {found_in: :slack, user: slack_user}
-      end
-    end
-
-    def slack_users
-      mentioned_users_with_references.select { |user| user[:found_in] == :slack }
-    end
-
-    def local_users
-      mentioned_users_with_references.select { |user| user[:found_in] == :local }
+    def users
+      SlackBot::ResponderUsers.new(realtime: realtime, message: message)
     end
 
     private
@@ -67,13 +49,9 @@ class SlackBot
       POWERBALL_KEYS.include?(method.to_sym) ? powerball(method.to_sym) : super
     end
 
-    def mentioned_user_ids
-      message.scan(realtime.regex).flatten
-    end
-
     def powerball(attr)
       response = if message.present?
-        mentioned_user_ids.any? ? [:users, mentioned_users_with_references] : [:notice, powerball_notice_empty]
+        users.mentioned_ids.any? ? [:users, users.with_references] : [:notice, powerball_notice_empty]
       else
         [:notice, powerball_notice_nousers]
       end
