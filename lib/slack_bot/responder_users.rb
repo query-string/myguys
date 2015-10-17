@@ -1,13 +1,13 @@
 class SlackBot
   class ResponderUsers
-  	attr_reader :realtime, :message
+    attr_reader :realtime, :message
 
-  	def initialize(attributes)
-  		@realtime = attributes.fetch(:realtime)
-  		@message  = attributes.fetch(:message)
-  	end
+    def initialize(attributes)
+      @realtime = attributes.fetch(:realtime)
+      @message  = attributes.fetch(:message)
+    end
 
-  	def mentioned
+    def mentioned
       mentioned_ids.map do |user|
         team_user = realtime.team_user_by_id user
         team_user ? team_user.name : user

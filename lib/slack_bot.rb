@@ -12,6 +12,7 @@ require "slack_bot/handlers/slash"
 require "slack_bot/sender"
 require "slack_bot/responder_destination"
 require "slack_bot/responder_users"
+require "slack_bot/responder_validation"
 require "slack_bot/responder"
 
 # @TODO: Empty message error
