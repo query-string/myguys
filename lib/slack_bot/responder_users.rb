@@ -12,7 +12,7 @@ class SlackBot
         team_user = realtime.team_user_by_id user
         team_user ? team_user.name : user
       end
-  	end
+    end
 
     def mentioned_ids
       message.scan(realtime.regex).flatten
