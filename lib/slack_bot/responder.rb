@@ -1,8 +1,7 @@
 class SlackBot
   # Calculates destination
-  # Validates message
   # Returns users
-  # @TODO: Split to separated classes accroding to their responsibility
+  # Validates message
   class Responder
     # target          – public channel which listens by default (usually #general)
     # source          – source channel from where message comes ATM (public channel OR PM)
@@ -27,7 +26,7 @@ class SlackBot
     end
 
     def post
-      case flag
+      case validator.flag
         when :notice
           SlackPost.execute destination, event
         when :users
@@ -43,27 +42,8 @@ class SlackBot
       SlackBot::ResponderUsers.new(realtime: realtime, message: message)
     end
 
-    private
-
-    def method_missing(method)
-      POWERBALL_KEYS.include?(method.to_sym) ? powerball(method.to_sym) : super
-    end
-
-    def powerball(attr)
-      response = if message.present?
-        users.mentioned_ids.any? ? [:users, users.with_references] : [:notice, powerball_notice_empty]
-      else
-        [:notice, powerball_notice_nousers]
-      end
-      Hash[POWERBALL_KEYS.zip(response)][attr]
-    end
-
-    def powerball_notice_empty
-      "How can I serve you, my dear @#{sender.name}?"
-    end
-
-    def powerball_notice_nousers
-      "Sorry @#{sender.name}, your request must contain at least one *@username*"
+    def validator
+      SlackBot::Validator.new(users: users, message: message)
     end
   end
 end
