@@ -9,8 +9,6 @@ class SlackBot
 
     attr_reader :handler, :realtime, :event, :target, :sender, :message, :source
 
-    POWERBALL_KEYS = %i(flag message)
-
     def initialize(handler)
       @handler  = handler
       @realtime = handler.realtime
@@ -26,12 +24,15 @@ class SlackBot
     end
 
     def post
-      case validator.flag
-        when :notice
-          SlackPost.execute destination, event
-        when :users
-          SlackPostPhoto.execute destination, users.in_local.first[:user].last_image if users.in_local.any?
-        end
+      validator.flag == :notice ? post_notice : post_photo
+    end
+
+    def post_notice
+      SlackPost.execute destination, event
+    end
+
+    def post_photo
+      SlackPostPhoto.execute destination, users.in_local.first[:user].last_image if users.in_local.any?
     end
 
     def destination
