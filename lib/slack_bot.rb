@@ -15,9 +15,10 @@ require "slack_bot/responder_users"
 require "slack_bot/responder_validator"
 require "slack_bot/responder"
 
-# @TODO: Send messages other the realtime instance
 # @TODO: Empty message error
 # @TODO: Show us command doesn't work
+# @TODO: Send messages other the realtime instance
+# @TODO: Send aplication photo via realtime instance
 
 class SlackBot
   attr_reader :realtime, :target

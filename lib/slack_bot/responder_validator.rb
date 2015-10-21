@@ -8,22 +8,26 @@ class SlackBot
     end
 
     def flag
-      if message.present?
+      validate :notice do
         users.mentioned_ids.any? ? :users : :notice
-      else
-        :notice
       end
     end
 
     def text
-      if message.present?
+      validate text_nousers do
         users.mentioned_ids.any? ? users.with_references : text_empty
-      else
-        text_nousers
       end
     end
 
     private
+
+    def validate(presence, &references)
+      if message.present?
+        references.call
+      else
+        presence
+      end
+    end
 
     def text_empty
       "How can I serve you, my dear @#{sender.name}?"
