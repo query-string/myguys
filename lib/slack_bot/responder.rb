@@ -28,7 +28,7 @@ class SlackBot
     end
 
     def post_notice
-      SlackPost.execute destination, event
+      SlackPost.execute destination, validator.text
     end
 
     def post_photo
@@ -44,7 +44,7 @@ class SlackBot
     end
 
     def validator
-      SlackBot::Validator.new(users: users, message: message)
+      SlackBot::Validator.new(users: users, message: message, sender: sender)
     end
   end
 end

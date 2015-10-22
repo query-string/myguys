@@ -1,10 +1,11 @@
 class SlackBot
   class Validator
-    attr_reader :message, :users
+    attr_reader :message, :users, :sender
 
     def initialize(attributes)
       @message = attributes.fetch(:message)
       @users   = attributes.fetch(:users)
+      @sender  = attributes.fetch(:sender)
     end
 
     def flag
