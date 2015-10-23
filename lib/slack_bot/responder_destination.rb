@@ -5,7 +5,7 @@ class SlackBot
     def initialize(attributes)
       @message = attributes.fetch(:message)
       @source  = attributes.fetch(:source)
-      @targer  = attributes.fetch(:target)
+      @target  = attributes.fetch(:target)
       @sender  = attributes.fetch(:sender)
     end
 
