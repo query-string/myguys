@@ -24,11 +24,11 @@ class SlackBot
     end
 
     def post
-      validator.flag == :notice ? post_notice : post_photo
+      validation.successful? ? post_photo : post_notice
     end
 
     def post_notice
-      SlackPost.execute destination, validator.text
+      SlackPost.execute destination, validation.error_message
     end
 
     def post_photo
@@ -43,8 +43,8 @@ class SlackBot
       SlackBot::ResponderUsers.new(realtime: realtime, message: message)
     end
 
-    def validator
-      SlackBot::Validator.new(users: users, message: message, sender: sender)
+    def validation
+      SlackBot::ResponderValidator.new(users: users, message: message, sender: sender)
     end
   end
 end
