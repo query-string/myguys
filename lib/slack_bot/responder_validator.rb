@@ -20,15 +20,19 @@ class SlackBot
     end
 
     def validate_message_presence
-      error_messages << notice_empty_message unless message.present?
+      put_error_message notice_empty_message unless message.present?
     end
 
     def validate_user_mentions
-      error_messages << notice_user_omission unless users.mentioned_ids.any?
+      put_error_message notice_user_omission unless users.mentioned_ids.any?
     end
 
     def validate_user_existence
-      error_messages << notice_user_unexistence unless users.in_local.any?
+      put_error_message notice_user_unexistence unless users.in_local.any?
+    end
+
+    def put_error_message(message)
+      error_messages << message
     end
 
     private
