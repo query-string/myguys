@@ -29,7 +29,7 @@ class SlackBot
     end
 
     def post_notice
-      validation.error_messages.each { |message| SlackPost.execute destination, message }
+      validation.error_messages.each { |notice| SlackPost.execute destination, notice[:body] }
     end
 
     def post_photo
