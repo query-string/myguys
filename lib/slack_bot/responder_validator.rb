@@ -1,12 +1,12 @@
 class SlackBot
   class ResponderValidator
-    attr_reader :message, :users, :sender, :error_messages
+    attr_reader :message, :users, :sender, :notices
 
     def initialize(attributes)
       @message         = attributes.fetch(:message)
       @users           = attributes.fetch(:users)
       @sender          = attributes.fetch(:sender)
-      @error_messages  = []
+      @notices  = []
     end
 
     def validate
@@ -16,26 +16,30 @@ class SlackBot
     end
 
     def successful?
-      error_messages.size == 0
+      notices.size == 0
     end
 
-    def validate_message_presence
-      put_error_message notice_empty_message unless message.present?
-    end
-
-    def validate_user_mentions
-      put_error_message notice_user_mentions_omission unless users.mentioned_ids.any?
-    end
-
-    def validate_users_existence
-      put_error_message notice_users_unexistence unless users.in_local.any?
-    end
-
-    def put_error_message(notice)
-      error_messages << notice
+    def all_notices
+      notices.map{ |notice| notice[:body] }
     end
 
     private
+
+    def validate_message_presence
+      put_notice notice_empty_message unless message.present?
+    end
+
+    def validate_user_mentions
+      put_notice notice_user_mentions_omission unless users.mentioned_ids.any?
+    end
+
+    def validate_users_existence
+      put_notice notice_users_unexistence unless users.in_local.any?
+    end
+
+    def put_notice(notice)
+      notices << notice
+    end
 
     def notice_empty_message
       {subject: :message_empty, body: "How can I serve you, my dear @#{sender.name}?"}
