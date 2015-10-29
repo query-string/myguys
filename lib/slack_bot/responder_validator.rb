@@ -23,6 +23,10 @@ class SlackBot
       notices.map{ |notice| notice[:body] }
     end
 
+    def notice_subjects
+      notices.map{ |notice| notice[:subject] }
+    end
+
     private
 
     def validate_message_presence
