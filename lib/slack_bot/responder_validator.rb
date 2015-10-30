@@ -20,11 +20,21 @@ class SlackBot
     end
 
     def all_notices
-      notices.map{ |notice| notice[:body] }
+      simplify notices, :body
     end
 
-    def notice_subjects
-      notices.map{ |notice| notice[:subject] }
+    def all_subjects
+      simplify notices, :subject
+    end
+
+    def muted_notices
+      if all_subjects.include?(:message_empty) && all_subjects.include?(:user_mentions) && all_subjects.include?(:users_nonexistence)
+        simplify notices.select { |notice| notice[:subject] == :message_empty }, :body
+      elsif all_subjects.include?(:user_mentions) && all_subjects.include?(:users_nonexistence)
+        simplify notices.select { |notice| notice[:subject] == :user_mentions }, :body
+      else
+        all_notices
+      end
     end
 
     private
@@ -38,11 +48,15 @@ class SlackBot
     end
 
     def validate_users_existence
-      put_notice notice_users_unexistence unless users.in_local.any?
+      put_notice notice_users_nonexistence unless users.in_local.any?
     end
 
     def put_notice(notice)
       notices << notice
+    end
+
+    def simplify(hash, key)
+      hash.map{ |notice| notice[key] }
     end
 
     def notice_empty_message
@@ -53,8 +67,8 @@ class SlackBot
       {subject: :user_mentions, body: "Sorry @#{sender.name}, your request must contain at least one *@username*"}
     end
 
-    def notice_users_unexistence
-      {subject: :users_unexistens, body: "None of requested users has appeared at higuys yet ("}
+    def notice_users_nonexistence
+      {subject: :users_nonexistence, body: "None of requested users has appeared at higuys yet ("}
     end
   end
 end

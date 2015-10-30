@@ -29,7 +29,7 @@ class SlackBot
     end
 
     def post_notice
-      validation.all_notices.each { |notice| SlackPost.execute destination, notice }
+      validation.muted_notices.each { |notice| SlackPost.execute destination, notice }
     end
 
     def post_photo
