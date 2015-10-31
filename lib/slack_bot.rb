@@ -15,8 +15,6 @@ require "slack_bot/responder_users"
 require "slack_bot/responder_validator"
 require "slack_bot/responder"
 
-# @TODO: Notice about unexisted users
-# @TODO: PM as destination for notice
 # @TODO: Send messages other the realtime instance
 # @TODO: Send aplication photo via realtime instance
 

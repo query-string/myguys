@@ -28,20 +28,22 @@ class SlackBot
       validation.successful? ? post_photo : post_notice
     end
 
+    private
+
     def post_notice
-      validation.muted_notices.each { |notice| SlackPost.execute destination, notice }
+      validation.muted_notices.each { |notice| SlackPost.execute sender.id, notice }
     end
 
     def post_photo
       SlackPostPhoto.execute destination, users.in_local.first[:user].last_image if users.in_local.any?
     end
 
-    def destination
-      SlackBot::ResponderDestination.new(message: message, source: source, target: target, sender: sender).respond
-    end
-
     def users
       SlackBot::ResponderUsers.new(realtime: realtime, message: message)
+    end
+
+    def destination
+      SlackBot::ResponderDestination.new(message: message, source: source, target: target, sender: sender).respond
     end
 
     def validation
