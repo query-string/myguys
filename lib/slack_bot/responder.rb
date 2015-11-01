@@ -7,7 +7,7 @@ class SlackBot
     # source          – source channel from where message comes ATM (public channel OR PM)
     # mentioned_users - an array of users mentioned in message
 
-    attr_reader :handler, :realtime, :event, :target, :sender, :message, :source, :validator
+    attr_reader :handler, :realtime, :event, :target, :sender, :message, :source
 
     def initialize(handler)
       @handler  = handler
@@ -39,15 +39,15 @@ class SlackBot
     end
 
     def users
-      SlackBot::ResponderUsers.new(realtime: realtime, message: message)
+      @_users ||= SlackBot::ResponderUsers.new(realtime: realtime, message: message)
     end
 
     def destination
-      SlackBot::ResponderDestination.new(message: message, source: source, target: target, sender: sender).respond
+      @_destination ||= SlackBot::ResponderDestination.new(message: message, source: source, target: target, sender: sender).respond
     end
 
     def validation
-      @validator ||= SlackBot::ResponderValidator.new(users: users, message: message, sender: sender)
+      @_validation ||= SlackBot::ResponderValidator.new(users: users, message: message, sender: sender)
     end
   end
 end
