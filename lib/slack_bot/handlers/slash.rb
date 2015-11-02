@@ -1,6 +1,6 @@
 class SlackBot
   module Handlers
-    class SlashHandler < SlackBot::Handlers::Base
+    class Slash < SlackBot::Handlers::Base
       def proper_target_defined?
         false
       end
