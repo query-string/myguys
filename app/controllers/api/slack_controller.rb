@@ -10,9 +10,9 @@ module Api
     def slash_command
       payload = {
         text:       params[:text],
-        user:       params[:user_name],
-        channel:    params[:channel_name],
+        user_name:  params[:user_name],
         user_id:    params[:user_id],
+        channel:    params[:channel_name],
         channel_id: params[:channel_id]
       }
       ActiveRecord::Base.connection.execute %Q(NOTIFY "slack_bot", '#{payload.to_json}') if params[:token].present?

@@ -25,6 +25,7 @@ class SlackBot
 
     def post
       validation.validate
+      p validation.muted_notices
       validation.successful? ? post_photo : post_notice
     end
 
