@@ -15,7 +15,6 @@ require "slack_bot/responder_users"
 require "slack_bot/responder_validator"
 require "slack_bot/responder"
 
-# @TODO: Clear @sender id/im missleading
 # @TODO: Set correct destincation for /slash messages/notices
 
 class SlackBot
