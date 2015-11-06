@@ -25,14 +25,13 @@ class SlackBot
 
     def post
       validation.validate
-      p validation.muted_notices
       validation.successful? ? post_photo : post_notice
     end
 
     private
 
     def post_notice
-      validation.muted_notices.each { |notice| SlackPost.execute sender.id, notice }
+      validation.muted_notices.each { |notice| SlackPost.execute sender.im, notice }
     end
 
     def post_photo
