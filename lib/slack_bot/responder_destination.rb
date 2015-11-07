@@ -19,7 +19,7 @@ class SlackBot
 
     def catch_destination
       if substr
-        substr.to_s.match(/me/) ? sender.id : "##{target}"
+        substr.to_s.match(/me/) ? sender.im : "##{target}"
       else
         source
       end
