@@ -6,7 +6,7 @@
 - [ ] Bot channel:
     - [ ] Personal photo (@higuys: show me/us @alex)
         - [ ] Case insensitive `Show me ...`
-        - [ ] Handle cases when more than on user requesed
+        - [ ] Handle cases when more than one user requested
         - [ ] Handle cases when no one of mentioned users in hg at the moment
     - [ ] Group photo (@higuys: show me/us @channel)
 - [ ] Bot PM: (show me @alex)
@@ -23,7 +23,7 @@
 ## Common tweaks
 - [ ] Pusher listens for status changes too
 - [ ] Changeable header colors
-- [ ] Personal domain for wall
+- [ ] Personal domain for a wall
 
 ## Archive
 

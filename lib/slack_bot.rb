@@ -15,6 +15,12 @@ require "slack_bot/responder_users"
 require "slack_bot/responder_validator"
 require "slack_bot/responder"
 
+
+# @TODO: Private listener doesn't seem working
+# @TODO: Default destination – channgel origin
+# @TODO: Check default destination for slash commands
+# @TODO: Case insensitive `Show me ...`
+
 class SlackBot
   attr_reader :realtime, :target
 
