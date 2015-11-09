@@ -14,12 +14,12 @@ class SlackBot
     end
 
     def substr
-      message.match(/show me|show us/)
+      message.match(/show me|show us/i)
     end
 
     def catch_destination
       if substr
-        substr.to_s.match(/me/) ? sender.im : "##{target}"
+        substr.to_s.match(/me/i) ? sender.im : "##{target}"
       else
         source
       end
