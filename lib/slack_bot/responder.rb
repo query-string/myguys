@@ -35,7 +35,7 @@ class SlackBot
     end
 
     def post_photo
-      SlackPostPhoto.execute destination, users.in_local.first[:user].last_image if users.in_local.any?
+      users.in_local.each { |local| SlackPostPhoto.execute destination, local[:user].last_image }
     end
 
     def users

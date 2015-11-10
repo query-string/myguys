@@ -15,8 +15,8 @@ require "slack_bot/responder_users"
 require "slack_bot/responder_validator"
 require "slack_bot/responder"
 
-# @TODO: Case insensitive `Show me ...`
-# @TODO: Default destination – channel origin
+# @TODO: Rename `Sender` to `User` otherwise it might be interpretad as a name of sending class :P
+# @TODO: Handle cases when no one of mentioned users in hg at the moment
 # @TODO: Check default destination for slash commands
 
 class SlackBot

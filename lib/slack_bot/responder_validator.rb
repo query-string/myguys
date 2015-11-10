@@ -3,10 +3,10 @@ class SlackBot
     attr_reader :message, :users, :sender, :notices
 
     def initialize(attributes)
-      @message         = attributes.fetch(:message)
-      @users           = attributes.fetch(:users)
-      @sender          = attributes.fetch(:sender)
-      @notices  = []
+      @message = attributes.fetch(:message)
+      @users   = attributes.fetch(:users)
+      @sender  = attributes.fetch(:sender)
+      @notices = []
     end
 
     def validate
