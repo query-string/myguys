@@ -1,5 +1,5 @@
 class SlackBot
-  class Sender
+  class Seeker
     attr_reader :realtime, :event
 
     def initialize(attributes)

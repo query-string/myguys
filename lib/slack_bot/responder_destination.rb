@@ -1,12 +1,12 @@
 class SlackBot
   class ResponderDestination
-    attr_reader :message, :source, :target, :sender
+    attr_reader :message, :source, :target, :seeker
 
     def initialize(attributes)
       @message = attributes.fetch(:message)
       @source  = attributes.fetch(:source)
       @target  = attributes.fetch(:target)
-      @sender  = attributes.fetch(:sender)
+      @seeker  = attributes.fetch(:seeker)
     end
 
     def respond
@@ -19,7 +19,7 @@ class SlackBot
 
     def catch_destination
       if substr
-        substr.to_s.match(/me/i) ? sender.im : "##{target}"
+        substr.to_s.match(/me/i) ? seeker.im : "##{target}"
       else
         source
       end

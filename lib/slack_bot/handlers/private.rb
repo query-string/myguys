@@ -10,7 +10,7 @@ class SlackBot
       end
 
       def proper_target_defined?
-        channel == sender.im
+        channel == seeker.im
       end
     end
   end

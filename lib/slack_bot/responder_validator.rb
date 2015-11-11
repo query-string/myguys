@@ -1,11 +1,11 @@
 class SlackBot
   class ResponderValidator
-    attr_reader :message, :users, :sender, :notices
+    attr_reader :message, :users, :seeker, :notices
 
     def initialize(attributes)
       @message = attributes.fetch(:message)
       @users   = attributes.fetch(:users)
-      @sender  = attributes.fetch(:sender)
+      @seeker  = attributes.fetch(:seeker)
       @notices = []
     end
 
@@ -60,11 +60,11 @@ class SlackBot
     end
 
     def notice_empty_message
-      {subject: :message_empty, body: "How can I serve you, my dear @#{sender.name}?"}
+      {subject: :message_empty, body: "How can I serve you, my dear @#{seeker.name}?"}
     end
 
     def notice_user_mentions_omission
-      {subject: :user_mentions, body: "Sorry @#{sender.name}, your request must contain at least one *@username*"}
+      {subject: :user_mentions, body: "Sorry @#{seeker.name}, your request must contain at least one *@username*"}
     end
 
     def notice_users_nonexistence

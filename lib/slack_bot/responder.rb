@@ -7,14 +7,14 @@ class SlackBot
     # source          – source channel from where message comes ATM (public channel OR PM)
     # mentioned_users - an array of users mentioned in message
 
-    attr_reader :handler, :realtime, :event, :target, :sender, :message, :source
+    attr_reader :handler, :realtime, :event, :target, :seeker, :message, :source
 
     def initialize(handler)
       @handler  = handler
       @realtime = handler.realtime
       @event    = handler.event
       @target   = handler.target
-      @sender   = handler.sender
+      @seeker   = handler.seeker
       @message  = handler.message
       @source   = handler.source
     end
@@ -31,7 +31,7 @@ class SlackBot
     private
 
     def post_notice
-      validation.muted_notices.each { |notice| SlackPost.execute sender.im, notice }
+      validation.muted_notices.each { |notice| SlackPost.execute seeker.im, notice }
     end
 
     def post_photo
@@ -43,11 +43,11 @@ class SlackBot
     end
 
     def destination
-      @_destination ||= SlackBot::ResponderDestination.new(message: message, source: source, target: target, sender: sender).respond
+      @_destination ||= SlackBot::ResponderDestination.new(message: message, source: source, target: target, seeker: seeker).respond
     end
 
     def validation
-      @_validation ||= SlackBot::ResponderValidator.new(users: users, message: message, sender: sender)
+      @_validation ||= SlackBot::ResponderValidator.new(users: users, message: message, seeker: seeker)
     end
   end
 end

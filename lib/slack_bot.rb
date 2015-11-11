@@ -9,15 +9,14 @@ require "slack_bot/handlers/public"
 require "slack_bot/handlers/private"
 require "slack_bot/handlers/slash"
 
-require "slack_bot/sender"
+require "slack_bot/seeker"
 require "slack_bot/responder_destination"
 require "slack_bot/responder_users"
 require "slack_bot/responder_validator"
 require "slack_bot/responder"
 
-# @TODO: Rename `Sender` to `User` otherwise it might be interpretad as a name of sending class :P
-# @TODO: Handle cases when no one of mentioned users in hg at the moment
-# @TODO: Check default destination for slash commands
+# @TODO: Handle cases when no one of mentioned users in hg at the moment (new validation type)
+# @TODO: Check default destination for slash commands (test sending from private)
 
 class SlackBot
   attr_reader :realtime, :target
