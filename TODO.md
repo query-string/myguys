@@ -24,6 +24,7 @@
 - [ ] Pusher listens for status changes too
 - [ ] Changeable header colors
 - [ ] Personal domain for a wall
+- [ ] Use memoization
 
 ## Archive
 

@@ -2,7 +2,7 @@ class SlackBot
   module Handlers
     class Private < SlackBot::Handlers::Base
       def message
-        text
+        text.gsub("<@#{bot.id}>", "")
       end
 
       def source
