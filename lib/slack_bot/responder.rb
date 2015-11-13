@@ -25,7 +25,8 @@ class SlackBot
 
     def post
       validation.validate
-      validation.successful? ? post_photo : post_notice
+      post_photo
+      post_notice
     end
 
     private
@@ -35,7 +36,7 @@ class SlackBot
     end
 
     def post_photo
-      users.in_local.each { |local| SlackPostPhoto.execute destination, local[:user].last_image }
+      users.in_local.each { |local| SlackPostPhoto.execute destination, local.last_image }
     end
 
     def users

@@ -30,7 +30,15 @@ class SlackBot
     end
 
     def in_local
-      with_references.select { |user| user[:found_in] == :local }
+      with_references.select { |user| user[:found_in] == :local }.map { |user| user[:user] }
+    end
+
+    def local_names
+      in_local.map { |local| local[:status_nickname].gsub("@", "") }
+    end
+
+    def local_diff
+      mentioned - local_names
     end
   end
  end

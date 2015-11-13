@@ -48,7 +48,7 @@ class SlackBot
     end
 
     def validate_users_existence
-      put_notice notice_users_nonexistence unless users.in_local.any?
+      put_notice notice_users_nonexistence if users.local_diff.any?
     end
 
     def put_notice(notice)
