@@ -68,7 +68,7 @@ class SlackBot
     end
 
     def notice_users_nonexistence
-      {subject: :users_nonexistence, body: "None of requested users has appeared at higuys yet ("}
+      {subject: :users_nonexistence, body: "None of these users have appeared at higuys app yet: *#{users.local_diff.join(", ")}*"}
     end
   end
 end
