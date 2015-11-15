@@ -1,12 +1,5 @@
 class SlackBot
-  # Calculates destination
-  # Returns users
-  # Validates message
   class Responder
-    # target          – public channel which listens by default (usually #general)
-    # source          – source channel from where message comes ATM (public channel OR PM)
-    # mentioned_users - an array of users mentioned in message
-
     attr_reader :handler, :realtime, :event, :target, :seeker, :message, :source
 
     def initialize(handler)

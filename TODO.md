@@ -7,7 +7,7 @@
     - [ ] Personal photo (@higuys: show me/us @alex)
         - [x] Case insensitive `Show me ...`
         - [x] Handle cases when more than one user requested
-        - [ ] Handle cases when none of mentioned users in hg at the moment
+        - [x] Handle cases when none of mentioned users in hg at the moment
     - [ ] Group photo (@higuys: show me/us @channel)
 - [ ] Bot PM: (show me @alex)
     - [ ] Group photo (show me/us @channel)

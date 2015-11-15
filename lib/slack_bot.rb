@@ -15,8 +15,6 @@ require "slack_bot/responder_users"
 require "slack_bot/responder_validator"
 require "slack_bot/responder"
 
-# @TODO: Improve validation of non-existed users (mention veir name, show even one of users has been found)
-# @TODO: Clear redundant comments
 # @TODO: Check default destination for slash commands (test sending from private)
 
 class SlackBot
