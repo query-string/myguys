@@ -63,6 +63,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    clockwork (1.2.0)
+      activesupport
+      tzinfo
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -354,6 +357,7 @@ DEPENDENCIES
   aws-sdk
   bourbon (~> 3.2.1)
   byebug
+  clockwork
   coffee-rails
   database_cleaner
   delayed_job_active_record

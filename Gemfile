@@ -44,6 +44,7 @@ gem 'rails-assets-lodash'
 gem 'rails-assets-jquery-cookie'
 gem 'role-rails'
 gem 'font-awesome-rails'
+gem 'clockwork'
 
 group :development do
   gem 'spring'

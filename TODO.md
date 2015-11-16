@@ -4,20 +4,16 @@
 - [ ] Slack-it (Web UI):
     - [ ] Group photo
 - [ ] Bot channel:
-    - [ ] Personal photo (@higuys: show me/us @alex)
-        - [x] Case insensitive `Show me ...`
-        - [x] Handle cases when more than one user requested
-        - [x] Handle cases when none of mentioned users in hg at the moment
     - [ ] Group photo (@higuys: show me/us @channel)
 - [ ] Bot PM: (show me @alex)
     - [ ] Group photo (show me/us @channel)
 - [ ] Slash commands:
-    - [ ] Personal photo (/higuys show me/us @alex)
     - [ ] Group photo (/higuys show me/us @channel)
-- [ ] Specs
 - [ ] Reminders:
     - [ ] Ping channel if nobody is active more than X hours
-    - [ ] Ping channel if only X people are active
+    - [ ] Ping channel if only one person is active for certain emount of time
+    - [ ] Ping @username if he has never seen in hg
+- [ ] Specs
 - [ ] Favorite photo
 
 ## Common tweaks
@@ -30,7 +26,5 @@
 
 - [ ] Bot commands:
     - [ ] Ask about help
-    - [ ] Bot request must work inside PM too
 - [ ] Slash commands:
     - [ ] Ask about help
-    - [ ] Bot request must work inside PM too
