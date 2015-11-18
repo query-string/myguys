@@ -9,6 +9,7 @@ require "slack_bot/handlers/public"
 require "slack_bot/handlers/private"
 require "slack_bot/handlers/slash"
 
+require "slack_bot/notifier"
 require "slack_bot/seeker"
 require "slack_bot/responder_destination"
 require "slack_bot/responder_users"
