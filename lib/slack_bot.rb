@@ -3,6 +3,7 @@ require "slack_bot/realtime"
 require "slack_bot/observers/base"
 require "slack_bot/observers/realtime"
 require "slack_bot/observers/bus"
+require "slack_bot/observers/bus_slash"
 
 require "slack_bot/handlers/base"
 require "slack_bot/handlers/public"
@@ -43,7 +44,7 @@ class SlackBot
   end
 
   def observe_bus
-    bus_observer.on do |response|
+    bus_slash_observer.on do |response|
       SlackBot::Responder.new(
         slash_handler(JSON.parse(response).to_hashugar)
       ).respond
@@ -57,9 +58,9 @@ class SlackBot
   end
 
   # Obsever methods: relatime_observer
-  %i(realtime bus).each do |name|
+  %w(realtime bus_slash).each do |name|
     define_method("#{name}_observer") do
-      "SlackBot::Observers::#{name.capitalize}".constantize.new(realtime_attributes)
+      "SlackBot::Observers::#{name.camelize}".constantize.new(realtime_attributes)
     end
   end
 

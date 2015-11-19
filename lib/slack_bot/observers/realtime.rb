@@ -23,7 +23,7 @@ class SlackBot
       private
 
       def hello_message
-        "Listening chat..."
+        "Realtime listening..."
       end
 
       def listen

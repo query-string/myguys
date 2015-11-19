@@ -3,20 +3,15 @@ class SlackBot
     class Bus < SlackBot::Observers::Base
       attr_reader :conn
 
-      CHANNEL = "slack_bot"
       RESTART = "pg_restart"
 
       private
-
-      def hello_message
-        "Listening PG..."
-      end
 
       def listen
         @conn = ActiveRecord::Base.connection.instance_variable_get(:@connection)
         begin
           conn.async_exec "LISTEN #{RESTART}"
-          conn.async_exec "LISTEN #{CHANNEL}"
+          conn.async_exec "LISTEN #{command_channel}"
           execute
         rescue => error
           p [:error, error]
