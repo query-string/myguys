@@ -1,6 +1,6 @@
 class SlackBot
   module Observers
-    class BusSlash < SlackBot::Observers::Bus
+    class SlashEvent < SlackBot::Observers::Bus
       def command_channel
         "slash_command"
       end
