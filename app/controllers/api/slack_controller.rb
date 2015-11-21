@@ -9,7 +9,7 @@ module Api
 
     def slash_command
       if params[:token].present?
-        SlackBot::Notifier.new("slash_command", {
+        SlackBot::Notifier.new("slash_event", {
           text:       params[:text],
           user_name:  params[:user_name],
           user_id:    params[:user_id],

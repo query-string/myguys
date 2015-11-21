@@ -19,7 +19,7 @@ class SlackBot
       private
 
       def hello
-        lumos hello_message, position: :bottom, delimiter: "❄"
+        lumos hello_message, position: :left, padding: 2, delimiter: ":coffee:"
       end
 
       def thread
