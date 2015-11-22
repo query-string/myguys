@@ -5,7 +5,6 @@ require "slack_bot/observers/realtime"
 require "slack_bot/observers/bus"
 require "slack_bot/observers/slash_events"
 require "slack_bot/observers/activity_events"
-require "slack_bot/observers/loneliness_events"
 
 require "slack_bot/handlers/base"
 require "slack_bot/handlers/public"
@@ -30,12 +29,12 @@ class SlackBot
   end
 
   def start
-    r = observe_realtime
-    b = observe_slash_events
-    b = observe_activity_events
-    b = observe_loneliness_events
+    r  = observe_realtime
+    se = observe_slash_events
+    ae = observe_activity_events
     r.join
-    b.join
+    se.join
+    ae.join
   end
 
   def observe_realtime
@@ -57,12 +56,6 @@ class SlackBot
 
   def observe_activity_events
     activity_events_observer.on do |response|
-      p response
-    end
-  end
-
-  def observe_loneliness_events
-    loneliness_events_observer.on do |response|
       p response
     end
   end
