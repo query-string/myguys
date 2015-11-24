@@ -1,6 +1,6 @@
 class SlackBot
   module Observers
-    class ActivityEvents < SlackBot::Observers::Bus
+    class ActivityNotifications < SlackBot::Observers::Bus
       def command_channel
         "activity_event"
       end

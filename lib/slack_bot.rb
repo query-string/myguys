@@ -3,8 +3,8 @@ require "slack_bot/realtime"
 require "slack_bot/observers/base"
 require "slack_bot/observers/realtime"
 require "slack_bot/observers/bus"
-require "slack_bot/observers/slash_events"
-require "slack_bot/observers/activity_events"
+require "slack_bot/observers/slash_notifications"
+require "slack_bot/observers/activity_notifications"
 
 require "slack_bot/handlers/base"
 require "slack_bot/handlers/public"
@@ -30,11 +30,11 @@ class SlackBot
 
   def start
     r  = observe_realtime
-    se = observe_slash_events
-    ae = observe_activity_events
+    sn = observe_slash_notifications
+    an = observe_activity_notifications
     r.join
-    se.join
-    ae.join
+    sn.join
+    an.join
   end
 
   def observe_realtime
@@ -46,16 +46,16 @@ class SlackBot
     end
   end
 
-  def observe_slash_events
-    slash_events_observer.on do |response|
+  def observe_slash_notifications
+    slash_notifications_observer.on do |response|
       SlackBot::Responder.new(
         slash_handler(JSON.parse(response).to_hashugar)
       ).respond
     end
   end
 
-  def observe_activity_events
-    activity_events_observer.on do |response|
+  def observe_activity_notifications
+    activity_notifications_observer.on do |response|
       p response
     end
   end
@@ -67,7 +67,7 @@ class SlackBot
   end
 
   # Obsever methods: relatime_observer
-  %w(realtime slash_events activity_events loneliness_events).each do |name|
+  %w(realtime slash_notifications activity_notifications).each do |name|
     define_method("#{name}_observer") do
       "SlackBot::Observers::#{name.camelize}".constantize.new(realtime_attributes)
     end
