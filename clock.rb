@@ -9,7 +9,7 @@ module Clockwork
 
   every(1.hour, "Check if somebody is active") {
     # Ping channel if nobody is active more than X hours
-    SlackBot::Notifier.new("activity_event", {type: "activity"}).notify
+    SlackBot::Notifier.new("activity_event", {type: "emptiness"}).notify
   }
 
   every(1.hour, "Check if somebody is alone :'(") {
