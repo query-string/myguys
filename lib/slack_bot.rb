@@ -56,6 +56,7 @@ class SlackBot
 
   def observe_activity_notifications
     activity_notifications_observer.on do |response|
+      p response
       #SlaskBot::Kickers::Emptiness.new.check
     end
   end

@@ -2,7 +2,7 @@ class SlackBot
   module Observers
     class SlashNotifications < SlackBot::Observers::Bus
       def command_channel
-        "slash_event"
+        "slash_notification"
       end
 
       def hello_message
