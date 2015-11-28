@@ -1,25 +1,15 @@
 require "slack_bot/realtime"
-require "slack_bot/observers/base"
-require "slack_bot/observers/realtime"
-require "slack_bot/observers/bus"
-require "slack_bot/observers/slash_notifications"
-require "slack_bot/observers/activity_notifications"
-require "slack_bot/handlers/base"
-require "slack_bot/handlers/public"
-require "slack_bot/handlers/private"
-require "slack_bot/handlers/slash"
-require "slack_bot/kickers/base"
-require "slack_bot/kickers/emptiness"
-require "slack_bot/kickers/loneliness"
+
+Dir["slack_bot/observers/*.rb"].each {|file| require file }
+Dir["slack_bot/handlers/*.rb"].each {|file| require file }
+Dir["slack_bot/kickers/*.rb"].each {|file| require file }
+
 require "slack_bot/notifier"
 require "slack_bot/seeker"
-
 require "slack_bot/responder_destination"
 require "slack_bot/responder_users"
 require "slack_bot/responder_validator"
 require "slack_bot/responder"
-
-# @TODO: Check default destination for slash commands (test sending from private)
 
 class SlackBot
   attr_reader :realtime, :target
