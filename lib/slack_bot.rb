@@ -40,15 +40,15 @@ class SlackBot
   def observe_slash_notifications
     slash_notifications_observer.on do |response|
       SlackBot::Responder.new(
-        slash_handler(JSON.parse(response).to_hashugar)
+        slash_handler(parse_response(response))
       ).respond
     end
   end
 
   def observe_activity_notifications
     activity_notifications_observer.on do |response|
-      p response
-      #SlaskBot::Kickers::Emptiness.new.check
+      kicker = "SlackBot::Kickers::#{parse_response(response).type.capitalize}"
+      kicker.constantize.new.check
     end
   end
 
@@ -56,6 +56,10 @@ class SlackBot
 
   def realtime_attributes(extra = {})
     {realtime: realtime, target: target}.merge(extra)
+  end
+
+  def parse_response(response)
+    JSON.parse(response).to_hashugar
   end
 
   # Obsever methods: relatime_observer

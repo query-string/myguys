@@ -1,7 +1,8 @@
 class SlackBot
   module Kickers
     class Base
-      def initialize
+      def check
+        lumos "Meo!"
       end
     end
   end
