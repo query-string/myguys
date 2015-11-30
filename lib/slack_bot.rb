@@ -48,7 +48,7 @@ class SlackBot
   def observe_activity_notifications
     activity_notifications_observer.on do |response|
       kicker = "SlackBot::Kickers::#{parse_response(response).type.capitalize}"
-      kicker.constantize.new.check
+      kicker.constantize.new.perform
     end
   end
 
