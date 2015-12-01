@@ -8,7 +8,7 @@ class SlackBot
         @time_zone   = "Melbourne"
         @work_days   = %w(1 2 3 4 0)
         @work_starts = ActiveSupport::TimeZone[time_zone].parse("09:00")
-        @work_ends   = ActiveSupport::TimeZone[time_zone].parse("18:00")
+        @work_ends   = ActiveSupport::TimeZone[time_zone].parse("20:00")
       end
 
       def perform
@@ -30,10 +30,11 @@ class SlackBot
       private
 
       def perform_checks
-        withhin_schedule?
+        # @TODO: Check if anybody is active in Slack
+        within_schedule?
       end
 
-      def withhin_schedule?
+      def within_schedule?
         is_work_day? && is_work_time?
       end
 
