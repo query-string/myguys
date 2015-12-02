@@ -20,7 +20,7 @@ class SlackBot
       end
 
       def send_message
-        message
+        SlackPost.execute "#general", message
       end
 
       def message
