@@ -6,7 +6,7 @@ class SlackBot
       end
 
       def message
-        "Hey @channel, I've discovered that nobody has been active in higuys since #{last_date.strftime("%b #{last_date.day.ordinalize}")}. Why don't ya join?"
+        "Hey @channel, I've discovered that nobody has been active in Higuys since #{last_date.strftime("%b #{last_date.day.ordinalize}")}. Why don't ya join?"
       end
 
       private

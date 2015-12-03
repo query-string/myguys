@@ -6,9 +6,9 @@ class SlackBot
       def initialize
         # @TODO: Extract to .env
         @time_zone   = "Melbourne"
-        @work_days   = %w(1 2 3 4 0)
+        @work_days   = %w(1 2 3 4 )
         @work_starts = ActiveSupport::TimeZone[time_zone].parse("09:00")
-        @work_ends   = ActiveSupport::TimeZone[time_zone].parse("20:00")
+        @work_ends   = ActiveSupport::TimeZone[time_zone].parse("18:00")
       end
 
       def perform
