@@ -1,14 +1,16 @@
 class SlackBot
   module Kickers
     class Base
-      attr_reader :time_zone, :work_days, :work_starts, :work_ends
+      attr_reader :realtime, :target, :time_zone, :work_days, :work_starts, :work_ends
 
-      def initialize
+      def initialize(realtime_attributes)
+        @target      = realtime_attributes.fetch(:target)
+        @realtime    = realtime_attributes.fetch(:realtime)
         # @TODO: Extract to .env
         @time_zone   = "Melbourne"
-        @work_days   = %w(1 2 3 4 )
+        @work_days   = %w(1 2 3 4 0)
         @work_starts = ActiveSupport::TimeZone[time_zone].parse("09:00")
-        @work_ends   = ActiveSupport::TimeZone[time_zone].parse("18:00")
+        @work_ends   = ActiveSupport::TimeZone[time_zone].parse("21:00")
       end
 
       def perform
@@ -20,7 +22,7 @@ class SlackBot
       end
 
       def send_message
-        SlackPost.execute "#general", message
+        SlackPost.execute "##{target}", message
       end
 
       def message
