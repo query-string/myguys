@@ -35,5 +35,8 @@ class SlackBot
       response.channels.find { |channel| channel.name == channel_name }
     end
 
+    def active_users
+      team_users.select { |user| user.is_bot == false && user.name != "slackbot" && user[:presence] == "active" }
+    end
   end
 end

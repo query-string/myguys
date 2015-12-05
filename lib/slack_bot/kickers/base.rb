@@ -14,6 +14,7 @@ class SlackBot
       end
 
       def perform
+        p realtime.active_users
         send_message if checks_successful?
       end
 
