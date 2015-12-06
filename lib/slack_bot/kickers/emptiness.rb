@@ -2,7 +2,7 @@ class SlackBot
   module Kickers
     class Emptiness < SlackBot::Kickers::Base
       def perform_checks
-        within_schedule? && empty_for_a_long_time
+        base_checks && empty_for_a_long_time
       end
 
       def message

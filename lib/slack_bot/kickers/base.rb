@@ -8,13 +8,12 @@ class SlackBot
         @realtime    = realtime_attributes.fetch(:realtime)
         # @TODO: Extract to .env
         @time_zone   = "Melbourne"
-        @work_days   = %w(1 2 3 4 0)
+        @work_days   = %w(1 2 3 4)
         @work_starts = ActiveSupport::TimeZone[time_zone].parse("09:00")
-        @work_ends   = ActiveSupport::TimeZone[time_zone].parse("21:00")
+        @work_ends   = ActiveSupport::TimeZone[time_zone].parse("18:00")
       end
 
       def perform
-        p realtime.active_users
         send_message if checks_successful?
       end
 
@@ -33,8 +32,11 @@ class SlackBot
       private
 
       def perform_checks
-        # @TODO: Check if anybody is active in Slack
-        within_schedule?
+        base_checks
+      end
+
+      def base_checks
+        within_schedule? && present_in_slack?
       end
 
       def within_schedule?
@@ -51,6 +53,10 @@ class SlackBot
 
       def is_work_time?
         local_time >= work_starts && local_time <= work_ends
+      end
+
+      def present_in_slack?
+        realtime.active_users.size > 0
       end
     end
   end

@@ -2,7 +2,7 @@ class SlackBot
   module Kickers
     class Loneliness < SlackBot::Kickers::Base
       def perform_checks
-        within_schedule? && is_alone?
+        base_checks && is_alone?
       end
 
       def message
