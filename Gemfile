@@ -45,11 +45,11 @@ gem 'rails-assets-jquery-cookie'
 gem 'role-rails'
 gem 'font-awesome-rails'
 gem 'clockwork'
+gem 'lumos', '~> 0.0.2'
 
 group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'lumos', '~> 0.0.2'
 end
 
 group :development, :test do
