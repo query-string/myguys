@@ -65,6 +65,7 @@ group :development, :test do
   gem 'rb-fsevent', require: false # os x
   gem 'vcr'
   gem 'json_spec'
+  gem 'capistrano', '~> 3.4.0'
 end
 
 group :test do

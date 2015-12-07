@@ -30,6 +30,10 @@ class @MyView extends EventEmitter
         streamReady = => cb()
         setTimeout(streamReady, 150)
 
+    navigator.getUserMedia = (navigator.getUserMedia ||
+                          navigator.webkitGetUserMedia ||
+                          navigator.mozGetUserMedia ||
+                          navigator.msGetUserMedia);
     navigator.getUserMedia({ video: true, audio: false }, success, error)
 
   shootPhoto: (cb) ->
