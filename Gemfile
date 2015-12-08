@@ -66,6 +66,9 @@ group :development, :test do
   gem 'vcr'
   gem 'json_spec'
   gem 'capistrano', '~> 3.4.0'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
 end
 
 group :test do

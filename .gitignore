@@ -13,4 +13,5 @@
 /tmp/*
 node_modules/*
 /config/database.yml
+/config/deploy*
 npm-debug.log
