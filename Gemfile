@@ -46,6 +46,7 @@ gem 'role-rails'
 gem 'font-awesome-rails'
 gem 'clockwork'
 gem 'lumos', '~> 0.0.2'
+gem 'dotenv-rails'
 
 group :development do
   gem 'spring'
@@ -55,7 +56,6 @@ end
 group :development, :test do
   gem 'awesome_print'
   gem 'byebug'
-  gem 'dotenv-rails'
   gem 'factory_girl_rails'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 3.0.0'
