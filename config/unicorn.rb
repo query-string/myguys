@@ -1,47 +1,30 @@
-# paths
-app_path = "/home/myguys"
-working_directory "#{app_path}/current"
-pid               "#{app_path}/current/tmp/pids/unicorn.pid"
+# https://devcenter.heroku.com/articles/rails-unicorn
 
-# listen
-listen "/tmp/unicorn-myguys.icelab.com.au.socket", :backlog => 64
-
-# logging
-stderr_path "log/unicorn.stderr.log"
-stdout_path "log/unicorn.stdout.log"
-
-# workers
-worker_processes 3
-
-# use correct Gemfile on restarts
-before_exec do |server|
-  ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
-end
-
-# preload
+worker_processes (ENV["WEB_CONCURRENCY"] || 3).to_i
+timeout (ENV["WEB_TIMEOUT"] || 5).to_i
 preload_app true
 
 before_fork do |server, worker|
-  # the following is highly recomended for Rails + "preload_app true"
-  # as there's no need for the master process to hold a connection
-  if defined?(ActiveRecord::Base)
-    ActiveRecord::Base.connection.disconnect!
+  Signal.trap "TERM" do
+    puts "Unicorn master intercepting TERM and sending myself QUIT instead"
+    Process.kill "QUIT", Process.pid
   end
 
-  # Before forking, kill the master process that belongs to the .oldbin PID.
-  # This enables 0 downtime deploys.
-  old_pid = "#{server.config[:pid]}.oldbin"
-  if File.exists?(old_pid) && server.pid != old_pid
-    begin
-      Process.kill("QUIT", File.read(old_pid).to_i)
-    rescue Errno::ENOENT, Errno::ESRCH
-      # someone else did our job for us
-    end
+  if defined? ActiveRecord::Base
+    ActiveRecord::Base.connection.disconnect!
   end
 end
 
 after_fork do |server, worker|
-  if defined?(ActiveRecord::Base)
-    ActiveRecord::Base.establish_connection
+  Signal.trap "TERM" do
+    puts "Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT"
+  end
+
+  if defined? ActiveRecord::Base
+    config = ActiveRecord::Base.configurations[Rails.env] ||
+      Rails.application.config.database_configuration[Rails.env]
+    config["reaping_frequency"] = (ENV["DB_REAPING_FREQUENCY"] || 10).to_i
+    config["pool"] = (ENV["DB_POOL"] || 2).to_i
+    ActiveRecord::Base.establish_connection(config)
   end
 end
