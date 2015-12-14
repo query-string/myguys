@@ -70,6 +70,7 @@ group :development, :test do
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
   gem 'capistrano3-unicorn'
+  gem 'capistrano3-delayed-job', '~> 1.0'
 end
 
 group :test do
@@ -84,4 +85,5 @@ end
 
 group :staging, :production do
   gem 'newrelic_rpm', '>= 3.7.3'
+  gem 'daemons'
 end
