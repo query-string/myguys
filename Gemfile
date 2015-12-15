@@ -71,6 +71,7 @@ group :development, :test do
   gem 'capistrano-rvm'
   gem 'capistrano3-unicorn'
   gem 'capistrano3-delayed-job', '~> 1.0'
+  gem 'capistrano-clockwork'
 end
 
 group :test do
