@@ -1,2 +1,2 @@
-json.upload_url @apg
+json.upload_url @apg.gsub("http", "https")
 
