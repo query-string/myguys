@@ -4,7 +4,7 @@ meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=n
 title = content_for?(:title) ? yield(:title) : "hi guys!"
 meta name="description" content='#{content_for?(:description) ? yield(:description) : "Hi Guys! is a remote presence tool where you can see your colleagues during the working day!"}'
 
-link rel="canonical" href="http://higuys.io#{request.fullpath}"
+link rel="canonical" href="https://#{ENV['DOMAIN']}#{request.fullpath}"
 
 / OPEN GRAPH STUFF
 meta property="og:title" content="#{yield(:title)}"
