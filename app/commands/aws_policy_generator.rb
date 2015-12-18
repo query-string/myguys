@@ -18,17 +18,17 @@ class AwsPolicyGenerator < Struct.new(:image_path)
       acl: "public-read"
     )
 
-    force_http_port(policy.clone).to_s
+    force_https_port(policy.clone).to_s
   end
 
   private
 
   def url(policy)
-    force_http_port(policy).tap { |uri| uri.query = nil }
+    force_https_port(policy).tap { |uri| uri.query = nil }
   end
 
-  def force_http_port(uri)
-    uri.port = 80
+  def force_https_port(uri)
+    uri.port = 443
     uri
   end
 end
