@@ -1,6 +1,6 @@
 # https://devcenter.heroku.com/articles/rails-unicorn
 
-worker_processes (ENV["WEB_CONCURRENCY"] || 2).to_i
+worker_processes (ENV["WEB_CONCURRENCY"] || 3).to_i
 timeout (ENV["WEB_TIMEOUT"] || 5).to_i
 preload_app true
 
