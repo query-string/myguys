@@ -14,21 +14,21 @@ class AwsPolicyGenerator < Struct.new(:image_path)
     presign = AWS::S3::PresignV4.new(object)
     policy = presign.presign(
       :put,
-      expires: Time.now.to_i + EXPIRATION_TIME,
+      expires: (Time.now.to_i + EXPIRATION_TIME).to_i,
       acl: "public-read"
     )
 
-    force_https_port(policy.clone).to_s
+    force_http_port(policy.clone).to_s
   end
 
   private
 
   def url(policy)
-    force_https_port(policy).tap { |uri| uri.query = nil }
+    force_http_port(policy).tap { |uri| uri.query = nil }
   end
 
-  def force_https_port(uri)
-    uri.port = 443
+  def force_http_port(uri)
+    uri.port = 80
     uri
   end
 end
