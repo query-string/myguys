@@ -1,6 +1,6 @@
 Airbrake.configure do |config|
-  config.api_key = '2ad6d046227ec61d79ad56f4d2dafba1'
-  config.host    = 'errbit.cantierecreativo.net'
+  config.api_key = ENV["AIRBRAKE_API_KEY"]
+  config.host    = ENV["AIRBRAKE_HOST"] || "api.airbrake.io"
   config.port    = 80
   config.secure  = config.port == 443
 end

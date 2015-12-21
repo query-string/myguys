@@ -17,6 +17,7 @@
 - [ ] Favorite photo
 
 ## Common tweaks
+- [ ] Extract Airbreak to ENV
 - [ ] Pusher listens for status changes too
 - [ ] Changeable header colors
 - [ ] Personal domain for a wall
