@@ -33,7 +33,7 @@ class SlackBot
     observer.on do |response|
       SlackBot::Responder.new(
         send("#{response}_handler", observer)
-      ).respond
+      ).respond if observer.text.present?
     end
   end
 
