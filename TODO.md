@@ -2,6 +2,8 @@
 
 ## Bugs
 
+- [ ] JS console error
+
 ## Slack integration
 
 - [ ] Display commands:
@@ -10,6 +12,7 @@
     - [x] Slash
 
 - [ ] Reminders:
+    - [ ] Make sure that latest user photo is channel relate
     - [ ] Ping channel if nobody is active more than X hours
     - [ ] Ping channel if only one person is active for certain emount of time
     - [ ] Ping @username if he has never seen in hg
