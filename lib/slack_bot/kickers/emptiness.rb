@@ -2,7 +2,7 @@ class SlackBot
   module Kickers
     class Emptiness < SlackBot::Kickers::Base
       def perform_checks
-        base_checks && empty_for_a_long_time
+        base_checks && empty_for_a_long_time?
       end
 
       def message
@@ -11,12 +11,12 @@ class SlackBot
 
       private
 
-      def empty_for_a_long_time
-        User.active_in_the_last(12.hours).size == 0
+      def empty_for_a_long_time?
+        Wall.slack_wall.users.active_in_the_last(12.hours).empty?
       end
 
       def last_user
-        User.by_the_latest_photo.last
+        Wall.slack_wall.users.by_the_latest_photo.last
       end
 
       def last_image

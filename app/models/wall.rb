@@ -4,6 +4,7 @@ class Wall < ActiveRecord::Base
     dependent: :destroy
 
   scope :inactive_since, -> (seconds) { joins(users: :last_image).where(["images.created_at < ?", seconds.ago]) }
+  scope :slack_wall, -> { where("access_code = ?", ENV["SLACK_WALL_ID"]).first }
 
   has_one :account,
     inverse_of: :wall
