@@ -6,7 +6,7 @@ class SlackBot
       end
 
       def message
-        "Hey @channel, I've discovered that nobody has been active in Higuys since #{last_date.strftime("%b #{last_date.day.ordinalize}")}. Why don't ya join?"
+        "Hey @channel, nobody has been active in Higuys since #{last_date.strftime("%b #{last_date.day.ordinalize}")}. Why don't ya join https://#{ENV["DOMAIN"]}/walls/#{SLACK_WALL_ID}"
       end
 
       private
@@ -16,7 +16,7 @@ class SlackBot
       end
 
       def last_user
-        Wall.slack_wall.users.by_the_latest_photo.last
+        Wall.slack_wall.users.by_the_latest_photo.first
       end
 
       def last_image
