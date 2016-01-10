@@ -3,6 +3,7 @@
 ## Bugs
 
 - [ ] JS console error
+- [ ] Show me / show us slach commands doesn't seem perfroming well
 
 ## Slack integration
 

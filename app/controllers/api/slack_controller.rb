@@ -14,7 +14,7 @@ module Api
     end
 
     def slash_command
-      message = if params[:token].present? && COMMANDS_ALLOWED.find { |e| /#{params[:text]}/ =~ e }
+      message = if params[:token].present? && COMMANDS_ALLOWED.find { |e| /#{e}/ =~ params[:text] }
         if params[:text] == "help"
           COMMANDS_HELP.join("\n")
         else
