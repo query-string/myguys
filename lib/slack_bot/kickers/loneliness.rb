@@ -6,7 +6,7 @@ class SlackBot
       end
 
       def message
-        "Hey @channel, it seems like #{lonely_rider.status_nickname} is alone in Huyguys! Just look at his lonely face and join https://#{ENV["DOMAIN"]}/walls/#{SLACK_WALL_ID}! #{lonely_rider.last_image.imgx_url}"
+        "Hey @channel, it seems like #{lonely_rider.status_nickname} is alone in Huyguys! Just look at his lonely face and join https://#{ENV["DOMAIN"]}/walls/#{ENV["SLACK_WALL_ID"]}! #{lonely_rider.last_image.imgx_url}"
       end
 
       private

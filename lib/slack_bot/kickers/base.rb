@@ -6,7 +6,6 @@ class SlackBot
       def initialize(realtime_attributes)
         @target      = realtime_attributes.fetch(:target)
         @realtime    = realtime_attributes.fetch(:realtime)
-        # @TODO: Extract to .env
         @time_zone   = ENV["TIME_ZONE"]
         @work_days   = [ENV["WORK_DAYS"]]
         @work_starts = ActiveSupport::TimeZone[time_zone].parse(ENV["WORK_STARTS"])

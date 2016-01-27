@@ -6,7 +6,7 @@ class SlackBot
       end
 
       def message
-        "Hey @channel, nobody has been active in Higuys since #{last_date.strftime("%b #{last_date.day.ordinalize}")}. Why don't ya join https://#{ENV["DOMAIN"]}/walls/#{SLACK_WALL_ID}"
+        "Hey @channel, nobody has been active in Higuys since #{last_date.strftime("%b #{last_date.day.ordinalize}")}. Why don't ya join https://#{ENV["DOMAIN"]}/walls/#{ENV["SLACK_WALL_ID"]}"
       end
 
       private
