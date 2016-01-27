@@ -38,12 +38,12 @@ class SlackBot
       end
 
       def base_checks
-        p "Within schedule: #{within_schedule?}"
-        p "Present in slack: #{present_in_slack?}"
         within_schedule? && present_in_slack?
       end
 
       def within_schedule?
+        p "Is work day: #{is_work_day?}"
+        p "Is work time: #{is_work_time?}"
         is_work_day? && is_work_time?
       end
 
