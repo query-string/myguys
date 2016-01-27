@@ -13,9 +13,6 @@ class SlackBot
       end
 
       def perform
-        p "Try checks: #{checks_successful?}"
-        p "Target: #{target}"
-        p "Message: #{message}"
         send_message if checks_successful?
       end
 
@@ -42,8 +39,6 @@ class SlackBot
       end
 
       def within_schedule?
-        p "Is work day: #{is_work_day?}"
-        p "Is work time: #{is_work_time?}"
         is_work_day? && is_work_time?
       end
 
