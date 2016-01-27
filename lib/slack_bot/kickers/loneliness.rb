@@ -2,11 +2,13 @@ class SlackBot
   module Kickers
     class Loneliness < SlackBot::Kickers::Base
       def perform_checks
+        p "Base checks: #{base_checks}"
+        p "Is alone: #{is_alone?}"
         base_checks && is_alone?
       end
 
       def message
-        "Hey @channel, it seems like #{lonely_rider.status_nickname} is alone in Huyguys! Just look at his lonely face and join https://#{ENV["DOMAIN"]}/walls/#{ENV["SLACK_WALL_ID"]}! #{lonely_rider.last_image.imgx_url}"
+        "Hey @channel, #{lonely_rider.status_nickname} is alone in Huyguys! Just look at his lonely face and join https://#{ENV["DOMAIN"]}/walls/#{ENV["SLACK_WALL_ID"]}! #{lonely_rider.last_image.imgx_url}"
       end
 
       private
