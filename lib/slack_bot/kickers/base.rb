@@ -14,6 +14,9 @@ class SlackBot
       end
 
       def perform
+        p "Try checks: #{checks_successful?}"
+        p "Target: #{target}"
+        p "Message: #{message}"
         send_message if checks_successful?
       end
 

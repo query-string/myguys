@@ -46,8 +46,10 @@ class SlackBot
   end
 
   def observe_activity_notifications
+    p "obsever_called"
     activity_notifications_observer.on do |response|
       kicker = "SlackBot::Kickers::#{parse_response(response).type.capitalize}"
+      p "Kicker name is: #{kicker}"
       kicker.constantize.new(realtime_attributes).perform
     end
   end

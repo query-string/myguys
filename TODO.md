@@ -3,7 +3,7 @@
 ## Bugs
 
 - [ ] JS console error
-- [ ] Show me / show us slach commands doesn't seem perfroming well
+- [x] Show me / show us slach commands doesn't seem perfroming well
 
 ## Slack integration
 
@@ -13,7 +13,7 @@
     - [x] Slash
 
 - [ ] Reminders:
-    - [x] Make sure that latest user photo is channel relate
+    - [x] Make sure that latest user photo is channel related
     - [ ] Ping channel if nobody is active more than X hours
     - [ ] Ping channel if only one person is active for certain emount of time
     - [ ] Ping @username if he has never seen in hg
