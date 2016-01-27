@@ -2,8 +2,6 @@ class SlackBot
   module Kickers
     class Loneliness < SlackBot::Kickers::Base
       def perform_checks
-        p "Base checks: #{base_checks}"
-        p "Is alone: #{is_alone?}"
         base_checks && is_alone?
       end
 
