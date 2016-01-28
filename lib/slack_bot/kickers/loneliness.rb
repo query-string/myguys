@@ -12,7 +12,7 @@ class SlackBot
       private
 
       def active_riders
-        Wall.slack_wall.users.active_in_the_last(1.hour)
+        Wall.slack_wall.users.active_in_the_last(15.minutes)
       end
 
       def lonely_rider
